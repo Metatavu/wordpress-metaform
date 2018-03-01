@@ -14,11 +14,12 @@
        */
       public function __construct() {
         $metaformUrl = '//cdn.metatavu.io/libs/metaform-fields/0.6.12';
-      
+        
         wp_enqueue_style('font_awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
         wp_register_style('jquery-ui', '//cdn.metatavu.io/libs/jquery-ui/1.12.1/jquery-ui.min.css');
         wp_register_style('flatpickr', '//cdn.metatavu.io/libs/flatpickr/4.0.6/flatpickr.min.css');
-        wp_register_style('metaform', '//cdn.metatavu.io/libs/metaform-fields/0.6.6/css/form.min.css', ['font_awesome', 'jquery-ui', 'flatpickr']);
+        wp_register_style('animate-css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
+        wp_register_style('metaform', '//cdn.metatavu.io/libs/metaform-fields/0.6.6/css/form.min.css', ['animate-css', 'font_awesome', 'jquery-ui', 'flatpickr']);
   
         wp_register_script('moment', "//cdn.metatavu.io/libs/moment/2.17.1/moment-with-locales.js");
         wp_register_script('flatpickr', '//cdn.metatavu.io/libs/flatpickr/4.0.6/flatpickr.min.js');
@@ -31,6 +32,7 @@
         add_shortcode('metaform', [$this, 'metaformShortcode']);
 
         wp_register_script('metaform-init', plugin_dir_url(dirname(__FILE__)) . 'metaform-init.js', ['metaform-client']);
+        wp_localize_script('metaform-init', 'metaformwp', [ 'ajaxurl' => admin_url( 'admin-ajax.php' ) ]);
       }
       
       /**
@@ -47,14 +49,27 @@
        */
       public function metaformShortcode($tagAttrs) {
         $attrs = shortcode_atts([
-          'id' => 0
+          'id' => 0,
+          'default-values' => ''
         ], $tagAttrs);
+
+        $defaultValues = json_decode($attrs['default-values'], true);
+        $userId = wp_get_current_user()->ID;
+        $id = $attrs['id'];
+        $savedValues = json_decode(get_user_meta($userId, "metaform-$id-values", true), true);
+        $formValues = $defaultValues ? $defaultValues : [];
+
+        if ($savedValues) {
+          foreach ($savedValues as $key => $value) {
+            $formValues[$key] = $value;
+          }
+        }
 
         wp_enqueue_style('metaform');
         wp_enqueue_script('metaform-init');
 
-        $json = get_post_meta($attrs['id'], "metaform-json", true);
-        echo sprintf('<div id="metaform-%s" class="metaform" data-json="%s"/>', $attrs['id'], htmlspecialchars($json));
+        $viewModel = get_post_meta($attrs['id'], "metaform-json", true);
+        echo sprintf('<div id="metaform-%s" class="metaform-container" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $id, htmlspecialchars($viewModel), htmlspecialchars(json_encode($formValues)));
       }
       
     }

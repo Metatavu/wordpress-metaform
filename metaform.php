@@ -15,5 +15,6 @@
 
   require_once( __DIR__ . '/metaform/metaform.php');
   require_once( __DIR__ . '/metaform/metaform-shortcodes.php');
+  require_once( __DIR__ . '/metaform/metaform-ajax.php');
  
 ?>
