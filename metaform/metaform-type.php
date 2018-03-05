@@ -14,8 +14,8 @@
       public function __construct() {
         register_post_type ('metaform', [
           'labels' => [
-              'name'               => __( 'Header Metaforms', 'metaform' ),
-              'singular_name'      => __( 'Header Metaform', 'metaform' ),
+              'name'               => __( 'Metaforms', 'metaform' ),
+              'singular_name'      => __( 'Metaform', 'metaform' ),
               'add_new'            => __( 'Add Metaform', 'metaform' ),
               'add_new_item'       => __( 'Add New Metaform', 'metaform' ),
               'edit_item'          => __( 'Edit Metaform', 'metaform' ),
@@ -27,6 +27,7 @@
               'menu_name'          => __( 'Metaforms', 'metaform' ),
               'all_items'          => __( 'Metaforms', 'metaform' )
           ],
+          'taxonomies' => ['category'],
           'public' => true,
           'has_archive' => true,
           'supports' => ['title']
