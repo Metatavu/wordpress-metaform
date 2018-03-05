@@ -49,7 +49,8 @@
        */
       public function metaformShortcode($tagAttrs) {
         $attrs = shortcode_atts([
-          'default-values' => ''
+          'default-values' => '',
+          'class' => ''
         ], $tagAttrs);
 
         $id = $attrs['id'];
@@ -72,7 +73,7 @@
         wp_enqueue_script('metaform-init');
 
         $viewModel = get_post_meta($id, "metaform-json", true);
-        echo sprintf('<div id="metaform-%s" class="metaform-container" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $id, htmlspecialchars($viewModel), htmlspecialchars(json_encode($formValues)));
+        echo sprintf('<div id="metaform-%s" class="metaform-container %s" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $attrs['class'], $id, htmlspecialchars($viewModel), htmlspecialchars(json_encode($formValues)));
       }
       
     }
