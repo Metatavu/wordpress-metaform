@@ -30,7 +30,7 @@
           'taxonomies' => ['category'],
           'public' => true,
           'has_archive' => true,
-          'supports' => ['title']
+          'supports' => ['title', 'editor']
         ]);
 
         add_action ('add_meta_boxes', [$this, "addMetaboxes"], 9999, 2);

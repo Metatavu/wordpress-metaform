@@ -49,13 +49,16 @@
        */
       public function metaformShortcode($tagAttrs) {
         $attrs = shortcode_atts([
-          'id' => 0,
           'default-values' => ''
         ], $tagAttrs);
 
+        $id = $attrs['id'];
+        if (!$id) {
+          $id = get_the_ID();
+        }
+
         $defaultValues = json_decode($attrs['default-values'], true);
         $userId = wp_get_current_user()->ID;
-        $id = $attrs['id'];
         $savedValues = json_decode(get_user_meta($userId, "metaform-$id-values", true), true);
         $formValues = $defaultValues ? $defaultValues : [];
 
@@ -68,7 +71,7 @@
         wp_enqueue_style('metaform');
         wp_enqueue_script('metaform-init');
 
-        $viewModel = get_post_meta($attrs['id'], "metaform-json", true);
+        $viewModel = get_post_meta($id, "metaform-json", true);
         echo sprintf('<div id="metaform-%s" class="metaform-container" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $id, htmlspecialchars($viewModel), htmlspecialchars(json_encode($formValues)));
       }
       
