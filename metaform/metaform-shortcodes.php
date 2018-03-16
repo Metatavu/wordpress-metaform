@@ -22,12 +22,13 @@
         wp_register_style('metaform', "$metaformUrl/css/form.min.css", ['animate-css', 'font_awesome', 'jquery-ui', 'flatpickr']);
   
         wp_register_script('moment', "//cdn.metatavu.io/libs/moment/2.17.1/moment-with-locales.js");
+        wp_register_script('jquery-ui_touch-punch', "//cdn.metatavu.io/libs/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js");
         wp_register_script('flatpickr', '//cdn.metatavu.io/libs/flatpickr/4.0.6/flatpickr.min.js');
         wp_register_script('flatpickr-fi', '//cdn.metatavu.io/libs/flatpickr/4.0.6/l10n/fi.js');
         wp_register_script('metaform-form', "$metaformUrl/js/form.js");
         wp_register_script('metaform-utils', "$metaformUrl/js/form-utils.js");
         wp_register_script('metaform-modernizr', "$metaformUrl/js/modernizr.js");
-        wp_register_script('metaform-client', "$metaformUrl/js/metaform-client.min.js", ['jquery', 'jquery-ui-dialog', 'jquery-ui-tabs', 'flatpickr', 'flatpickr-fi', 'metaform-form', 'metaform-utils', 'metaform-modernizr']);
+        wp_register_script('metaform-client', "$metaformUrl/js/metaform-client.min.js", ['jquery', 'jquery-ui-dialog', 'jquery-ui-tabs', 'flatpickr', 'flatpickr-fi', 'metaform-form', 'metaform-utils', 'metaform-modernizr', 'jquery-ui_touch-punch']);
 
         add_shortcode('metaform', [$this, 'metaformShortcode']);
 
