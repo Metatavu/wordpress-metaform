@@ -13,7 +13,7 @@
        * Constructor
        */
       public function __construct() {
-        $metaformUrl = '//cdn.metatavu.io/libs/metaform-fields/0.6.15';
+        $metaformUrl = '//cdn.metatavu.io/libs/metaform-fields/0.6.16';
         
         wp_enqueue_style('font_awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
         wp_register_style('jquery-ui', '//cdn.metatavu.io/libs/jquery-ui/1.12.1/jquery-ui.min.css');
