@@ -41,6 +41,28 @@
       }
 
       /**
+       * Returns metaform values as user => values associative array
+       * 
+       * @return array Associative array of user replies with user as key 
+       */
+      public function getValues($metaform) {
+        $postMetas = get_post_meta($metaform->ID);
+        $result = [];
+
+        foreach ($postMetas as $metaKey => $metaValue) {
+          if (substr($metaKey, 0, 14) === "metaform-anon-") {
+            $json = array_shift($metaValue);
+            $value = json_decode($json, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+              $result[substr($metaKey, 14)] = $value;
+            }
+          }
+        }
+
+        return $result;
+      }
+
+      /**
        * Sets reply for metaform and user
        * 
        * This implementation does not care about logged user but instead 

@@ -11,7 +11,8 @@
     class Capabilities {
       
       private static $capabilities = [
-        'metaform_rest_create_reply'
+        'metaform_rest_create_reply',
+        'metaform_read_replies'
       ];
       
     }
