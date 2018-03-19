@@ -4,6 +4,8 @@
   
   defined ( 'ABSPATH' ) || die ( 'No script kiddies please!' );
 
+  use \Metatavu\Metaform\ReplyStrategy\ReplyStrategyFactory;
+
   if (!class_exists( '\Metatavu\Metaform\Type' ) ) {
   
     class Type {
@@ -30,6 +32,7 @@
           'taxonomies' => ['category'],
           'public' => true,
           'has_archive' => true,
+          'show_in_rest' => true,
           'supports' => ['title', 'editor']
         ]);
 
@@ -48,6 +51,7 @@
        */
       public function addMetaboxes() {
         add_meta_box('metaform-json-meta-box', __( 'Metaform JSON', 'metaform' ), [$this, 'renderJsonMetaBox'], 'metaform', 'normal', 'default');
+        add_meta_box('metaform-reply-strategy-meta-box', __( 'Reply strategy', 'metaform' ), [$this, 'renderReplyStrategyMetaBox'], 'metaform', 'side');
       }
 
       /**
@@ -62,12 +66,37 @@
         echo sprintf('<textarea class="codemirror" name="metaform-json" style="%s" rows="20">%s</textarea>', 'width: 100%', htmlspecialchars($json));
       }
 
+      /** 
+       * Renders reply strategy metabox
+       * 
+       * @param \WP_Post $metaform metaform post objects
+       */
+      public function renderReplyStrategyMetaBox($metaform) {
+        $selectedStrategy = get_post_meta($metaform->ID, "metaform-reply-strategy", true);
+        $supportedStrategies = ReplyStrategyFactory::getSupportedStrategies();
+
+        echo '<select name="metaform-reply-strategy">';
+
+        foreach ($supportedStrategies as $supportedStrategy) {
+          $strategy = ReplyStrategyFactory::createStrategy($supportedStrategy);
+          $selected = $supportedStrategy === $selectedStrategy; 
+          $label = $strategy->getLabel();
+          echo sprintf('<option value="%s"%s>%s</option>', $supportedStrategy, $selected ? 'selected="selected"' : '', $label);
+        }
+
+        echo '</select>';
+      }
+
       /**
        * Post save hook
        */
       public function savePost($metaformId) {
         if (array_key_exists('metaform-json', $_POST)) {
           update_post_meta($metaformId, 'metaform-json', $_POST['metaform-json']);
+        }
+
+        if (array_key_exists('metaform-reply-strategy', $_POST)) {
+          update_post_meta($metaformId, 'metaform-reply-strategy', $_POST['metaform-reply-strategy']);
         }
       }
 
