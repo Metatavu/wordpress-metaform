@@ -51,7 +51,8 @@
       public function metaformShortcode($tagAttrs) {
         $attrs = shortcode_atts([
           'default-values' => '',
-          'class' => ''
+          'class' => '',
+          'id' => ''
         ], $tagAttrs);
 
         $id = $attrs['id'];
