@@ -74,7 +74,7 @@
         wp_enqueue_script('metaform-init');
 
         $viewModel = get_post_meta($id, "metaform-json", true);
-        echo sprintf('<div id="metaform-%s" class="metaform-container %s" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $attrs['class'], $id, htmlspecialchars($viewModel), htmlspecialchars(json_encode($formValues)));
+        return sprintf('<div id="metaform-%s" class="metaform-container %s" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $attrs['class'], $id, htmlspecialchars($viewModel), htmlspecialchars(json_encode($formValues)));
       }
       
     }
