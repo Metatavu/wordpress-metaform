@@ -18,7 +18,7 @@
        * Constructor
        */
       public function __construct() {
-        register_rest_route('wp/v2', '/metaform/(?P<id>\d+)/reply', [
+        register_rest_route('wp/v2', '/metaforms/(?P<id>\d+)/replies', [
           'methods' => 'POST',
           'callback' => [$this, "replyPostCallback"],
           'permission_callback' => [$this, "replyPostPermissionCallback"]
@@ -35,13 +35,13 @@
         $id = $data['id'];
         $metaform = get_post($id);
         if (!$metaform || $metaform->post_type !== 'metaform') {
-          return new WP_Error('not_found', __('Metaform could not be found'), [ 'status' => 404 ] );
+          return new \WP_Error('not_found', __('Metaform could not be found'), [ 'status' => 404 ] );
           exit;
         }
 
         $body = $data->get_body();
         if (!body) {
-          return new WP_Error('body_missing', __('Body is required'), [ 'status' => 400 ] );
+          return new \WP_Error('body_missing', __('Body is required'), [ 'status' => 400 ] );
           exit;
         }
 
@@ -50,7 +50,7 @@
         $strategy = ReplyStrategyFactory::createStrategy($strategyName);
 
         if (!$strategy) {
-          return new WP_Error('unsupported_strategy', __('Metaform is using reply strategy that is not supported by the REST'), [ 'status' => 501 ] );
+          return new \WP_Error('unsupported_strategy', __('Metaform is using reply strategy that is not supported by the REST'), [ 'status' => 501 ] );
           exit;
         } else {
           $strategy->setValue($metaform, $user, $body);
