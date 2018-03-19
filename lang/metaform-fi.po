@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Wordpress Metaform integration 0.0.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-"
 "metaform\n"
-"POT-Creation-Date: 2018-03-19 13:47:03+00:00\n"
+"POT-Creation-Date: 2018-03-19 17:50:39+00:00\n"
+"PO-Revision-Date: 2018-03-19 19:52+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-03-19 15:59+0200\n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.0.4\n"
-"Last-Translator: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: fi\n"
 
-#: metaform/metaform-rest.php:38
+#: metaform/metaform-rest.php:38 metaform/metaform-type.php:165
 msgid "Metaform could not be found"
 msgstr "Metaformia ei löytynyt"
 
@@ -28,54 +28,74 @@ msgstr ""
 msgid "Metaform is using reply strategy that is not supported by the REST"
 msgstr ""
 
-#: metaform/metaform-type.php:19 metaform/metaform-type.php:29
-#: metaform/metaform-type.php:30
-msgid "Metaforms"
-msgstr "Metaformit"
+#: metaform/metaform-type.php:54
+msgid "Excel Export"
+msgstr "Vie Excel tiedostoon"
 
-#: metaform/metaform-type.php:20
-msgid "Metaform"
-msgstr "Metaform"
-
-#: metaform/metaform-type.php:21
-msgid "Add Metaform"
-msgstr "Lisää Metaformi"
-
-#: metaform/metaform-type.php:22
-msgid "Add New Metaform"
-msgstr "Lisää uusi Metaformi"
-
-#: metaform/metaform-type.php:23
-msgid "Edit Metaform"
-msgstr "Muokkaa Metaformia"
-
-#: metaform/metaform-type.php:24
-msgid "New Metaform"
-msgstr "Uusi Metaformi"
-
-#: metaform/metaform-type.php:25
-msgid "View Metaform"
-msgstr "Näytä Metaformi"
-
-#: metaform/metaform-type.php:26
-msgid "Search Metaforms"
-msgstr "Etsi Metaformeja"
-
-#: metaform/metaform-type.php:27
-msgid "No Metaforms found"
-msgstr "Metaformeja ei löytynyt"
-
-#: metaform/metaform-type.php:28
-msgid "No Metaforms in trash"
-msgstr "Ei Metaformeja roskiksessa"
-
-#: metaform/metaform-type.php:53
+#: metaform/metaform-type.php:65
 msgid "Metaform JSON"
 msgstr "Metaform JSON"
 
-#: metaform/metaform-type.php:54
+#: metaform/metaform-type.php:66
 msgid "Reply strategy"
 msgstr "Vastausten tallennusstrategia"
+
+#: metaform/metaform-type.php:121 metaform/metaform-type.php:131
+#: metaform/metaform-type.php:132
+msgid "Metaforms"
+msgstr "Metaformit"
+
+#: metaform/metaform-type.php:122
+msgid "Metaform"
+msgstr "Metaform"
+
+#: metaform/metaform-type.php:123
+msgid "Add Metaform"
+msgstr "Lisää Metaformi"
+
+#: metaform/metaform-type.php:124
+msgid "Add New Metaform"
+msgstr "Lisää uusi Metaformi"
+
+#: metaform/metaform-type.php:125
+msgid "Edit Metaform"
+msgstr "Muokkaa Metaformia"
+
+#: metaform/metaform-type.php:126
+msgid "New Metaform"
+msgstr "Uusi Metaformi"
+
+#: metaform/metaform-type.php:127
+msgid "View Metaform"
+msgstr "Näytä Metaformi"
+
+#: metaform/metaform-type.php:128
+msgid "Search Metaforms"
+msgstr "Etsi Metaformeja"
+
+#: metaform/metaform-type.php:129
+msgid "No Metaforms found"
+msgstr "Metaformeja ei löytynyt"
+
+#: metaform/metaform-type.php:130
+msgid "No Metaforms in trash"
+msgstr "Ei Metaformeja roskiksessa"
+
+#: metaform/metaform-type.php:159
+msgid "Permission denied"
+msgstr "Pääsy kielletty"
+
+#: metaform/metaform-type.php:171
+msgid "Metaform is empty"
+msgstr "Metaform on tyhjä"
+
+#: metaform/metaform-type.php:177
+msgid "Failed to read Metaform"
+msgstr "Metaformin lukeminen epäonnistui"
+
+#: metaform/metaform-type.php:183
+msgid "Failed to resolve reply strategy"
+msgstr "Tallennusstrategian selvitys epäonnistui"
 
 #: reply-strategies/postmeta-reply-strategy.php:27
 msgid "Wordpress Anonymous"
