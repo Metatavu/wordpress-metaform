@@ -53,7 +53,7 @@
           return new \WP_Error('unsupported_strategy', __('Metaform is using reply strategy that is not supported by the REST'), [ 'status' => 501 ] );
           exit;
         } else {
-          $strategy->setValue($metaform, $user, $body);
+          $strategy->setValue($metaform, $user, json_decode($body, true));
           return "OK";
         }
       }
