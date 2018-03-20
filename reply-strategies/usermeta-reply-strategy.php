@@ -38,7 +38,33 @@
        */
       public function getValue($metaform, $user) {
         $id = $metaform->ID;
-        return json_decode(get_user_meta($user->ID, "metaform-$id-values", true), true);
+        $value = get_user_meta($user->ID, "metaform-$id-values", true);
+        if (!$value) {
+          return null;
+        }
+
+        return json_decode($value, true);
+      }
+
+      /**
+       * Returns metaform values as user => values associative array
+       * 
+       * @return array Associative array of user replies with user as key 
+       */
+      public function getValues($metaform) {
+        $result = [];
+        $id = $metaform->ID;
+        $users = get_users(['fields' => ['ID']]);
+
+        foreach ($users as $user) {
+          $json = get_user_meta($user->ID, "metaform-$id-values", true);
+          if ($json) {
+            $value = json_decode($json, true);
+            $result[$userId] = $value;
+          }
+        }
+        
+        return $result;
       }
 
       /**
