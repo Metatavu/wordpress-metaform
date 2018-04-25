@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0faf14a17de7b80465045587ee848eb5",
+    "content-hash": "c0623da79cd302c048869b59f96bd7e1",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -189,16 +189,16 @@
         },
         {
             "name": "metatavu/metaform-api-client-php",
-            "version": "0.0.1",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Metatavu/metaform-api-client-php.git",
-                "reference": "b3c7e71e7da97248b8fd34a5fee1e53494a5daad"
+                "reference": "3734eaddb226fe23753d778a37a2fe62945d3430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Metatavu/metaform-api-client-php/zipball/b3c7e71e7da97248b8fd34a5fee1e53494a5daad",
-                "reference": "b3c7e71e7da97248b8fd34a5fee1e53494a5daad",
+                "url": "https://api.github.com/repos/Metatavu/metaform-api-client-php/zipball/3734eaddb226fe23753d778a37a2fe62945d3430",
+                "reference": "3734eaddb226fe23753d778a37a2fe62945d3430",
                 "shasum": ""
             },
             "require": {
@@ -236,7 +236,7 @@
                 "sdk",
                 "swagger"
             ],
-            "time": "2018-04-25T03:06:56+00:00"
+            "time": "2018-04-25T08:01:05+00:00"
         },
         {
             "name": "mk-j/php_xlsxwriter",

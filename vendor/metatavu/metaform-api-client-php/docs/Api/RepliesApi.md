@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **createReply**
-> createReply($realmId, $metaformId, $payload)
+> createReply($realmId, $metaformId, $payload, $updateExisting)
 
 create new form reply
 
@@ -33,9 +33,10 @@ $api_instance = new Metatavu\Metaform\Api\RepliesApi(new \Http\Adapter\Guzzle6\C
 $realmId = "realmId_example"; // string | realm id
 $metaformId = "metaformId_example"; // string | Metaform id
 $payload = new \Metatavu\Metaform\Api\Model\Reply(); // \Metatavu\Metaform\Api\Model\Reply | Payload
+$updateExisting = true; // bool | specifies that existing reply should be updated
 
 try {
-    $api_instance->createReply($realmId, $metaformId, $payload);
+    $api_instance->createReply($realmId, $metaformId, $payload, $updateExisting);
 } catch (Exception $e) {
     echo 'Exception when calling RepliesApi->createReply: ', $e->getMessage(), PHP_EOL;
 }
@@ -49,6 +50,7 @@ Name | Type | Description  | Notes
  **realmId** | **string**| realm id |
  **metaformId** | **string**| Metaform id |
  **payload** | [**\Metatavu\Metaform\Api\Model\Reply**](../Model/Reply.md)| Payload |
+ **updateExisting** | **bool**| specifies that existing reply should be updated | [optional]
 
 ### Return type
 

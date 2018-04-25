@@ -88,14 +88,15 @@ class RepliesApi
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
      * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  bool $updateExisting specifies that existing reply should be updated (optional)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function createReply($realmId, $metaformId, $payload)
+    public function createReply($realmId, $metaformId, $payload, $updateExisting = null)
     {
-        $this->createReplyWithHttpInfo($realmId, $metaformId, $payload);
+        $this->createReplyWithHttpInfo($realmId, $metaformId, $payload, $updateExisting);
     }
 
     /**
@@ -106,15 +107,16 @@ class RepliesApi
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
      * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  bool $updateExisting specifies that existing reply should be updated (optional)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createReplyWithHttpInfo($realmId, $metaformId, $payload)
+    public function createReplyWithHttpInfo($realmId, $metaformId, $payload, $updateExisting = null)
     {
         $returnType = '';
-        $request = $this->createReplyRequest($realmId, $metaformId, $payload);
+        $request = $this->createReplyRequest($realmId, $metaformId, $payload, $updateExisting);
 
         try {
 
@@ -192,13 +194,14 @@ class RepliesApi
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
      * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  bool $updateExisting specifies that existing reply should be updated (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createReplyAsync($realmId, $metaformId, $payload)
+    public function createReplyAsync($realmId, $metaformId, $payload, $updateExisting = null)
     {
-        return $this->createReplyAsyncWithHttpInfo($realmId, $metaformId, $payload)
+        return $this->createReplyAsyncWithHttpInfo($realmId, $metaformId, $payload, $updateExisting)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -214,14 +217,15 @@ class RepliesApi
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
      * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  bool $updateExisting specifies that existing reply should be updated (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createReplyAsyncWithHttpInfo($realmId, $metaformId, $payload)
+    public function createReplyAsyncWithHttpInfo($realmId, $metaformId, $payload, $updateExisting = null)
     {
         $returnType = '';
-        $request = $this->createReplyRequest($realmId, $metaformId, $payload);
+        $request = $this->createReplyRequest($realmId, $metaformId, $payload, $updateExisting);
 
         return $this->client
             ->sendAsync($request)
@@ -252,11 +256,12 @@ class RepliesApi
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
      * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  bool $updateExisting specifies that existing reply should be updated (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function createReplyRequest($realmId, $metaformId, $payload)
+    protected function createReplyRequest($realmId, $metaformId, $payload, $updateExisting = null)
     {
         // verify the required parameter 'realmId' is set
         if ($realmId === null) {
@@ -284,6 +289,10 @@ class RepliesApi
         $httpBody = '';
         $multipart = false;
 
+        // query params
+        if ($updateExisting !== null) {
+            $queryParams['updateExisting'] = ObjectSerializer::toQueryValue($updateExisting);
+        }
 
         // path params
         if ($realmId !== null) {
