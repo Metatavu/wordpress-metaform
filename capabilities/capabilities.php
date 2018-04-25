@@ -12,7 +12,8 @@
       
       private static $capabilities = [
         'metaform_rest_create_reply',
-        'metaform_read_replies'
+        'metaform_read_replies',
+        'metaform_migrate'
       ];
       
     }
