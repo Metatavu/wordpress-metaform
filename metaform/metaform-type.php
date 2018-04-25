@@ -64,7 +64,7 @@
 
           if (current_user_can('metaform_migrate')) {
             $apiId = get_post_meta($post->ID, "metaform-api-id", true);
-            if (empty($apiId)) {
+            if (empty($apiId) && !empty(Settings::getValue("api-url"))) {
               $url = add_query_arg(['post' => $post->ID, 'action' => 'api-migrate']);
               $migrateLink = add_query_arg(['action' => 'api-migrate'], $url);
               $actions["api-migrate"] = sprintf('<a href="%1$s">%2$s</a>', $migrateLink, esc_html(__( 'Migrate to API', 'metaform' )));                
@@ -285,8 +285,6 @@
             response => $e->getCode()
           ]);
         }
-
-        wp_redirect(admin_url('/edit.php?post_type=metaform'));
       }
 
       /**
