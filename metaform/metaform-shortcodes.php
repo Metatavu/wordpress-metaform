@@ -4,6 +4,12 @@
   if (!defined('ABSPATH')) { 
     exit;
   }
+
+  require_once( __DIR__ . '/../api/api-client.php');
+  require_once( __DIR__ . '/../settings/settings.php');
+
+  use \Metatavu\Metaform\Api\ApiClient;
+  use \Metatavu\Metaform\Settings\Settings;
   
   if (!class_exists( 'Metatavu\Metaform\MetaformShortcodes' ) ) {
     
@@ -60,14 +66,26 @@
           $id = get_the_ID();
         }
 
-        $defaultValues = json_decode($attrs['default-values'], true);
         $userId = wp_get_current_user()->ID;
-        $savedValues = json_decode(get_user_meta($userId, "metaform-$id-values", true), true);
-        $formValues = $defaultValues ? $defaultValues : [];
+        $metaformApiId = get_post_meta($id, "metaform-api-id", true);
+        $formValues = [];
 
-        if ($savedValues) {
-          foreach ($savedValues as $key => $value) {
-            $formValues[$key] = $value;
+        if (!empty($metaformApiId)) {
+          $realmId = Settings::getValue("realm-id");
+          $repliesApi = ApiClient::getRepliesApi();
+          $ssoUserId = get_user_meta($userId, "openid-connect-generic-subject-identity", true);
+          $replies = $repliesApi->listReplies($realmId, $metaformApiId, $ssoUserId);
+          $reply = count($replies) > 0 ? $replies[0] : null;
+          $formValues = $reply ? $reply->getData() : [];
+        } else {
+          $defaultValues = json_decode($attrs['default-values'], true);
+          $savedValues = json_decode(get_user_meta($userId, "metaform-$id-values", true), true);
+          $formValues = $defaultValues ? $defaultValues : [];
+
+          if ($savedValues) {
+            foreach ($savedValues as $key => $value) {
+              $formValues[$key] = $value;
+            }
           }
         }
 

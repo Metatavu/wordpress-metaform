@@ -5,8 +5,12 @@
   defined ( 'ABSPATH' ) || die ( 'No script kiddies please!' );
 
   require_once( __DIR__ . '/../vendor/autoload.php');
+  require_once( __DIR__ . '/../api/api-client.php');
+  require_once( __DIR__ . '/../settings/settings.php');
   
   use \Metatavu\Metaform\ReplyStrategy\ReplyStrategyFactory;
+  use \Metatavu\Metaform\Api\ApiClient;
+  use \Metatavu\Metaform\Settings\Settings;
 
   if (!class_exists( '\Metatavu\Metaform\Type' ) ) {
   
@@ -37,6 +41,10 @@
         if (isset($_REQUEST['action']) && 'xlsx-export' == $_REQUEST['action'] && $_REQUEST['post']) {
           $this->exportExcel($_REQUEST['post']);
         }
+
+        if (isset($_REQUEST['action']) && 'api-migrate' == $_REQUEST['action'] && $_REQUEST['post']) {
+          $this->apiMigrate($_REQUEST['post']);
+        }
       }
 
       /**
@@ -52,6 +60,15 @@
             $url = add_query_arg(['post' => $post->ID, 'action' => 'xlsx-export']);
             $exportLink = add_query_arg(['action' => 'xlsx-export'], $url);
             $actions["xlsx-export"] = sprintf('<a href="%1$s">%2$s</a>', $exportLink, esc_html(__( 'Excel Export', 'metaform' )));
+          }
+
+          if (current_user_can('metaform_migrate')) {
+            $apiId = get_post_meta($post->ID, "metaform-api-id", true);
+            if (empty($apiId) && !empty(Settings::getValue("api-url"))) {
+              $url = add_query_arg(['post' => $post->ID, 'action' => 'api-migrate']);
+              $migrateLink = add_query_arg(['action' => 'api-migrate'], $url);
+              $actions["api-migrate"] = sprintf('<a href="%1$s">%2$s</a>', $migrateLink, esc_html(__( 'Migrate to API', 'metaform' )));                
+            }
           }
         }
 
@@ -188,6 +205,91 @@
         $filename = sanitize_title($metaform->post_title ? $metaform->post_title : $metaform->ID) . '.xlsx';
         $this->outputXlsx($filename, $rows);
         exit;
+      }
+
+      /**
+       * Migrates Metaform to API
+       * 
+       * @param int $id metaform id
+       */
+      private function apiMigrate($id) {
+        if (!current_user_can('metaform_migrate')) {
+          echo __('Permission denied', 'metaform');
+          exit;
+        }
+
+        $metaform = get_post($id);
+        if (!$metaform || $metaform->post_type !== 'metaform') {
+          echo __('Metaform could not be found', 'metaform');
+          exit;
+        }
+
+        $metaformJson = get_post_meta($id, "metaform-json", true);
+        if (!$metaformJson) {
+          echo __('Metaform is empty', 'metaform');
+          exit;
+        }
+
+        $viewModel = json_decode($metaformJson, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+          echo __('Failed to read Metaform', 'metaform');
+          exit;
+        }
+
+        $replyStrategy = get_post_meta($metaform->ID, "metaform-reply-strategy", true);
+        $strategy = ReplyStrategyFactory::createStrategy($replyStrategy);
+        if (!$strategy) {
+          echo __('Failed to resolve reply strategy', 'metaform');
+          exit;
+        }
+
+        if ($strategy->getName() !== "wordpress_usermeta") {
+          echo __('Unsupported reply strategy', 'metaform');
+          exit;
+        }
+
+        $metaformsApi = ApiClient::getMetaformsApi();
+        $repliesApi = ApiClient::getRepliesApi();
+        $realmId = Settings::getValue("realm-id");
+        $metaform = new \Metatavu\Metaform\Api\Model\Metaform($viewModel);
+
+        try {
+          $metaformResponse = $metaformsApi->createMetaform($realmId, $metaform);
+          $metaformId = $metaformResponse->getId();
+          $users = get_users(['fields' => ['ID']]);
+          
+          foreach ($users as $user) {
+            $ssoUserId = get_user_meta($user->ID, "openid-connect-generic-subject-identity", true);
+            $replyJson = get_user_meta($user->ID, "metaform-$id-values", true);
+
+            if (!empty($ssoUserId) && !empty($replyJson)) {
+              $replyData = json_decode($replyJson, true);
+              if (json_last_error() !== JSON_ERROR_NONE) {
+                echo __("Failed to read replies of user $ssoUserId", 'metaform');
+                exit;
+              }
+
+              $reply = new \Metatavu\Metaform\Api\Model\Reply([
+                "userId" => $ssoUserId,
+                "data" => $replyData
+              ]);
+
+              $repliesApi->createReply($realmId, $metaformId, $reply, "true");
+            }
+          }
+
+          update_post_meta($id, 'metaform-api-id', $metaformId);
+        } catch (\Metatavu\Metaform\ApiException $e) {
+          $message = $e->getMessage();
+
+          if (empty($message)) {
+            $message = json_encode($e->getResponseBody());
+          }
+
+          wp_die($message, null, [
+            response => $e->getCode()
+          ]);
+        }
       }
 
       /**
