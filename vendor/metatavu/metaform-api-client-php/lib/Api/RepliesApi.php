@@ -1382,7 +1382,7 @@ class RepliesApi
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Metatavu\Metaform\Api\Model\Reply
+     * @return \Metatavu\Metaform\Api\Model\Reply[]
      */
     public function listReplies($realmId, $metaformId, $userId = null)
     {
@@ -1401,11 +1401,11 @@ class RepliesApi
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Metatavu\Metaform\Api\Model\Reply, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Metatavu\Metaform\Api\Model\Reply[], HTTP status code, HTTP response headers (array of strings)
      */
     public function listRepliesWithHttpInfo($realmId, $metaformId, $userId = null)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Reply';
+        $returnType = '\Metatavu\Metaform\Api\Model\Reply[]';
         $request = $this->listRepliesRequest($realmId, $metaformId, $userId);
 
         try {
@@ -1456,7 +1456,7 @@ class RepliesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Reply',
+                        '\Metatavu\Metaform\Api\Model\Reply[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1534,7 +1534,7 @@ class RepliesApi
      */
     public function listRepliesAsyncWithHttpInfo($realmId, $metaformId, $userId = null)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Reply';
+        $returnType = '\Metatavu\Metaform\Api\Model\Reply[]';
         $request = $this->listRepliesRequest($realmId, $metaformId, $userId);
 
         return $this->client

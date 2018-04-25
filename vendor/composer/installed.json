@@ -284,17 +284,17 @@
     },
     {
         "name": "metatavu/metaform-api-client-php",
-        "version": "0.0.2",
-        "version_normalized": "0.0.2.0",
+        "version": "0.0.3",
+        "version_normalized": "0.0.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Metatavu/metaform-api-client-php.git",
-            "reference": "3734eaddb226fe23753d778a37a2fe62945d3430"
+            "reference": "497d09be5f4bd1081172733e28e1dda0cfafe0e5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Metatavu/metaform-api-client-php/zipball/3734eaddb226fe23753d778a37a2fe62945d3430",
-            "reference": "3734eaddb226fe23753d778a37a2fe62945d3430",
+            "url": "https://api.github.com/repos/Metatavu/metaform-api-client-php/zipball/497d09be5f4bd1081172733e28e1dda0cfafe0e5",
+            "reference": "497d09be5f4bd1081172733e28e1dda0cfafe0e5",
             "shasum": ""
         },
         "require": {
@@ -309,7 +309,7 @@
             "phpunit/phpunit": "^4.8",
             "squizlabs/php_codesniffer": "~2.6"
         },
-        "time": "2018-04-25T08:01:05+00:00",
+        "time": "2018-04-25T08:39:32+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

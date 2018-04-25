@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listReplies**
-> \Metatavu\Metaform\Api\Model\Reply listReplies($realmId, $metaformId, $userId)
+> \Metatavu\Metaform\Api\Model\Reply[] listReplies($realmId, $metaformId, $userId)
 
 Lists form replies
 
@@ -270,7 +270,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\Metatavu\Metaform\Api\Model\Reply**](../Model/Reply.md)
+[**\Metatavu\Metaform\Api\Model\Reply[]**](../Model/Reply.md)
 
 ### Authorization
 

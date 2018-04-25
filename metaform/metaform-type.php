@@ -274,13 +274,18 @@
                 "data" => $replyData
               ]);
 
-              $repliesApi->createReply($realmId, $metaformId, $reply);
+              $repliesApi->createReply($realmId, $metaformId, $reply, "true");
             }
           }
 
           update_post_meta($id, 'metaform-api-id', $metaformId);
         } catch (\Metatavu\Metaform\ApiException $e) {
-          $message = json_encode($e->getResponseBody());
+          $message = $e->getMessage();
+
+          if (empty($message)) {
+            $message = json_encode($e->getResponseBody());
+          }
+
           wp_die($message, null, [
             response => $e->getCode()
           ]);
