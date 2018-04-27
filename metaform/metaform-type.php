@@ -43,7 +43,7 @@
         }
 
         if (isset($_REQUEST['action']) && 'api-migrate' == $_REQUEST['action'] && $_REQUEST['post']) {
-          $this->apiMigrate($_REQUEST['post']);
+          $this->apiMigrate($_REQUEST['post'], intval($_REQUEST['offset']), $_REQUEST['metaformId']);
         }
       }
 
@@ -65,8 +65,7 @@
           if (current_user_can('metaform_migrate')) {
             $apiId = get_post_meta($post->ID, "metaform-api-id", true);
             if (empty($apiId) && !empty(Settings::getValue("api-url"))) {
-              $url = add_query_arg(['post' => $post->ID, 'action' => 'api-migrate']);
-              $migrateLink = add_query_arg(['action' => 'api-migrate'], $url);
+              $migrateLink = add_query_arg(['post' => $post->ID, 'action' => 'api-migrate', 'offset' => '0']);              
               $actions["api-migrate"] = sprintf('<a href="%1$s">%2$s</a>', $migrateLink, esc_html(__( 'Migrate to API', 'metaform' )));                
             }
           }
@@ -212,7 +211,10 @@
        * 
        * @param int $id metaform id
        */
-      private function apiMigrate($id) {
+      private function apiMigrate($id, $offset, $metaformId) {
+        echo "<pre>";
+        $maxResults = 10;
+
         if (!current_user_can('metaform_migrate')) {
           echo __('Permission denied', 'metaform');
           exit;
@@ -251,12 +253,24 @@
         $metaformsApi = ApiClient::getMetaformsApi();
         $repliesApi = ApiClient::getRepliesApi();
         $realmId = Settings::getValue("realm-id");
+
         $metaform = new \Metatavu\Metaform\Api\Model\Metaform($viewModel);
 
         try {
-          $metaformResponse = $metaformsApi->createMetaform($realmId, $metaform);
-          $metaformId = $metaformResponse->getId();
-          $users = get_users(['fields' => ['ID']]);
+          if (!$metaformId) {
+            $metaformResponse = $metaformsApi->createMetaform($realmId, $metaform);
+            $metaformId = $metaformResponse->getId();
+            echo "Created new metaform $metaformId" . PHP_EOL;
+          }
+
+          $lastResult = $offset + $maxResults;
+          echo "Migrate users from $offset to $lastResult" . PHP_EOL;
+
+          $users = get_users([
+            'fields' => ['ID'],
+            'offset' => $offset,
+            'number' => $maxResults
+          ]);
           
           foreach ($users as $user) {
             $ssoUserId = get_user_meta($user->ID, "openid-connect-generic-subject-identity", true);
@@ -275,10 +289,27 @@
               ]);
 
               $repliesApi->createReply($realmId, $metaformId, $reply, "true");
+              echo "Migrated user $user->ID ($ssoUserId)" . PHP_EOL;
+            } else {
+              echo "Skipped user $user->ID" . PHP_EOL;
             }
           }
 
-          update_post_meta($id, 'metaform-api-id', $metaformId);
+          $userCount = count($users);
+          echo "Migrated $userCount users" . PHP_EOL;
+          
+          if ($userCount >= $maxResults) {
+            $url = add_query_arg(['post' => $id, 'action' => 'api-migrate', 'offset' => $offset + $maxResults, 'metaformId' => $metaformId]);
+            echo sprintf('<a href="%s">Continue to next batch</a>', $url);
+          } else {
+            update_post_meta($id, 'metaform-api-id', $metaformId);
+            $url = add_query_arg(['post_type' => 'metaform']);
+            echo sprintf('Migration complete, <a href="/wp-admin/">Return to admin view</a>', $url);
+          }
+
+          echo "</pre>";
+
+          exit;
         } catch (\Metatavu\Metaform\ApiException $e) {
           $message = $e->getMessage();
 
