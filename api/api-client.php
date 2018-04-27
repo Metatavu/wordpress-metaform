@@ -72,7 +72,7 @@
       private static function ensureFreshToken($userId) {
         $sessionTokens = \WP_Session_Tokens::get_instance($userId);
         $session = $sessionTokens->get(wp_get_session_token());
-        $refreshSlack = 1000 * 60 * 5; // 5 minute slack
+        $refreshSlack = 60 * 5; // 5 minute slack
         
         if (!isset($session)) {
           error_log("Failed to resolve session, could not refresh token");
