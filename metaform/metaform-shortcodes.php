@@ -58,7 +58,8 @@
         $attrs = shortcode_atts([
           'default-values' => '',
           'class' => '',
-          'id' => ''
+          'id' => '',
+          'load-values' => 'true'
         ], $tagAttrs);
 
         $id = $attrs['id'];
@@ -70,21 +71,23 @@
         $metaformApiId = get_post_meta($id, "metaform-api-id", true);
         $formValues = [];
 
-        if (!empty($metaformApiId)) {
-          $realmId = Settings::getValue("realm-id");
-          $repliesApi = ApiClient::getRepliesApi();
-          $ssoUserId = get_user_meta($userId, "openid-connect-generic-subject-identity", true);
-          $replies = $repliesApi->listReplies($realmId, $metaformApiId, $ssoUserId);
-          $reply = count($replies) > 0 ? $replies[0] : null;
-          $formValues = $reply ? $reply->getData() : [];
-        } else {
-          $defaultValues = json_decode($attrs['default-values'], true);
-          $savedValues = json_decode(get_user_meta($userId, "metaform-$id-values", true), true);
-          $formValues = $defaultValues ? $defaultValues : [];
+        if ($attrs['load-values'] === 'true') {
+          if (!empty($metaformApiId)) {
+            $realmId = Settings::getValue("realm-id");
+            $repliesApi = ApiClient::getRepliesApi();
+            $ssoUserId = get_user_meta($userId, "openid-connect-generic-subject-identity", true);
+            $replies = $repliesApi->listReplies($realmId, $metaformApiId, $ssoUserId);
+            $reply = count($replies) > 0 ? $replies[0] : null;
+            $formValues = $reply ? $reply->getData() : [];
+          } else {
+            $defaultValues = json_decode($attrs['default-values'], true);
+            $savedValues = json_decode(get_user_meta($userId, "metaform-$id-values", true), true);
+            $formValues = $defaultValues ? $defaultValues : [];
 
-          if ($savedValues) {
-            foreach ($savedValues as $key => $value) {
-              $formValues[$key] = $value;
+            if ($savedValues) {
+              foreach ($savedValues as $key => $value) {
+                $formValues[$key] = $value;
+              }
             }
           }
         }
