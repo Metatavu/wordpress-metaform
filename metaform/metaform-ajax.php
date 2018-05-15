@@ -10,6 +10,11 @@
   add_action('wp_ajax_save_metaform', function () {
     $id = $_POST['id'];
     $values = $_POST['values'];
+    $updateExisting = $_POST["updateExisting"];
+    if (!$updateExisting) {
+      $updateExisting = "true";
+    }
+
     $userId = wp_get_current_user()->ID;
     $metaformApiId = get_post_meta($id, "metaform-api-id", true);
     update_user_meta($userId, "metaform-$id-values", $values);
@@ -24,7 +29,7 @@
         "data" => $replyData
       ]);
       
-      $repliesApi->createReply($realmId, $metaformApiId, $reply, "true");
+      $repliesApi->createReply($realmId, $metaformApiId, $reply, $updateExisting);
     }
 
     wp_die();
