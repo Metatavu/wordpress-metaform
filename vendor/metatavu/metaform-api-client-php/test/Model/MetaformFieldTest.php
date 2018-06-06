@@ -119,6 +119,13 @@ class MetaformFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "flags"
+     */
+    public function testPropertyFlags()
+    {
+    }
+
+    /**
      * Test attribute "placeholder"
      */
     public function testPropertyPlaceholder()

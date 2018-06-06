@@ -1,10 +1,9 @@
-# ReplyMeta
+# MetaformFieldFlags
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**createdAt** | [**\DateTime**](\DateTime.md) |  | [optional] 
-**modifiedAt** | [**\DateTime**](\DateTime.md) |  | [optional] 
+**managementEditable** | **bool** | Field should be editable in management service | [optional] [default to false]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

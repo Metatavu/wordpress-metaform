@@ -58,6 +58,7 @@ class Metaform implements ModelInterface, ArrayAccess
     protected static $swaggerTypes = [
         'id' => 'string',
         'replyStrategy' => 'string',
+        'allowAnonymous' => 'bool',
         'title' => 'string',
         'sections' => '\Metatavu\Metaform\Api\Model\MetaformSection[]'
     ];
@@ -70,6 +71,7 @@ class Metaform implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'id' => 'uuid',
         'replyStrategy' => null,
+        'allowAnonymous' => null,
         'title' => null,
         'sections' => null
     ];
@@ -103,6 +105,7 @@ class Metaform implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'id' => 'id',
         'replyStrategy' => 'replyStrategy',
+        'allowAnonymous' => 'allowAnonymous',
         'title' => 'title',
         'sections' => 'sections'
     ];
@@ -115,6 +118,7 @@ class Metaform implements ModelInterface, ArrayAccess
     protected static $setters = [
         'id' => 'setId',
         'replyStrategy' => 'setReplyStrategy',
+        'allowAnonymous' => 'setAllowAnonymous',
         'title' => 'setTitle',
         'sections' => 'setSections'
     ];
@@ -127,6 +131,7 @@ class Metaform implements ModelInterface, ArrayAccess
     protected static $getters = [
         'id' => 'getId',
         'replyStrategy' => 'getReplyStrategy',
+        'allowAnonymous' => 'getAllowAnonymous',
         'title' => 'getTitle',
         'sections' => 'getSections'
     ];
@@ -208,6 +213,7 @@ class Metaform implements ModelInterface, ArrayAccess
     {
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['replyStrategy'] = isset($data['replyStrategy']) ? $data['replyStrategy'] : null;
+        $this->container['allowAnonymous'] = isset($data['allowAnonymous']) ? $data['allowAnonymous'] : null;
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
         $this->container['sections'] = isset($data['sections']) ? $data['sections'] : null;
     }
@@ -302,6 +308,30 @@ class Metaform implements ModelInterface, ArrayAccess
             );
         }
         $this->container['replyStrategy'] = $replyStrategy;
+
+        return $this;
+    }
+
+    /**
+     * Gets allowAnonymous
+     *
+     * @return bool
+     */
+    public function getAllowAnonymous()
+    {
+        return $this->container['allowAnonymous'];
+    }
+
+    /**
+     * Sets allowAnonymous
+     *
+     * @param bool $allowAnonymous Are anonymous replies allowed or not
+     *
+     * @return $this
+     */
+    public function setAllowAnonymous($allowAnonymous)
+    {
+        $this->container['allowAnonymous'] = $allowAnonymous;
 
         return $this;
     }

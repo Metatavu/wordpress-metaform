@@ -91,6 +91,13 @@ class MetaformTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "allowAnonymous"
+     */
+    public function testPropertyAllowAnonymous()
+    {
+    }
+
+    /**
      * Test attribute "title"
      */
     public function testPropertyTitle()

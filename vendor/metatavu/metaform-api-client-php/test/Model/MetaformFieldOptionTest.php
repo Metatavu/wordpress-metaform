@@ -96,4 +96,11 @@ class MetaformFieldOptionTest extends \PHPUnit_Framework_TestCase
     public function testPropertyChecked()
     {
     }
+
+    /**
+     * Test attribute "selected"
+     */
+    public function testPropertySelected()
+    {
+    }
 }

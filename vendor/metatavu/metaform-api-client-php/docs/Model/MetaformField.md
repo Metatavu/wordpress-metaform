@@ -8,7 +8,8 @@ Name | Type | Description | Notes
 **type** | [**\Metatavu\Metaform\Api\Model\MetaformFieldType**](MetaformFieldType.md) |  | 
 **title** | **string** |  | [optional] 
 **required** | **bool** |  | [optional] 
-**contexts** | **string** |  | [optional] 
+**contexts** | **string[]** |  | [optional] 
+**flags** | [**\Metatavu\Metaform\Api\Model\MetaformFieldFlags**](MetaformFieldFlags.md) |  | [optional] 
 **placeholder** | **string** |  | [optional] 
 **class** | **string** |  | [optional] 
 **readonly** | **bool** |  | [optional] 
