@@ -1,6 +1,6 @@
 <?php
 /**
- * ReplyMetaTest
+ * MetaformFieldFlagsTest
  *
  * PHP version 5
  *
@@ -29,16 +29,16 @@
 namespace Metatavu\Metaform;
 
 /**
- * ReplyMetaTest Class Doc Comment
+ * MetaformFieldFlagsTest Class Doc Comment
  *
  * @category    Class */
-// * @description ReplyMeta
+// * @description MetaformFieldFlags
 /**
  * @package     Metatavu\Metaform
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class ReplyMetaTest extends \PHPUnit_Framework_TestCase
+class MetaformFieldFlagsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -70,23 +70,16 @@ class ReplyMetaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "ReplyMeta"
+     * Test "MetaformFieldFlags"
      */
-    public function testReplyMeta()
+    public function testMetaformFieldFlags()
     {
     }
 
     /**
-     * Test attribute "createdAt"
+     * Test attribute "managementEditable"
      */
-    public function testPropertyCreatedAt()
-    {
-    }
-
-    /**
-     * Test attribute "modifiedAt"
-     */
-    public function testPropertyModifiedAt()
+    public function testPropertyManagementEditable()
     {
     }
 }

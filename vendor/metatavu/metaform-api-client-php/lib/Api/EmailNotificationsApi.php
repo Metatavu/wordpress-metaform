@@ -1,6 +1,6 @@
 <?php
 /**
- * MetaformsApi
+ * EmailNotificationsApi
  * PHP version 5
  *
  * @category Class
@@ -38,14 +38,14 @@ use Metatavu\Metaform\HeaderSelector;
 use Metatavu\Metaform\ObjectSerializer;
 
 /**
- * MetaformsApi Class Doc Comment
+ * EmailNotificationsApi Class Doc Comment
  *
  * @category Class
  * @package  Metatavu\Metaform
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class MetaformsApi
+class EmailNotificationsApi
 {
     /**
      * @var ClientInterface
@@ -81,39 +81,41 @@ class MetaformsApi
     }
 
     /**
-     * Operation createMetaform
+     * Operation createEmailNotification
      *
-     * create new Metaform
+     * create new form email notification
      *
      * @param  string $realmId realm id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
+     * @param  string $metaformId Metaform id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Metatavu\Metaform\Api\Model\Metaform
+     * @return \Metatavu\Metaform\Api\Model\EmailNotification
      */
-    public function createMetaform($realmId, $payload)
+    public function createEmailNotification($realmId, $metaformId, $payload)
     {
-        list($response) = $this->createMetaformWithHttpInfo($realmId, $payload);
+        list($response) = $this->createEmailNotificationWithHttpInfo($realmId, $metaformId, $payload);
         return $response;
     }
 
     /**
-     * Operation createMetaformWithHttpInfo
+     * Operation createEmailNotificationWithHttpInfo
      *
-     * create new Metaform
+     * create new form email notification
      *
      * @param  string $realmId realm id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
+     * @param  string $metaformId Metaform id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Metatavu\Metaform\Api\Model\Metaform, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Metatavu\Metaform\Api\Model\EmailNotification, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createMetaformWithHttpInfo($realmId, $payload)
+    public function createEmailNotificationWithHttpInfo($realmId, $metaformId, $payload)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Metaform';
-        $request = $this->createMetaformRequest($realmId, $payload);
+        $returnType = '\Metatavu\Metaform\Api\Model\EmailNotification';
+        $request = $this->createEmailNotificationRequest($realmId, $metaformId, $payload);
 
         try {
 
@@ -163,7 +165,7 @@ class MetaformsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Metaform',
+                        '\Metatavu\Metaform\Api\Model\EmailNotification',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -206,19 +208,20 @@ class MetaformsApi
     }
 
     /**
-     * Operation createMetaformAsync
+     * Operation createEmailNotificationAsync
      *
-     * create new Metaform
+     * create new form email notification
      *
      * @param  string $realmId realm id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
+     * @param  string $metaformId Metaform id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createMetaformAsync($realmId, $payload)
+    public function createEmailNotificationAsync($realmId, $metaformId, $payload)
     {
-        return $this->createMetaformAsyncWithHttpInfo($realmId, $payload)
+        return $this->createEmailNotificationAsyncWithHttpInfo($realmId, $metaformId, $payload)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -227,20 +230,21 @@ class MetaformsApi
     }
 
     /**
-     * Operation createMetaformAsyncWithHttpInfo
+     * Operation createEmailNotificationAsyncWithHttpInfo
      *
-     * create new Metaform
+     * create new form email notification
      *
      * @param  string $realmId realm id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
+     * @param  string $metaformId Metaform id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createMetaformAsyncWithHttpInfo($realmId, $payload)
+    public function createEmailNotificationAsyncWithHttpInfo($realmId, $metaformId, $payload)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Metaform';
-        $request = $this->createMetaformRequest($realmId, $payload);
+        $returnType = '\Metatavu\Metaform\Api\Model\EmailNotification';
+        $request = $this->createEmailNotificationRequest($realmId, $metaformId, $payload);
 
         return $this->client
             ->sendAsync($request)
@@ -280,30 +284,37 @@ class MetaformsApi
     }
 
     /**
-     * Create request for operation 'createMetaform'
+     * Create request for operation 'createEmailNotification'
      *
      * @param  string $realmId realm id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
+     * @param  string $metaformId Metaform id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function createMetaformRequest($realmId, $payload)
+    protected function createEmailNotificationRequest($realmId, $metaformId, $payload)
     {
         // verify the required parameter 'realmId' is set
         if ($realmId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling createMetaform'
+                'Missing the required parameter $realmId when calling createEmailNotification'
+            );
+        }
+        // verify the required parameter 'metaformId' is set
+        if ($metaformId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $metaformId when calling createEmailNotification'
             );
         }
         // verify the required parameter 'payload' is set
         if ($payload === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $payload when calling createMetaform'
+                'Missing the required parameter $payload when calling createEmailNotification'
             );
         }
 
-        $resourcePath = '/realms/{realmId}/metaforms';
+        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/emailNotifications';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -316,6 +327,14 @@ class MetaformsApi
             $resourcePath = str_replace(
                 '{' . 'realmId' . '}',
                 ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($metaformId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'metaformId' . '}',
+                ObjectSerializer::toPathValue($metaformId),
                 $resourcePath
             );
         }
@@ -389,38 +408,40 @@ class MetaformsApi
     }
 
     /**
-     * Operation deleteMetaform
+     * Operation deleteEmailNotification
      *
-     * Deletes Metaform
+     * Deletes an email notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId Email notification id (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteMetaform($realmId, $metaformId)
+    public function deleteEmailNotification($realmId, $metaformId, $emailNotificationId)
     {
-        $this->deleteMetaformWithHttpInfo($realmId, $metaformId);
+        $this->deleteEmailNotificationWithHttpInfo($realmId, $metaformId, $emailNotificationId);
     }
 
     /**
-     * Operation deleteMetaformWithHttpInfo
+     * Operation deleteEmailNotificationWithHttpInfo
      *
-     * Deletes Metaform
+     * Deletes an email notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId Email notification id (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteMetaformWithHttpInfo($realmId, $metaformId)
+    public function deleteEmailNotificationWithHttpInfo($realmId, $metaformId, $emailNotificationId)
     {
         $returnType = '';
-        $request = $this->deleteMetaformRequest($realmId, $metaformId);
+        $request = $this->deleteEmailNotificationRequest($realmId, $metaformId, $emailNotificationId);
 
         try {
 
@@ -491,19 +512,20 @@ class MetaformsApi
     }
 
     /**
-     * Operation deleteMetaformAsync
+     * Operation deleteEmailNotificationAsync
      *
-     * Deletes Metaform
+     * Deletes an email notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId Email notification id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteMetaformAsync($realmId, $metaformId)
+    public function deleteEmailNotificationAsync($realmId, $metaformId, $emailNotificationId)
     {
-        return $this->deleteMetaformAsyncWithHttpInfo($realmId, $metaformId)
+        return $this->deleteEmailNotificationAsyncWithHttpInfo($realmId, $metaformId, $emailNotificationId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -512,20 +534,21 @@ class MetaformsApi
     }
 
     /**
-     * Operation deleteMetaformAsyncWithHttpInfo
+     * Operation deleteEmailNotificationAsyncWithHttpInfo
      *
-     * Deletes Metaform
+     * Deletes an email notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId Email notification id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteMetaformAsyncWithHttpInfo($realmId, $metaformId)
+    public function deleteEmailNotificationAsyncWithHttpInfo($realmId, $metaformId, $emailNotificationId)
     {
         $returnType = '';
-        $request = $this->deleteMetaformRequest($realmId, $metaformId);
+        $request = $this->deleteEmailNotificationRequest($realmId, $metaformId, $emailNotificationId);
 
         return $this->client
             ->sendAsync($request)
@@ -551,30 +574,37 @@ class MetaformsApi
     }
 
     /**
-     * Create request for operation 'deleteMetaform'
+     * Create request for operation 'deleteEmailNotification'
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId Email notification id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteMetaformRequest($realmId, $metaformId)
+    protected function deleteEmailNotificationRequest($realmId, $metaformId, $emailNotificationId)
     {
         // verify the required parameter 'realmId' is set
         if ($realmId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling deleteMetaform'
+                'Missing the required parameter $realmId when calling deleteEmailNotification'
             );
         }
         // verify the required parameter 'metaformId' is set
         if ($metaformId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling deleteMetaform'
+                'Missing the required parameter $metaformId when calling deleteEmailNotification'
+            );
+        }
+        // verify the required parameter 'emailNotificationId' is set
+        if ($emailNotificationId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $emailNotificationId when calling deleteEmailNotification'
             );
         }
 
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}';
+        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/emailNotifications/{emailNotificationId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -595,6 +625,14 @@ class MetaformsApi
             $resourcePath = str_replace(
                 '{' . 'metaformId' . '}',
                 ObjectSerializer::toPathValue($metaformId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($emailNotificationId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'emailNotificationId' . '}',
+                ObjectSerializer::toPathValue($emailNotificationId),
                 $resourcePath
             );
         }
@@ -665,39 +703,41 @@ class MetaformsApi
     }
 
     /**
-     * Operation findMetaform
+     * Operation findEmailNotification
      *
-     * Finds single Metaform
+     * Find a single emai notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Metatavu\Metaform\Api\Model\Metaform
+     * @return \Metatavu\Metaform\Api\Model\EmailNotification
      */
-    public function findMetaform($realmId, $metaformId)
+    public function findEmailNotification($realmId, $metaformId, $emailNotificationId)
     {
-        list($response) = $this->findMetaformWithHttpInfo($realmId, $metaformId);
+        list($response) = $this->findEmailNotificationWithHttpInfo($realmId, $metaformId, $emailNotificationId);
         return $response;
     }
 
     /**
-     * Operation findMetaformWithHttpInfo
+     * Operation findEmailNotificationWithHttpInfo
      *
-     * Finds single Metaform
+     * Find a single emai notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Metatavu\Metaform\Api\Model\Metaform, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Metatavu\Metaform\Api\Model\EmailNotification, HTTP status code, HTTP response headers (array of strings)
      */
-    public function findMetaformWithHttpInfo($realmId, $metaformId)
+    public function findEmailNotificationWithHttpInfo($realmId, $metaformId, $emailNotificationId)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Metaform';
-        $request = $this->findMetaformRequest($realmId, $metaformId);
+        $returnType = '\Metatavu\Metaform\Api\Model\EmailNotification';
+        $request = $this->findEmailNotificationRequest($realmId, $metaformId, $emailNotificationId);
 
         try {
 
@@ -747,7 +787,7 @@ class MetaformsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Metaform',
+                        '\Metatavu\Metaform\Api\Model\EmailNotification',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -790,19 +830,20 @@ class MetaformsApi
     }
 
     /**
-     * Operation findMetaformAsync
+     * Operation findEmailNotificationAsync
      *
-     * Finds single Metaform
+     * Find a single emai notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function findMetaformAsync($realmId, $metaformId)
+    public function findEmailNotificationAsync($realmId, $metaformId, $emailNotificationId)
     {
-        return $this->findMetaformAsyncWithHttpInfo($realmId, $metaformId)
+        return $this->findEmailNotificationAsyncWithHttpInfo($realmId, $metaformId, $emailNotificationId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -811,20 +852,21 @@ class MetaformsApi
     }
 
     /**
-     * Operation findMetaformAsyncWithHttpInfo
+     * Operation findEmailNotificationAsyncWithHttpInfo
      *
-     * Finds single Metaform
+     * Find a single emai notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function findMetaformAsyncWithHttpInfo($realmId, $metaformId)
+    public function findEmailNotificationAsyncWithHttpInfo($realmId, $metaformId, $emailNotificationId)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Metaform';
-        $request = $this->findMetaformRequest($realmId, $metaformId);
+        $returnType = '\Metatavu\Metaform\Api\Model\EmailNotification';
+        $request = $this->findEmailNotificationRequest($realmId, $metaformId, $emailNotificationId);
 
         return $this->client
             ->sendAsync($request)
@@ -864,7 +906,335 @@ class MetaformsApi
     }
 
     /**
-     * Create request for operation 'findMetaform'
+     * Create request for operation 'findEmailNotification'
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function findEmailNotificationRequest($realmId, $metaformId, $emailNotificationId)
+    {
+        // verify the required parameter 'realmId' is set
+        if ($realmId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $realmId when calling findEmailNotification'
+            );
+        }
+        // verify the required parameter 'metaformId' is set
+        if ($metaformId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $metaformId when calling findEmailNotification'
+            );
+        }
+        // verify the required parameter 'emailNotificationId' is set
+        if ($emailNotificationId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $emailNotificationId when calling findEmailNotification'
+            );
+        }
+
+        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/emailNotifications/{emailNotificationId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($realmId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'realmId' . '}',
+                ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($metaformId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'metaformId' . '}',
+                ObjectSerializer::toPathValue($metaformId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($emailNotificationId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'emailNotificationId' . '}',
+                ObjectSerializer::toPathValue($emailNotificationId),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json;charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json;charset=utf-8'],
+                ['application/json;charset=utf-8']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listEmailNotifications
+     *
+     * Lists form email notifications
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $metaformId Metaform id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Metatavu\Metaform\Api\Model\EmailNotification[]
+     */
+    public function listEmailNotifications($realmId, $metaformId)
+    {
+        list($response) = $this->listEmailNotificationsWithHttpInfo($realmId, $metaformId);
+        return $response;
+    }
+
+    /**
+     * Operation listEmailNotificationsWithHttpInfo
+     *
+     * Lists form email notifications
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $metaformId Metaform id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Metatavu\Metaform\Api\Model\EmailNotification[], HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listEmailNotificationsWithHttpInfo($realmId, $metaformId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\EmailNotification[]';
+        $request = $this->listEmailNotificationsRequest($realmId, $metaformId);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\EmailNotification[]',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\BadRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\Forbidden',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\NotFound',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\InternalServerError',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listEmailNotificationsAsync
+     *
+     * Lists form email notifications
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $metaformId Metaform id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listEmailNotificationsAsync($realmId, $metaformId)
+    {
+        return $this->listEmailNotificationsAsyncWithHttpInfo($realmId, $metaformId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listEmailNotificationsAsyncWithHttpInfo
+     *
+     * Lists form email notifications
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $metaformId Metaform id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listEmailNotificationsAsyncWithHttpInfo($realmId, $metaformId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\EmailNotification[]';
+        $request = $this->listEmailNotificationsRequest($realmId, $metaformId);
+
+        return $this->client
+            ->sendAsync($request)
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listEmailNotifications'
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
@@ -872,22 +1242,22 @@ class MetaformsApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function findMetaformRequest($realmId, $metaformId)
+    protected function listEmailNotificationsRequest($realmId, $metaformId)
     {
         // verify the required parameter 'realmId' is set
         if ($realmId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling findMetaform'
+                'Missing the required parameter $realmId when calling listEmailNotifications'
             );
         }
         // verify the required parameter 'metaformId' is set
         if ($metaformId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling findMetaform'
+                'Missing the required parameter $metaformId when calling listEmailNotifications'
             );
         }
 
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}';
+        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/emailNotifications';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -978,37 +1348,43 @@ class MetaformsApi
     }
 
     /**
-     * Operation listMetaforms
+     * Operation updateEmailNotification
      *
-     * Lists Metaforms
+     * Updates email notification
      *
      * @param  string $realmId realm id (required)
+     * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Metatavu\Metaform\Api\Model\Metaform[]
+     * @return \Metatavu\Metaform\Api\Model\EmailNotification
      */
-    public function listMetaforms($realmId)
+    public function updateEmailNotification($realmId, $metaformId, $emailNotificationId, $payload)
     {
-        list($response) = $this->listMetaformsWithHttpInfo($realmId);
+        list($response) = $this->updateEmailNotificationWithHttpInfo($realmId, $metaformId, $emailNotificationId, $payload);
         return $response;
     }
 
     /**
-     * Operation listMetaformsWithHttpInfo
+     * Operation updateEmailNotificationWithHttpInfo
      *
-     * Lists Metaforms
+     * Updates email notification
      *
      * @param  string $realmId realm id (required)
+     * @param  string $metaformId Metaform id (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Metatavu\Metaform\Api\Model\Metaform[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Metatavu\Metaform\Api\Model\EmailNotification, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listMetaformsWithHttpInfo($realmId)
+    public function updateEmailNotificationWithHttpInfo($realmId, $metaformId, $emailNotificationId, $payload)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Metaform[]';
-        $request = $this->listMetaformsRequest($realmId);
+        $returnType = '\Metatavu\Metaform\Api\Model\EmailNotification';
+        $request = $this->updateEmailNotificationRequest($realmId, $metaformId, $emailNotificationId, $payload);
 
         try {
 
@@ -1058,297 +1434,7 @@ class MetaformsApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Metaform[]',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\BadRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Forbidden',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\InternalServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation listMetaformsAsync
-     *
-     * Lists Metaforms
-     *
-     * @param  string $realmId realm id (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listMetaformsAsync($realmId)
-    {
-        return $this->listMetaformsAsyncWithHttpInfo($realmId)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation listMetaformsAsyncWithHttpInfo
-     *
-     * Lists Metaforms
-     *
-     * @param  string $realmId realm id (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listMetaformsAsyncWithHttpInfo($realmId)
-    {
-        $returnType = '\Metatavu\Metaform\Api\Model\Metaform[]';
-        $request = $this->listMetaformsRequest($realmId);
-
-        return $this->client
-            ->sendAsync($request)
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'listMetaforms'
-     *
-     * @param  string $realmId realm id (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function listMetaformsRequest($realmId)
-    {
-        // verify the required parameter 'realmId' is set
-        if ($realmId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling listMetaforms'
-            );
-        }
-
-        $resourcePath = '/realms/{realmId}/metaforms';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($realmId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'realmId' . '}',
-                ObjectSerializer::toPathValue($realmId),
-                $resourcePath
-            );
-        }
-
-        // body params
-        $_tempBody = null;
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json;charset=utf-8']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json;charset=utf-8'],
-                ['application/json;charset=utf-8']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
-        if ($apiKey !== null) {
-            $headers['Authorization'] = $apiKey;
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation updateMetaform
-     *
-     * Updates Metaform
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Metatavu\Metaform\Api\Model\Metaform
-     */
-    public function updateMetaform($realmId, $metaformId, $payload)
-    {
-        list($response) = $this->updateMetaformWithHttpInfo($realmId, $metaformId, $payload);
-        return $response;
-    }
-
-    /**
-     * Operation updateMetaformWithHttpInfo
-     *
-     * Updates Metaform
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Metatavu\Metaform\Api\Model\Metaform, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function updateMetaformWithHttpInfo($realmId, $metaformId, $payload)
-    {
-        $returnType = '\Metatavu\Metaform\Api\Model\Metaform';
-        $request = $this->updateMetaformRequest($realmId, $metaformId, $payload);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Metaform',
+                        '\Metatavu\Metaform\Api\Model\EmailNotification',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1391,20 +1477,21 @@ class MetaformsApi
     }
 
     /**
-     * Operation updateMetaformAsync
+     * Operation updateEmailNotificationAsync
      *
-     * Updates Metaform
+     * Updates email notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateMetaformAsync($realmId, $metaformId, $payload)
+    public function updateEmailNotificationAsync($realmId, $metaformId, $emailNotificationId, $payload)
     {
-        return $this->updateMetaformAsyncWithHttpInfo($realmId, $metaformId, $payload)
+        return $this->updateEmailNotificationAsyncWithHttpInfo($realmId, $metaformId, $emailNotificationId, $payload)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1413,21 +1500,22 @@ class MetaformsApi
     }
 
     /**
-     * Operation updateMetaformAsyncWithHttpInfo
+     * Operation updateEmailNotificationAsyncWithHttpInfo
      *
-     * Updates Metaform
+     * Updates email notification
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateMetaformAsyncWithHttpInfo($realmId, $metaformId, $payload)
+    public function updateEmailNotificationAsyncWithHttpInfo($realmId, $metaformId, $emailNotificationId, $payload)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Metaform';
-        $request = $this->updateMetaformRequest($realmId, $metaformId, $payload);
+        $returnType = '\Metatavu\Metaform\Api\Model\EmailNotification';
+        $request = $this->updateEmailNotificationRequest($realmId, $metaformId, $emailNotificationId, $payload);
 
         return $this->client
             ->sendAsync($request)
@@ -1467,37 +1555,44 @@ class MetaformsApi
     }
 
     /**
-     * Create request for operation 'updateMetaform'
+     * Create request for operation 'updateEmailNotification'
      *
      * @param  string $realmId realm id (required)
      * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Metaform $payload Payload (required)
+     * @param  string $emailNotificationId EmailNotification id (required)
+     * @param  \Metatavu\Metaform\Api\Model\EmailNotification $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function updateMetaformRequest($realmId, $metaformId, $payload)
+    protected function updateEmailNotificationRequest($realmId, $metaformId, $emailNotificationId, $payload)
     {
         // verify the required parameter 'realmId' is set
         if ($realmId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling updateMetaform'
+                'Missing the required parameter $realmId when calling updateEmailNotification'
             );
         }
         // verify the required parameter 'metaformId' is set
         if ($metaformId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling updateMetaform'
+                'Missing the required parameter $metaformId when calling updateEmailNotification'
+            );
+        }
+        // verify the required parameter 'emailNotificationId' is set
+        if ($emailNotificationId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $emailNotificationId when calling updateEmailNotification'
             );
         }
         // verify the required parameter 'payload' is set
         if ($payload === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $payload when calling updateMetaform'
+                'Missing the required parameter $payload when calling updateEmailNotification'
             );
         }
 
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}';
+        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/emailNotifications/{emailNotificationId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1518,6 +1613,14 @@ class MetaformsApi
             $resourcePath = str_replace(
                 '{' . 'metaformId' . '}',
                 ObjectSerializer::toPathValue($metaformId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($emailNotificationId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'emailNotificationId' . '}',
+                ObjectSerializer::toPathValue($emailNotificationId),
                 $resourcePath
             );
         }

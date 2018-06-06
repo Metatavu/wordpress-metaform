@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d90583c603b26da19f2d600b9fe44df8",
+    "hash": "afbf439cf6d10ef8f4b02d33b2c0e26d",
+    "content-hash": "57bcbdc7a9ee172f52bef8ce4ce9cca3",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -69,7 +70,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2018-04-22T15:46:56+00:00"
+            "time": "2018-04-22 15:46:56"
         },
         {
             "name": "guzzlehttp/promises",
@@ -120,7 +121,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-12-20T10:07:11+00:00"
+            "time": "2016-12-20 10:07:11"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -185,20 +186,20 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-03-20T17:10:46+00:00"
+            "time": "2017-03-20 17:10:46"
         },
         {
             "name": "metatavu/metaform-api-client-php",
-            "version": "0.0.3",
+            "version": "0.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Metatavu/metaform-api-client-php.git",
-                "reference": "497d09be5f4bd1081172733e28e1dda0cfafe0e5"
+                "reference": "07ccb5e66b0a92a867fc937324060ce37b143410"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Metatavu/metaform-api-client-php/zipball/497d09be5f4bd1081172733e28e1dda0cfafe0e5",
-                "reference": "497d09be5f4bd1081172733e28e1dda0cfafe0e5",
+                "url": "https://api.github.com/repos/Metatavu/metaform-api-client-php/zipball/07ccb5e66b0a92a867fc937324060ce37b143410",
+                "reference": "07ccb5e66b0a92a867fc937324060ce37b143410",
                 "shasum": ""
             },
             "require": {
@@ -236,7 +237,7 @@
                 "sdk",
                 "swagger"
             ],
-            "time": "2018-04-25T08:39:32+00:00"
+            "time": "2018-06-06 07:16:03"
         },
         {
             "name": "mk-j/php_xlsxwriter",
@@ -278,7 +279,7 @@
                 "xls",
                 "xlsx"
             ],
-            "time": "2018-01-11T08:03:56+00:00"
+            "time": "2018-01-11 08:03:56"
         },
         {
             "name": "psr/http-message",
@@ -328,7 +329,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2016-08-06 14:39:51"
         }
     ],
     "packages-dev": [],

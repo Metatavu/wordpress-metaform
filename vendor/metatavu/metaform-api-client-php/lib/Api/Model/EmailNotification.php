@@ -1,6 +1,6 @@
 <?php
 /**
- * MetaformFieldOption
+ * EmailNotification
  *
  * PHP version 5
  *
@@ -32,15 +32,15 @@ use \ArrayAccess;
 use \Metatavu\Metaform\ObjectSerializer;
 
 /**
- * MetaformFieldOption Class Doc Comment
+ * EmailNotification Class Doc Comment
  *
  * @category Class
- * @description Option object for Metaform field
+ * @description Email notification
  * @package  Metatavu\Metaform
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class MetaformFieldOption implements ModelInterface, ArrayAccess
+class EmailNotification implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'MetaformFieldOption';
+    protected static $swaggerModelName = 'EmailNotification';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -57,10 +57,10 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'name' => 'string',
-        'text' => 'string',
-        'checked' => 'bool',
-        'selected' => 'bool'
+        'id' => 'string',
+        'subjectTemplate' => 'string',
+        'contentTemplate' => 'string',
+        'emails' => 'string[]'
     ];
 
     /**
@@ -69,10 +69,10 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'name' => null,
-        'text' => null,
-        'checked' => null,
-        'selected' => null
+        'id' => 'uuid',
+        'subjectTemplate' => null,
+        'contentTemplate' => null,
+        'emails' => null
     ];
 
     /**
@@ -102,10 +102,10 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
-        'text' => 'text',
-        'checked' => 'checked',
-        'selected' => 'selected'
+        'id' => 'id',
+        'subjectTemplate' => 'subjectTemplate',
+        'contentTemplate' => 'contentTemplate',
+        'emails' => 'emails'
     ];
 
     /**
@@ -114,10 +114,10 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
-        'text' => 'setText',
-        'checked' => 'setChecked',
-        'selected' => 'setSelected'
+        'id' => 'setId',
+        'subjectTemplate' => 'setSubjectTemplate',
+        'contentTemplate' => 'setContentTemplate',
+        'emails' => 'setEmails'
     ];
 
     /**
@@ -126,10 +126,10 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
-        'text' => 'getText',
-        'checked' => 'getChecked',
-        'selected' => 'getSelected'
+        'id' => 'getId',
+        'subjectTemplate' => 'getSubjectTemplate',
+        'contentTemplate' => 'getContentTemplate',
+        'emails' => 'getEmails'
     ];
 
     /**
@@ -192,10 +192,10 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['text'] = isset($data['text']) ? $data['text'] : null;
-        $this->container['checked'] = isset($data['checked']) ? $data['checked'] : null;
-        $this->container['selected'] = isset($data['selected']) ? $data['selected'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['subjectTemplate'] = isset($data['subjectTemplate']) ? $data['subjectTemplate'] : null;
+        $this->container['contentTemplate'] = isset($data['contentTemplate']) ? $data['contentTemplate'] : null;
+        $this->container['emails'] = isset($data['emails']) ? $data['emails'] : null;
     }
 
     /**
@@ -207,11 +207,14 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
+        if ($this->container['subjectTemplate'] === null) {
+            $invalidProperties[] = "'subjectTemplate' can't be null";
         }
-        if ($this->container['text'] === null) {
-            $invalidProperties[] = "'text' can't be null";
+        if ($this->container['contentTemplate'] === null) {
+            $invalidProperties[] = "'contentTemplate' can't be null";
+        }
+        if ($this->container['emails'] === null) {
+            $invalidProperties[] = "'emails' can't be null";
         }
         return $invalidProperties;
     }
@@ -225,10 +228,13 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
     public function valid()
     {
 
-        if ($this->container['name'] === null) {
+        if ($this->container['subjectTemplate'] === null) {
             return false;
         }
-        if ($this->container['text'] === null) {
+        if ($this->container['contentTemplate'] === null) {
+            return false;
+        }
+        if ($this->container['emails'] === null) {
             return false;
         }
         return true;
@@ -236,97 +242,97 @@ class MetaformFieldOption implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets name
+     * Gets id
      *
      * @return string
      */
-    public function getName()
+    public function getId()
     {
-        return $this->container['name'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets name
+     * Sets id
      *
-     * @param string $name Option name
+     * @param string $id
      *
      * @return $this
      */
-    public function setName($name)
+    public function setId($id)
     {
-        $this->container['name'] = $name;
+        $this->container['id'] = $id;
 
         return $this;
     }
 
     /**
-     * Gets text
+     * Gets subjectTemplate
      *
      * @return string
      */
-    public function getText()
+    public function getSubjectTemplate()
     {
-        return $this->container['text'];
+        return $this->container['subjectTemplate'];
     }
 
     /**
-     * Sets text
+     * Sets subjectTemplate
      *
-     * @param string $text Option text
+     * @param string $subjectTemplate
      *
      * @return $this
      */
-    public function setText($text)
+    public function setSubjectTemplate($subjectTemplate)
     {
-        $this->container['text'] = $text;
+        $this->container['subjectTemplate'] = $subjectTemplate;
 
         return $this;
     }
 
     /**
-     * Gets checked
+     * Gets contentTemplate
      *
-     * @return bool
+     * @return string
      */
-    public function getChecked()
+    public function getContentTemplate()
     {
-        return $this->container['checked'];
+        return $this->container['contentTemplate'];
     }
 
     /**
-     * Sets checked
+     * Sets contentTemplate
      *
-     * @param bool $checked Defines whether option should be checked by default.
+     * @param string $contentTemplate
      *
      * @return $this
      */
-    public function setChecked($checked)
+    public function setContentTemplate($contentTemplate)
     {
-        $this->container['checked'] = $checked;
+        $this->container['contentTemplate'] = $contentTemplate;
 
         return $this;
     }
 
     /**
-     * Gets selected
+     * Gets emails
      *
-     * @return bool
+     * @return string[]
      */
-    public function getSelected()
+    public function getEmails()
     {
-        return $this->container['selected'];
+        return $this->container['emails'];
     }
 
     /**
-     * Sets selected
+     * Sets emails
      *
-     * @param bool $selected Defines whether option should be selected by default.
+     * @param string[] $emails
      *
      * @return $this
      */
-    public function setSelected($selected)
+    public function setEmails($emails)
     {
-        $this->container['selected'] = $selected;
+        $this->container['emails'] = $emails;
 
         return $this;
     }

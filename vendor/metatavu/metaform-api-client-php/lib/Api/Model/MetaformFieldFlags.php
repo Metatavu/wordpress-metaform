@@ -1,6 +1,6 @@
 <?php
 /**
- * ReplyMeta
+ * MetaformFieldFlags
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \Metatavu\Metaform\ObjectSerializer;
 
 /**
- * ReplyMeta Class Doc Comment
+ * MetaformFieldFlags Class Doc Comment
  *
  * @category Class
  * @package  Metatavu\Metaform
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class ReplyMeta implements ModelInterface, ArrayAccess
+class MetaformFieldFlags implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class ReplyMeta implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'ReplyMeta';
+    protected static $swaggerModelName = 'MetaformFieldFlags';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,8 +56,7 @@ class ReplyMeta implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'createdAt' => '\DateTime',
-        'modifiedAt' => '\DateTime'
+        'managementEditable' => 'bool'
     ];
 
     /**
@@ -66,8 +65,7 @@ class ReplyMeta implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'createdAt' => 'date-time',
-        'modifiedAt' => 'date-time'
+        'managementEditable' => null
     ];
 
     /**
@@ -97,8 +95,7 @@ class ReplyMeta implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'createdAt' => 'createdAt',
-        'modifiedAt' => 'modifiedAt'
+        'managementEditable' => 'managementEditable'
     ];
 
     /**
@@ -107,8 +104,7 @@ class ReplyMeta implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'createdAt' => 'setCreatedAt',
-        'modifiedAt' => 'setModifiedAt'
+        'managementEditable' => 'setManagementEditable'
     ];
 
     /**
@@ -117,8 +113,7 @@ class ReplyMeta implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'createdAt' => 'getCreatedAt',
-        'modifiedAt' => 'getModifiedAt'
+        'managementEditable' => 'getManagementEditable'
     ];
 
     /**
@@ -181,8 +176,7 @@ class ReplyMeta implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['createdAt'] = isset($data['createdAt']) ? $data['createdAt'] : null;
-        $this->container['modifiedAt'] = isset($data['modifiedAt']) ? $data['modifiedAt'] : null;
+        $this->container['managementEditable'] = isset($data['managementEditable']) ? $data['managementEditable'] : false;
     }
 
     /**
@@ -211,49 +205,25 @@ class ReplyMeta implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets createdAt
+     * Gets managementEditable
      *
-     * @return \DateTime
+     * @return bool
      */
-    public function getCreatedAt()
+    public function getManagementEditable()
     {
-        return $this->container['createdAt'];
+        return $this->container['managementEditable'];
     }
 
     /**
-     * Sets createdAt
+     * Sets managementEditable
      *
-     * @param \DateTime $createdAt
+     * @param bool $managementEditable Field should be editable in management service
      *
      * @return $this
      */
-    public function setCreatedAt($createdAt)
+    public function setManagementEditable($managementEditable)
     {
-        $this->container['createdAt'] = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Gets modifiedAt
-     *
-     * @return \DateTime
-     */
-    public function getModifiedAt()
-    {
-        return $this->container['modifiedAt'];
-    }
-
-    /**
-     * Sets modifiedAt
-     *
-     * @param \DateTime $modifiedAt
-     *
-     * @return $this
-     */
-    public function setModifiedAt($modifiedAt)
-    {
-        $this->container['modifiedAt'] = $modifiedAt;
+        $this->container['managementEditable'] = $managementEditable;
 
         return $this;
     }

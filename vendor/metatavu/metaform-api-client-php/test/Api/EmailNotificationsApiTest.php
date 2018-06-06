@@ -1,6 +1,6 @@
 <?php
 /**
- * MetaformsApiTest
+ * EmailNotificationsApiTest
  * PHP version 5
  *
  * @category Class
@@ -32,14 +32,14 @@ use \Metatavu\Metaform\ApiException;
 use \Metatavu\Metaform\ObjectSerializer;
 
 /**
- * MetaformsApiTest Class Doc Comment
+ * EmailNotificationsApiTest Class Doc Comment
  *
  * @category Class
  * @package  Metatavu\Metaform
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class MetaformsApiTest extends \PHPUnit_Framework_TestCase
+class EmailNotificationsApiTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -71,52 +71,52 @@ class MetaformsApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for createMetaform
+     * Test case for createEmailNotification
      *
-     * create new Metaform.
+     * create new form email notification.
      *
      */
-    public function testCreateMetaform()
+    public function testCreateEmailNotification()
     {
     }
 
     /**
-     * Test case for deleteMetaform
+     * Test case for deleteEmailNotification
      *
-     * Deletes Metaform.
+     * Deletes an email notification.
      *
      */
-    public function testDeleteMetaform()
+    public function testDeleteEmailNotification()
     {
     }
 
     /**
-     * Test case for findMetaform
+     * Test case for findEmailNotification
      *
-     * Finds single Metaform.
+     * Find a single emai notification.
      *
      */
-    public function testFindMetaform()
+    public function testFindEmailNotification()
     {
     }
 
     /**
-     * Test case for listMetaforms
+     * Test case for listEmailNotifications
      *
-     * Lists Metaforms.
+     * Lists form email notifications.
      *
      */
-    public function testListMetaforms()
+    public function testListEmailNotifications()
     {
     }
 
     /**
-     * Test case for updateMetaform
+     * Test case for updateEmailNotification
      *
-     * Updates Metaform.
+     * Updates email notification.
      *
      */
-    public function testUpdateMetaform()
+    public function testUpdateEmailNotification()
     {
     }
 }

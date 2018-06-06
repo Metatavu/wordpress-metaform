@@ -58,6 +58,7 @@ class Reply implements ModelInterface, ArrayAccess
     protected static $swaggerTypes = [
         'id' => 'string',
         'userId' => 'string',
+        'revision' => '\DateTime',
         'data' => '\Metatavu\Metaform\Api\Model\ReplyData'
     ];
 
@@ -69,6 +70,7 @@ class Reply implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'id' => 'uuid',
         'userId' => 'uuid',
+        'revision' => 'date-time',
         'data' => null
     ];
 
@@ -101,6 +103,7 @@ class Reply implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'id' => 'id',
         'userId' => 'userId',
+        'revision' => 'revision',
         'data' => 'data'
     ];
 
@@ -112,6 +115,7 @@ class Reply implements ModelInterface, ArrayAccess
     protected static $setters = [
         'id' => 'setId',
         'userId' => 'setUserId',
+        'revision' => 'setRevision',
         'data' => 'setData'
     ];
 
@@ -123,6 +127,7 @@ class Reply implements ModelInterface, ArrayAccess
     protected static $getters = [
         'id' => 'getId',
         'userId' => 'getUserId',
+        'revision' => 'getRevision',
         'data' => 'getData'
     ];
 
@@ -188,6 +193,7 @@ class Reply implements ModelInterface, ArrayAccess
     {
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['userId'] = isset($data['userId']) ? $data['userId'] : null;
+        $this->container['revision'] = isset($data['revision']) ? $data['revision'] : null;
         $this->container['data'] = isset($data['data']) ? $data['data'] : null;
     }
 
@@ -260,6 +266,30 @@ class Reply implements ModelInterface, ArrayAccess
     public function setUserId($userId)
     {
         $this->container['userId'] = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Gets revision
+     *
+     * @return \DateTime
+     */
+    public function getRevision()
+    {
+        return $this->container['revision'];
+    }
+
+    /**
+     * Sets revision
+     *
+     * @param \DateTime $revision
+     *
+     * @return $this
+     */
+    public function setRevision($revision)
+    {
+        $this->container['revision'] = $revision;
 
         return $this;
     }

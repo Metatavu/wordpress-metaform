@@ -1,13 +1,12 @@
-# Metaform
+# EmailNotification
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [optional] 
-**replyStrategy** | **string** |  | [optional] 
-**allowAnonymous** | **bool** | Are anonymous replies allowed or not | [optional] 
-**title** | **string** |  | [optional] 
-**sections** | [**\Metatavu\Metaform\Api\Model\MetaformSection[]**](MetaformSection.md) |  | [optional] 
+**subjectTemplate** | **string** |  | 
+**contentTemplate** | **string** |  | 
+**emails** | **string[]** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

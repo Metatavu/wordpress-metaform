@@ -229,7 +229,7 @@ class ObjectSerializer
         if (null === $data) {
             return null;
         } elseif ($class === "\Metatavu\Metaform\Api\Model\ReplyData") {
-          return $data;
+            return $data;
         } elseif (substr($class, 0, 4) === 'map[') { // for associative array e.g. map[string,int]
             $inner = substr($class, 4, -1);
             $deserialized = [];

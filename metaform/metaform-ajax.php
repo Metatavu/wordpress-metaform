@@ -14,7 +14,7 @@
     if (!$updateExisting) {
       $updateExisting = "true";
     }
-
+    
     $userId = wp_get_current_user()->ID;
     $metaformApiId = get_post_meta($id, "metaform-api-id", true);
     update_user_meta($userId, "metaform-$id-values", $values);

@@ -81,6 +81,16 @@ class RepliesApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for deleteReply
+     *
+     * Deletes a reply.
+     *
+     */
+    public function testDeleteReply()
+    {
+    }
+
+    /**
      * Test case for export
      *
      * Exports metaform data.
@@ -97,16 +107,6 @@ class RepliesApiTest extends \PHPUnit_Framework_TestCase
      *
      */
     public function testFindReply()
-    {
-    }
-
-    /**
-     * Test case for findReplyMeta
-     *
-     * Returns reply meta.
-     *
-     */
-    public function testFindReplyMeta()
     {
     }
 

@@ -91,6 +91,13 @@ class ReplyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "revision"
+     */
+    public function testPropertyRevision()
+    {
+    }
+
+    /**
      * Test attribute "data"
      */
     public function testPropertyData()
