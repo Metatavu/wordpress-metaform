@@ -22,9 +22,10 @@
       public function __construct() {
         $this->registerMetaformType();
 
+        add_action('admin_enqueue_scripts', [$this, 'enqueScripts']);
         add_action('admin_init',[$this, "adminInit"]);
         add_action('add_meta_boxes', [$this, "addMetaboxes"], 9999, 2);
-        add_action('save_post', [$this, "savePost"]);
+        add_action('save_post_metaform', [$this, "saveMetaformPost"]);
         add_filter('post_row_actions', [$this, "postRowActionsFilter"], 10, 2);    
         
         wp_register_style('codemirror', '//cdn.metatavu.io/libs/codemirror/5.35.0/lib/codemirror.css');
@@ -32,6 +33,17 @@
         wp_register_script('codemirror', "//cdn.metatavu.io/libs/codemirror/5.35.0/lib/codemirror.js");
         wp_register_script('codemirror-init', plugin_dir_url(dirname(__FILE__)) . 'codemirror-init.js', ['codemirror']);
         wp_register_script('codemirror-js', "//cdn.metatavu.io/libs/codemirror/5.35.0/mode/javascript/javascript.js", ['codemirror-init']);
+      }
+
+      /**
+       * Enque scripts hook
+       */
+      function enqueScripts() {
+        switch(get_post_type()) {
+          case 'metaform':
+            wp_dequeue_script('autosave');
+            break;
+        }
       }
 
       /**
@@ -61,14 +73,6 @@
             $exportLink = add_query_arg(['action' => 'xlsx-export'], $url);
             $actions["xlsx-export"] = sprintf('<a href="%1$s">%2$s</a>', $exportLink, esc_html(__( 'Excel Export', 'metaform' )));
           }
-
-          if (current_user_can('metaform_migrate')) {
-            $apiId = get_post_meta($post->ID, "metaform-api-id", true);
-            if (empty($apiId) && !empty(Settings::getValue("api-url"))) {
-              $migrateLink = add_query_arg(['post' => $post->ID, 'action' => 'api-migrate', 'offset' => '0']);              
-              $actions["api-migrate"] = sprintf('<a href="%1$s">%2$s</a>', $migrateLink, esc_html(__( 'Migrate to API', 'metaform' )));                
-            }
-          }
         }
 
         return $actions;
@@ -88,10 +92,29 @@
        * @param \WP_Post $metaform metaform post objects
        */
       public function renderJsonMetaBox($metaform) {
+        global $post;
         wp_enqueue_style('codemirror-js');
         wp_enqueue_script('codemirror-js');
-        $json = get_post_meta($metaform->ID, "metaform-json", true);
-        echo sprintf('<textarea class="codemirror" name="metaform-json" style="%s" rows="20">%s</textarea>', 'width: 100%', htmlspecialchars($json));
+        
+        $metaformsApi = ApiClient::getMetaformsApi();
+        $realmId = Settings::getValue("realm-id");
+        $metaformId = get_post_meta($post->ID, 'metaform-id', true);
+        $json = '';
+
+        if ($metaformId) {
+          $json = $metaformsApi->findMetaform($realmId, $metaformId);
+          error_log($json->__toString());
+        }
+
+        echo '<textarea class="codemirror" name="metaform-json" style="width:100%" rows="20"> '. stripslashes($this->unicode_decode($json->__toString())) .' </textarea>';
+      }
+
+      public function replace_unicode_escape_sequence($match) {
+        return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
+      }
+
+      public function unicode_decode($str) {
+        return preg_replace_callback('/\\\\u([0-9a-f]{4})/i', [$this,'replace_unicode_escape_sequence'], $str);
       }
 
       /** 
@@ -118,14 +141,12 @@
       /**
        * Post save hook
        */
-      public function savePost($metaformId) {
-        if (array_key_exists('metaform-json', $_POST)) {
-          update_post_meta($metaformId, 'metaform-json', $_POST['metaform-json']);
+      public function saveMetaformPost($metaformId) {
+        if (!isset($_REQUEST['metaform-json'])) {
+          return;
         }
 
-        if (array_key_exists('metaform-reply-strategy', $_POST)) {
-          update_post_meta($metaformId, 'metaform-reply-strategy', $_POST['metaform-reply-strategy']);
-        }
+        $this->createOrUpdateMetaform($metaformId);
       }
 
       /**
@@ -207,109 +228,69 @@
       }
 
       /**
-       * Migrates Metaform to API
+       * Create or update metaform
        * 
-       * @param int $id metaform id
+       * @param String $postId id of wp post
        */
-      private function apiMigrate($id, $offset, $metaformId) {
-        echo "<pre>";
-        $maxResults = 10;
+      private function createOrUpdateMetaform($postId) {
+        $metaformId = get_post_meta($postId, 'metaform-id', true);
 
-        if (!current_user_can('metaform_migrate')) {
-          echo __('Permission denied', 'metaform');
-          exit;
+        if (!$metaformId) {
+          $this->createMetaform($postId);
+        } else {
+          $this->updateMetaform($postId, $metaformId);
         }
+      }
 
-        $metaform = get_post($id);
-        if (!$metaform || $metaform->post_type !== 'metaform') {
-          echo __('Metaform could not be found', 'metaform');
-          exit;
-        }
-
-        $metaformJson = get_post_meta($id, "metaform-json", true);
-        if (!$metaformJson) {
-          echo __('Metaform is empty', 'metaform');
-          exit;
-        }
-
-        $viewModel = json_decode($metaformJson, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-          echo __('Failed to read Metaform', 'metaform');
-          exit;
-        }
-
-        $replyStrategy = get_post_meta($metaform->ID, "metaform-reply-strategy", true);
-        $strategy = ReplyStrategyFactory::createStrategy($replyStrategy);
-        if (!$strategy) {
-          echo __('Failed to resolve reply strategy', 'metaform');
-          exit;
-        }
-
-        if ($strategy->getName() !== "wordpress_usermeta") {
-          echo __('Unsupported reply strategy', 'metaform');
-          exit;
-        }
-
+      /**
+       * Create metaform
+       * 
+       * @param String $postId id of wp post
+       */
+      private function createMetaform($postId) {
         $metaformsApi = ApiClient::getMetaformsApi();
-        $repliesApi = ApiClient::getRepliesApi();
         $realmId = Settings::getValue("realm-id");
 
+        $metaformJson = $_POST['metaform-json'];
+        $viewModel = json_decode(stripslashes($metaformJson), true);
         $metaform = new \Metatavu\Metaform\Api\Model\Metaform($viewModel);
 
         try {
-          if (!$metaformId) {
-            $metaformResponse = $metaformsApi->createMetaform($realmId, $metaform);
-            $metaformId = $metaformResponse->getId();
-            echo "Created new metaform $metaformId" . PHP_EOL;
+          $metaformResponse = $metaformsApi->createMetaform($realmId, $metaform);
+          $metaformId = $metaformResponse->getId();
+          update_post_meta($postId, 'metaform-id', $metaformId);
+        } catch (\Metatavu\Metaform\ApiException $e) {
+          $message = $e->getMessage();
+
+          if (empty($message)) {
+            $message = json_encode($e->getResponseBody());
           }
 
-          $lastResult = $offset + $maxResults;
-          echo "Migrate users from $offset to $lastResult" . PHP_EOL;
-
-          $users = get_users([
-            'fields' => ['ID'],
-            'offset' => $offset,
-            'number' => $maxResults
+          wp_die($message, null, [
+            response => $e->getCode()
           ]);
-          
-          foreach ($users as $user) {
-            $ssoUserId = get_user_meta($user->ID, "openid-connect-generic-subject-identity", true);
-            $replyJson = get_user_meta($user->ID, "metaform-$id-values", true);
+        }
+      }
 
-            if (!empty($ssoUserId) && !empty($replyJson)) {
-              $replyData = json_decode($replyJson, true);
-              if (json_last_error() !== JSON_ERROR_NONE) {
-                echo __("Failed to read replies of user $ssoUserId", 'metaform');
-                exit;
-              }
+      /**
+       * Update metaform
+       * 
+       * @param String $metaformId id of metaform
+       */
+      private function updateMetaform($postId, $metaformId) {
+        $metaformsApi = ApiClient::getMetaformsApi();
+        $realmId = Settings::getValue("realm-id");
 
-              $reply = new \Metatavu\Metaform\Api\Model\Reply([
-                "userId" => $ssoUserId,
-                "data" => $replyData
-              ]);
-
-              $repliesApi->createReply($realmId, $metaformId, $reply, "true");
-              echo "Migrated user $user->ID ($ssoUserId)" . PHP_EOL;
-            } else {
-              echo "Skipped user $user->ID" . PHP_EOL;
-            }
-          }
-
-          $userCount = count($users);
-          echo "Migrated $userCount users" . PHP_EOL;
-          
-          if ($userCount >= $maxResults) {
-            $url = add_query_arg(['post' => $id, 'action' => 'api-migrate', 'offset' => $offset + $maxResults, 'metaformId' => $metaformId]);
-            echo sprintf('<a href="%s">Continue to next batch</a>', $url);
-          } else {
-            update_post_meta($id, 'metaform-api-id', $metaformId);
-            $url = add_query_arg(['post_type' => 'metaform']);
-            echo sprintf('Migration complete, <a href="/wp-admin/">Return to admin view</a>', $url);
-          }
-
-          echo "</pre>";
-
-          exit;
+        $metaformJson = $_POST['metaform-json'];
+        $viewModel = json_decode(stripslashes($metaformJson), true);
+        
+        error_log(print_r($viewModel, true));
+        $metaform = new \Metatavu\Metaform\Api\Model\Metaform($viewModel);
+        
+        try {
+          $metaformResponse = $metaformsApi->updateMetaform($realmId, $metaformId, $metaform);
+          $metaformId = $metaformResponse->getId();
+          update_post_meta($postId, 'metaform-id', $metaformId);
         } catch (\Metatavu\Metaform\ApiException $e) {
           $message = $e->getMessage();
 
