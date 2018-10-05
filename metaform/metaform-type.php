@@ -284,7 +284,6 @@
         $metaformJson = $_POST['metaform-json'];
         $viewModel = json_decode(stripslashes($metaformJson), true);
         
-        error_log(print_r($viewModel, true));
         $metaform = new \Metatavu\Metaform\Api\Model\Metaform($viewModel);
         
         try {

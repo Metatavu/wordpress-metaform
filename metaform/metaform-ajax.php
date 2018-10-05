@@ -8,22 +8,74 @@
   use \Metatavu\Metaform\Settings\Settings;
 
   add_action('rest_api_init', function() {
-    register_rest_route('files', '/upload', [
+    register_rest_route('metaform', 'files/upload', [
       'methods' => 'POST',
       'callback' => 'uploadFile',
     ]);
 
-    register_rest_route('files', '/upload/(?P<id>\S+)', [
+    register_rest_route('metaform', 'files/upload/(?P<id>\S+)', [
       'methods' => 'GET',
       'callback' => 'getFile',
     ]);
 
-    register_rest_route('files', '/upload/(?P<id>\S+)', [
+    register_rest_route('metaform', 'files/upload/(?P<id>\S+)', [
       'methods' => 'DELETE',
       'callback' => 'deleteFile',
     ]);
+
+    register_rest_route('metaform', '/formDraft', [
+      'methods' => 'POST',
+      'callback' => 'saveDraft',
+    ]);
+
+    register_rest_route('metaform', '/formDraft/email', [
+      'methods' => 'POST',
+      'callback' => 'sendEmail',
+    ]);
   });
 
+  /**
+   * Send email
+   */
+  function sendEmail () {
+    $data = ['email' => $_POST['email'], 'draftUrl' => $_POST['draftUrl']];
+    $payload = json_encode($data);
+    $ch = curl_init("http://localhost:3000/formDraft/email");
+
+    curl_setopt($ch, CURLOPT_POST,1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+      'Content-Type: application/json'                                                                
+    ));
+    $result = utf8_decode(curl_exec($ch));
+    curl_close ($ch);
+
+    return $result;
+  }
+
+  /**
+   * Save draft
+   */
+  function saveDraft() {
+    $formData = $_POST['reply'];
+
+    $ch = curl_init("http://localhost:3000/formDraft");
+
+    curl_setopt($ch, CURLOPT_POST,1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $formData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result = utf8_decode(curl_exec($ch));
+    curl_close ($ch);
+
+    error_log(print_r($result,true));
+
+    return $result;
+  }
+
+  /**
+   * Delete file
+   */
   function deleteFile($data) {
     $apiUrl = \Metatavu\Metaform\Settings\Settings::getValue("api-url");
     $uploadUrl = preg_replace("/\/v1.*/", "/fileUpload", $apiUrl);
@@ -51,6 +103,9 @@
     die;
   }
 
+  /**
+   * Upload image
+   */
   function uploadImage($id) {
     $uploadUrl = __DIR__ . '/../tmp/';
     $fileWithOriginalName = $uploadUrl . basename($_FILES["file"]["name"]);
@@ -64,6 +119,9 @@
     move_uploaded_file($_FILES["file"]["tmp_name"], $file);
   }
 
+  /**
+   * Upload file
+   */
   function uploadFile () {
     $apiUrl = \Metatavu\Metaform\Settings\Settings::getValue("api-url");
     $uploadUrl = preg_replace("/\/v1.*/", "/fileUpload", $apiUrl);
@@ -98,6 +156,7 @@
     $id = $_POST['id'];
     $values = $_POST['values'];
     $updateExisting = $_POST["updateExisting"];
+    
     if (!$updateExisting) {
       $updateExisting = "true";
     }
@@ -114,11 +173,9 @@
     ]);
     
     $repliesApi->createReply($realmId, $id, $reply, $updateExisting);
-    error_log("hasd");
     $response= array(
-      'message'   => 'Saved',
-      'ID'        => 1
-  );
-  wp_send_json_success($response);
+      'message'   => 'Saved'
+    );
+    wp_send_json_success($response);
   });
 ?>

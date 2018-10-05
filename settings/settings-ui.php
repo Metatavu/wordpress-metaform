@@ -35,6 +35,9 @@
         add_settings_section('api', __( "API", 'metaform' ), null, 'metaform');
         $this->addOption('api', 'url', 'api-url', __( "API URL", 'metaform'));
         $this->addOption('api', 'text', 'realm-id', __( "Realm ID", 'metaform'));
+
+        add_settings_section('management', __( "Management", 'metaform' ), null, 'metaform');
+        $this->addOption('management', 'url', 'management-url', __( "Management URL", 'metaform'));
       }
 
       /**

@@ -3,7 +3,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**\Metatavu\Metaform\Api\Model\MetaformTableColumnType**](MetaformTableColumnType.md) |  | [optional] 
+**type** | [**\Metatavu\Metaform\Api\Model\MetaformTableColumnType**](MetaformTableColumnType.md) |  | 
+**name** | **string** | Column name | 
 **title** | **string** | Column title | [optional] 
 **calculateSum** | **bool** | Defines column should automatically calculate sum | [optional] 
 **sumPostfix** | **string** | Postfix for calculated sum | [optional] 

@@ -19,7 +19,7 @@
        * Constructor
        */
       public function __construct() {
-        $metaformUrl = '//cdn.metatavu.io/libs/metaform-fields/0.6.20';
+        $metaformUrl = '//cdn.metatavu.io/libs/metaform-fields/0.6.22';
         
         wp_enqueue_style('font_awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
         wp_register_style('jquery-ui', '//cdn.metatavu.io/libs/jquery-ui/1.12.1/jquery-ui.min.css');
@@ -31,6 +31,7 @@
         wp_register_script('jquery-ui_touch-punch', "//cdn.metatavu.io/libs/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js");
         wp_register_script('flatpickr', '//cdn.metatavu.io/libs/flatpickr/4.0.6/flatpickr.min.js');
         wp_register_script('flatpickr-fi', '//cdn.metatavu.io/libs/flatpickr/4.0.6/l10n/fi.js');
+        wp_enqueue_script('url', '//cdn.metatavu.io/libs/url/url.js');
         wp_enqueue_script('bootstrap-js', '//cdn.metatavu.io/libs/bootstrap/4.1.0/js/bootstrap.min.js', ['jquery']);
         wp_enqueue_script('hyperform', '//cdn.metatavu.io/libs/hyperform/0.8.15/hyperform.min.js', ['jquery']);
         wp_enqueue_script('bootbox', '//cdn.metatavu.io/libs/bootbox-js/4.4.0/bootbox.min.js', ['jquery']);
@@ -83,6 +84,11 @@
         $realmId = Settings::getValue("realm-id");
         $metaformId = $id;
         $json = '';
+        
+        if ($_GET['replyId']) {
+          $formValues = $this->getFormValues($_GET['replyId'])->reply;
+          error_log($formValues);
+        }
 
         if ($metaformId) {
           $json = $metaformsApi->findMetaform($realmId, $metaformId);
@@ -92,15 +98,18 @@
         wp_enqueue_script('metaform-init');
 
         $viewModel = get_post_meta($id, "metaform-json", true);
-        return sprintf('<div id="metaform-%s" class="metaform-container %s" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $attrs['class'], $id, htmlspecialchars($json->__toString()), htmlspecialchars(json_encode($formValues)));
+        return sprintf('<div id="metaform-%s" class="metaform-container %s" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $attrs['class'], $id, htmlspecialchars($json->__toString()), htmlspecialchars($formValues));
       }
 
-      public function replace_unicode_escape_sequence($match) {
-        return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
-      }
-
-      public function unicode_decode($str) {
-        return preg_replace_callback('/\\\\u([0-9a-f]{4})/i', [$this,'replace_unicode_escape_sequence'], $str);
+      /**
+       * Get form values
+       */
+      public function getFormValues($id) {
+        $ch = curl_init("http://localhost:3000/formDraft?draftId=$id");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = utf8_decode(curl_exec($ch));
+        curl_close ($ch);
+        return json_decode($result);
       }
       
     }

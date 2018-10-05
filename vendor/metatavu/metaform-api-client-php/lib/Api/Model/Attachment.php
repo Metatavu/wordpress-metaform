@@ -1,6 +1,6 @@
 <?php
 /**
- * Metaform
+ * Attachment
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \Metatavu\Metaform\ObjectSerializer;
 
 /**
- * Metaform Class Doc Comment
+ * Attachment Class Doc Comment
  *
  * @category Class
  * @package  Metatavu\Metaform
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Metaform implements ModelInterface, ArrayAccess
+class Attachment implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class Metaform implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'Metaform';
+    protected static $swaggerModelName = 'Attachment';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -57,12 +57,8 @@ class Metaform implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'id' => 'string',
-        'replyStrategy' => 'string',
-        'exportThemeId' => 'string',
-        'allowAnonymous' => 'bool',
-        'allowDrafts' => 'bool',
-        'title' => 'string',
-        'sections' => '\Metatavu\Metaform\Api\Model\MetaformSection[]'
+        'name' => 'string',
+        'contentType' => 'string'
     ];
 
     /**
@@ -72,12 +68,8 @@ class Metaform implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'id' => 'uuid',
-        'replyStrategy' => null,
-        'exportThemeId' => 'uuid',
-        'allowAnonymous' => null,
-        'allowDrafts' => null,
-        'title' => null,
-        'sections' => null
+        'name' => null,
+        'contentType' => null
     ];
 
     /**
@@ -108,12 +100,8 @@ class Metaform implements ModelInterface, ArrayAccess
      */
     protected static $attributeMap = [
         'id' => 'id',
-        'replyStrategy' => 'replyStrategy',
-        'exportThemeId' => 'exportThemeId',
-        'allowAnonymous' => 'allowAnonymous',
-        'allowDrafts' => 'allowDrafts',
-        'title' => 'title',
-        'sections' => 'sections'
+        'name' => 'name',
+        'contentType' => 'contentType'
     ];
 
     /**
@@ -123,12 +111,8 @@ class Metaform implements ModelInterface, ArrayAccess
      */
     protected static $setters = [
         'id' => 'setId',
-        'replyStrategy' => 'setReplyStrategy',
-        'exportThemeId' => 'setExportThemeId',
-        'allowAnonymous' => 'setAllowAnonymous',
-        'allowDrafts' => 'setAllowDrafts',
-        'title' => 'setTitle',
-        'sections' => 'setSections'
+        'name' => 'setName',
+        'contentType' => 'setContentType'
     ];
 
     /**
@@ -138,12 +122,8 @@ class Metaform implements ModelInterface, ArrayAccess
      */
     protected static $getters = [
         'id' => 'getId',
-        'replyStrategy' => 'getReplyStrategy',
-        'exportThemeId' => 'getExportThemeId',
-        'allowAnonymous' => 'getAllowAnonymous',
-        'allowDrafts' => 'getAllowDrafts',
-        'title' => 'getTitle',
-        'sections' => 'getSections'
+        'name' => 'getName',
+        'contentType' => 'getContentType'
     ];
 
     /**
@@ -187,23 +167,8 @@ class Metaform implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const REPLY_STRATEGY__PUBLIC = 'PUBLIC';
-    const REPLY_STRATEGY__PRIVATE = 'PRIVATE';
     
 
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getReplyStrategyAllowableValues()
-    {
-        return [
-            self::REPLY_STRATEGY__PUBLIC,
-            self::REPLY_STRATEGY__PRIVATE,
-        ];
-    }
     
 
     /**
@@ -222,12 +187,8 @@ class Metaform implements ModelInterface, ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['replyStrategy'] = isset($data['replyStrategy']) ? $data['replyStrategy'] : null;
-        $this->container['exportThemeId'] = isset($data['exportThemeId']) ? $data['exportThemeId'] : null;
-        $this->container['allowAnonymous'] = isset($data['allowAnonymous']) ? $data['allowAnonymous'] : null;
-        $this->container['allowDrafts'] = isset($data['allowDrafts']) ? $data['allowDrafts'] : null;
-        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
-        $this->container['sections'] = isset($data['sections']) ? $data['sections'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['contentType'] = isset($data['contentType']) ? $data['contentType'] : null;
     }
 
     /**
@@ -238,14 +199,6 @@ class Metaform implements ModelInterface, ArrayAccess
     public function listInvalidProperties()
     {
         $invalidProperties = [];
-
-        $allowedValues = $this->getReplyStrategyAllowableValues();
-        if (!in_array($this->container['replyStrategy'], $allowedValues)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'replyStrategy', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
 
         return $invalidProperties;
     }
@@ -259,10 +212,6 @@ class Metaform implements ModelInterface, ArrayAccess
     public function valid()
     {
 
-        $allowedValues = $this->getReplyStrategyAllowableValues();
-        if (!in_array($this->container['replyStrategy'], $allowedValues)) {
-            return false;
-        }
         return true;
     }
 
@@ -280,7 +229,7 @@ class Metaform implements ModelInterface, ArrayAccess
     /**
      * Sets id
      *
-     * @param string $id
+     * @param string $id Entity identifier
      *
      * @return $this
      */
@@ -292,154 +241,49 @@ class Metaform implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets replyStrategy
+     * Gets name
      *
      * @return string
      */
-    public function getReplyStrategy()
+    public function getName()
     {
-        return $this->container['replyStrategy'];
+        return $this->container['name'];
     }
 
     /**
-     * Sets replyStrategy
+     * Sets name
      *
-     * @param string $replyStrategy
+     * @param string $name Attachment's name
      *
      * @return $this
      */
-    public function setReplyStrategy($replyStrategy)
+    public function setName($name)
     {
-        $allowedValues = $this->getReplyStrategyAllowableValues();
-        if (!is_null($replyStrategy) && !in_array($replyStrategy, $allowedValues)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'replyStrategy', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['replyStrategy'] = $replyStrategy;
+        $this->container['name'] = $name;
 
         return $this;
     }
 
     /**
-     * Gets exportThemeId
+     * Gets contentType
      *
      * @return string
      */
-    public function getExportThemeId()
+    public function getContentType()
     {
-        return $this->container['exportThemeId'];
+        return $this->container['contentType'];
     }
 
     /**
-     * Sets exportThemeId
+     * Sets contentType
      *
-     * @param string $exportThemeId
+     * @param string $contentType Attachment's content type (e.g. application/pdf)
      *
      * @return $this
      */
-    public function setExportThemeId($exportThemeId)
+    public function setContentType($contentType)
     {
-        $this->container['exportThemeId'] = $exportThemeId;
-
-        return $this;
-    }
-
-    /**
-     * Gets allowAnonymous
-     *
-     * @return bool
-     */
-    public function getAllowAnonymous()
-    {
-        return $this->container['allowAnonymous'];
-    }
-
-    /**
-     * Sets allowAnonymous
-     *
-     * @param bool $allowAnonymous Are anonymous replies allowed or not
-     *
-     * @return $this
-     */
-    public function setAllowAnonymous($allowAnonymous)
-    {
-        $this->container['allowAnonymous'] = $allowAnonymous;
-
-        return $this;
-    }
-
-    /**
-     * Gets allowDrafts
-     *
-     * @return bool
-     */
-    public function getAllowDrafts()
-    {
-        return $this->container['allowDrafts'];
-    }
-
-    /**
-     * Sets allowDrafts
-     *
-     * @param bool $allowDrafts Are drafts allowed or not
-     *
-     * @return $this
-     */
-    public function setAllowDrafts($allowDrafts)
-    {
-        $this->container['allowDrafts'] = $allowDrafts;
-
-        return $this;
-    }
-
-    /**
-     * Gets title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->container['title'];
-    }
-
-    /**
-     * Sets title
-     *
-     * @param string $title
-     *
-     * @return $this
-     */
-    public function setTitle($title)
-    {
-        $this->container['title'] = $title;
-
-        return $this;
-    }
-
-    /**
-     * Gets sections
-     *
-     * @return \Metatavu\Metaform\Api\Model\MetaformSection[]
-     */
-    public function getSections()
-    {
-        return $this->container['sections'];
-    }
-
-    /**
-     * Sets sections
-     *
-     * @param \Metatavu\Metaform\Api\Model\MetaformSection[] $sections
-     *
-     * @return $this
-     */
-    public function setSections($sections)
-    {
-        $this->container['sections'] = $sections;
+        $this->container['contentType'] = $contentType;
 
         return $this;
     }

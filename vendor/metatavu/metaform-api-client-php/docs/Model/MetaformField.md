@@ -26,6 +26,7 @@ Name | Type | Description | Notes
 **singleFile** | **bool** | Defines whether file fields allow multiple files or just one | [optional] 
 **onlyImages** | **bool** | Defines whether file fields allow only images | [optional] 
 **maxFileSize** | **int** | Maximum upload size for image filds | [optional] 
+**addRows** | **bool** | Defines whether user can add more table rows. | [optional] 
 **draggable** | **bool** | Defines whether table rows should be draggable. | [optional] 
 **columns** | [**\Metatavu\Metaform\Api\Model\MetaformTableColumn[]**](MetaformTableColumn.md) | Columns for table fields | [optional] 
 **src** | **string** | Url for logo field. | [optional] 

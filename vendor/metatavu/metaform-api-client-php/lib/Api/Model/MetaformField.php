@@ -79,6 +79,7 @@ class MetaformField implements ModelInterface, ArrayAccess
         'singleFile' => 'bool',
         'onlyImages' => 'bool',
         'maxFileSize' => 'int',
+        'addRows' => 'bool',
         'draggable' => 'bool',
         'columns' => '\Metatavu\Metaform\Api\Model\MetaformTableColumn[]',
         'src' => 'string',
@@ -115,6 +116,7 @@ class MetaformField implements ModelInterface, ArrayAccess
         'singleFile' => null,
         'onlyImages' => null,
         'maxFileSize' => 'int64',
+        'addRows' => null,
         'draggable' => null,
         'columns' => null,
         'src' => 'url',
@@ -172,6 +174,7 @@ class MetaformField implements ModelInterface, ArrayAccess
         'singleFile' => 'single-file',
         'onlyImages' => 'only-images',
         'maxFileSize' => 'max-file-size',
+        'addRows' => 'add-rows',
         'draggable' => 'draggable',
         'columns' => 'columns',
         'src' => 'src',
@@ -208,6 +211,7 @@ class MetaformField implements ModelInterface, ArrayAccess
         'singleFile' => 'setSingleFile',
         'onlyImages' => 'setOnlyImages',
         'maxFileSize' => 'setMaxFileSize',
+        'addRows' => 'setAddRows',
         'draggable' => 'setDraggable',
         'columns' => 'setColumns',
         'src' => 'setSrc',
@@ -244,6 +248,7 @@ class MetaformField implements ModelInterface, ArrayAccess
         'singleFile' => 'getSingleFile',
         'onlyImages' => 'getOnlyImages',
         'maxFileSize' => 'getMaxFileSize',
+        'addRows' => 'getAddRows',
         'draggable' => 'getDraggable',
         'columns' => 'getColumns',
         'src' => 'getSrc',
@@ -334,6 +339,7 @@ class MetaformField implements ModelInterface, ArrayAccess
         $this->container['singleFile'] = isset($data['singleFile']) ? $data['singleFile'] : null;
         $this->container['onlyImages'] = isset($data['onlyImages']) ? $data['onlyImages'] : null;
         $this->container['maxFileSize'] = isset($data['maxFileSize']) ? $data['maxFileSize'] : null;
+        $this->container['addRows'] = isset($data['addRows']) ? $data['addRows'] : null;
         $this->container['draggable'] = isset($data['draggable']) ? $data['draggable'] : null;
         $this->container['columns'] = isset($data['columns']) ? $data['columns'] : null;
         $this->container['src'] = isset($data['src']) ? $data['src'] : null;
@@ -920,6 +926,30 @@ class MetaformField implements ModelInterface, ArrayAccess
     public function setMaxFileSize($maxFileSize)
     {
         $this->container['maxFileSize'] = $maxFileSize;
+
+        return $this;
+    }
+
+    /**
+     * Gets addRows
+     *
+     * @return bool
+     */
+    public function getAddRows()
+    {
+        return $this->container['addRows'];
+    }
+
+    /**
+     * Sets addRows
+     *
+     * @param bool $addRows Defines whether user can add more table rows.
+     *
+     * @return $this
+     */
+    public function setAddRows($addRows)
+    {
+        $this->container['addRows'] = $addRows;
 
         return $this;
     }

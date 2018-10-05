@@ -1,6 +1,6 @@
 <?php
 /**
- * MetaformTest
+ * ExportThemeTest
  *
  * PHP version 5
  *
@@ -29,16 +29,16 @@
 namespace Metatavu\Metaform;
 
 /**
- * MetaformTest Class Doc Comment
+ * ExportThemeTest Class Doc Comment
  *
  * @category    Class */
-// * @description Metaform
+// * @description ExportTheme
 /**
  * @package     Metatavu\Metaform
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class MetaformTest extends \PHPUnit_Framework_TestCase
+class ExportThemeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -70,9 +70,9 @@ class MetaformTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "Metaform"
+     * Test "ExportTheme"
      */
-    public function testMetaform()
+    public function testExportTheme()
     {
     }
 
@@ -84,37 +84,23 @@ class MetaformTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "replyStrategy"
+     * Test attribute "name"
      */
-    public function testPropertyReplyStrategy()
+    public function testPropertyName()
     {
     }
 
     /**
-     * Test attribute "exportThemeId"
+     * Test attribute "parentId"
      */
-    public function testPropertyExportThemeId()
+    public function testPropertyParentId()
     {
     }
 
     /**
-     * Test attribute "allowAnonymous"
+     * Test attribute "locales"
      */
-    public function testPropertyAllowAnonymous()
-    {
-    }
-
-    /**
-     * Test attribute "title"
-     */
-    public function testPropertyTitle()
-    {
-    }
-
-    /**
-     * Test attribute "sections"
-     */
-    public function testPropertySections()
+    public function testPropertyLocales()
     {
     }
 }

@@ -1,4 +1,6 @@
 jQuery(document).on('ready', function($) {
+  window.draftUrl = "/wp-json/metaform/formDraft";
+
   jQuery(document).on('click', 'input[type="submit"]', function (event) {
     var button = jQuery(event.target);
     var metaform = button.closest('.metaform-container').find('.metaform');
