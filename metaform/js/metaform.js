@@ -18,7 +18,6 @@ jQuery(document).on('ready', function($) {
 
   function saveMetaform(metaform, callback) {
     var valuesArray = metaform.metaform('val', true); 
-    console.log(valuesArray);
     var id = metaform.closest('.metaform-container').attr('data-id');
     var ajaxurl = metaformwp.ajaxurl;
     var values = {};
