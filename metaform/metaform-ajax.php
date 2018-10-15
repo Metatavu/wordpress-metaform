@@ -3,7 +3,9 @@
 
   require_once( __DIR__ . '/../api/api-client.php');
   require_once( __DIR__ . '/../settings/settings.php');
+  require_once( __DIR__ . '/metaform-utils.php');
 
+  use \Metatavu\Metaform\MetaformUtils;
   use \Metatavu\Metaform\Api\ApiClient;
   use \Metatavu\Metaform\Settings\Settings;
 
@@ -60,15 +62,13 @@
   function saveDraft() {
     $formData = $_POST['reply'];
 
-    $ch = curl_init("http://localhost:3000/formDraft");
+    $ch = curl_init(Settings::getValue("management-url") . "/formDraft");
 
     curl_setopt($ch, CURLOPT_POST,1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $formData);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = utf8_decode(curl_exec($ch));
     curl_close ($ch);
-
-    error_log(print_r($result,true));
 
     return $result;
   }
@@ -152,6 +152,9 @@
     wp_send_json($array);
   }
 
+  /**
+   * Save Metaform
+   */
   add_action('wp_ajax_save_metaform', function () {
     $id = $_POST['id'];
     $values = $_POST['values'];
@@ -162,17 +165,22 @@
     }
 
     $userId = wp_get_current_user()->ID;
-    $replyData = json_decode(stripslashes($values), true);
-    $realmId = Settings::getValue("realm-id");
-    $repliesApi = ApiClient::getRepliesApi();
     $ssoUserId = get_user_meta($userId, "openid-connect-generic-subject-identity", true);
+    $realmId = Settings::getValue("realm-id");
+
+    $repliesApi = ApiClient::getRepliesApi();
+    $metaformsApi = ApiClient::getMetaformsApi();
+    $metaformJson = $metaformsApi->findMetaform($realmId, $id);
+
+    $replyData = MetaformUtils::getFormData($metaformJson, $values);
 
     $reply = new \Metatavu\Metaform\Api\Model\Reply([
       "userId" => $ssoUserId,
       "data" => $replyData
     ]);
-    
+
     $repliesApi->createReply($realmId, $id, $reply, $updateExisting);
+
     $response= array(
       'message'   => 'Saved'
     );

@@ -11,8 +11,6 @@ jQuery(document).on('ready', function($) {
       saveMetaform(metaform, function (err) {
         if (err) {
           alert(err);
-        } else {
-          
         }
       });
     }
@@ -20,6 +18,7 @@ jQuery(document).on('ready', function($) {
 
   function saveMetaform(metaform, callback) {
     var valuesArray = metaform.metaform('val', true); 
+    console.log(valuesArray);
     var id = metaform.closest('.metaform-container').attr('data-id');
     var ajaxurl = metaformwp.ajaxurl;
     var values = {};
@@ -36,7 +35,7 @@ jQuery(document).on('ready', function($) {
       'values': JSON.stringify(values)
     }, function (response) { 
       bootbox.alert({
-        message: '<i class="fa fa-check" /><h3>Lomake lähetettiin onnistuneesti.</h3>',
+        message: '<h3>Lomake lähetettiin onnistuneesti.</h3>',
         backdrop: true,
         callback: function(){
           window.location.reload(true);

@@ -106,7 +106,7 @@
           error_log($json->__toString());
         }
 
-        echo '<textarea class="codemirror" name="metaform-json" style="width:100%" rows="20"> '. stripslashes($this->unicode_decode($json->__toString())) .' </textarea>';
+        echo '<textarea class="codemirror" name="metaform-json" style="width:100%" rows="20"> '. $json->__toString() .' </textarea>';
       }
 
       public function replace_unicode_escape_sequence($match) {

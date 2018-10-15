@@ -26,6 +26,7 @@
         wp_enqueue_style('flatpickr', '//cdn.metatavu.io/libs/flatpickr/4.0.6/flatpickr.min.css');
         wp_enqueue_style('hyperform', '//cdn.metatavu.io/libs/hyperform/0.8.15/hyperform.min.css');
         wp_enqueue_style('animate-css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
+        wp_register_style('metaform', "$metaformUrl/css/form.min.css");
   
         wp_register_script('moment', "//cdn.metatavu.io/libs/moment/2.17.1/moment-with-locales.js");
         wp_register_script('jquery-ui_touch-punch', "//cdn.metatavu.io/libs/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js");
@@ -98,7 +99,7 @@
           $json = $metaformsApi->findMetaform($realmId, $metaformId);
         }
 
-        wp_enqueue_style('metaform', "$metaformUrl/css/form.min.css", ['bootstrap-css']);
+        wp_enqueue_style('metaform');
         wp_enqueue_script('metaform-init');
 
         $viewModel = get_post_meta($id, "metaform-json", true);
