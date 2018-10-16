@@ -109,14 +109,6 @@
         echo '<textarea class="codemirror" name="metaform-json" style="width:100%" rows="20"> '. $json->__toString() .' </textarea>';
       }
 
-      public function replace_unicode_escape_sequence($match) {
-        return mb_convert_encoding(pack('H*', $match[1]), 'UTF-8', 'UCS-2BE');
-      }
-
-      public function unicode_decode($str) {
-        return preg_replace_callback('/\\\\u([0-9a-f]{4})/i', [$this,'replace_unicode_escape_sequence'], $str);
-      }
-
       /** 
        * Renders reply strategy metabox
        * 

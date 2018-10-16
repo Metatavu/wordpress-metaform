@@ -25,53 +25,7 @@
       'callback' => 'deleteFile',
     ]);
 
-    register_rest_route('metaform', '/formDraft', [
-      'methods' => 'POST',
-      'callback' => 'saveDraft',
-    ]);
-
-    register_rest_route('metaform', '/formDraft/email', [
-      'methods' => 'POST',
-      'callback' => 'sendEmail',
-    ]);
   });
-
-  /**
-   * Send email
-   */
-  function sendEmail () {
-    $data = ['email' => $_POST['email'], 'draftUrl' => $_POST['draftUrl']];
-    $payload = json_encode($data);
-    $ch = curl_init("http://localhost:3000/formDraft/email");
-
-    curl_setopt($ch, CURLOPT_POST,1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-      'Content-Type: application/json'                                                                
-    ));
-    $result = utf8_decode(curl_exec($ch));
-    curl_close ($ch);
-
-    return $result;
-  }
-
-  /**
-   * Save draft
-   */
-  function saveDraft() {
-    $formData = $_POST['reply'];
-
-    $ch = curl_init(Settings::getValue("management-url") . "/formDraft");
-
-    curl_setopt($ch, CURLOPT_POST,1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $formData);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $result = utf8_decode(curl_exec($ch));
-    curl_close ($ch);
-
-    return $result;
-  }
 
   /**
    * Delete file
@@ -92,14 +46,18 @@
   function getFile($data) {
     $id = $data['id'];
     $ext = '';
-    $fh = fopen(__DIR__ . '/../tmp/' . $id . '.txt','r');
+    $extPath = tmpnam(sys_get_temp_dir(), $id . '.txt');
+    $fh = fopen($extPath,'r');
 
     while ($line = fgets($fh)) {
       $ext = $line;
       break;
     }
 
-    wp_redirect(plugin_dir_url( __FILE__ ) . '../tmp/' . $id . '.' . $ext);
+    // TODO: Näytä file käyttäjälle
+    $filePath = tmpnam(sys_get_temp_dir(), $id . $ext);
+    wp_redirect();
+
     die;
   }
 
@@ -107,7 +65,7 @@
    * Upload image
    */
   function uploadImage($id) {
-    $uploadUrl = __DIR__ . '/../tmp/';
+    $uploadUrl = sys_get_temp_dir();
     $fileWithOriginalName = $uploadUrl . basename($_FILES["file"]["name"]);
     $imageFileType = strtolower(pathinfo($fileWithOriginalName,PATHINFO_EXTENSION));
     $file = $uploadUrl . basename($id . '.' . $imageFileType);
