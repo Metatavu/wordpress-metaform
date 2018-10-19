@@ -2,6 +2,21 @@
 (function ($) {
   'use strict';
 
+  function wpAjaxPost(postOptions, callback) {
+    var ajaxurl = metaformwp.ajaxurl;
+    
+    $.post(ajaxurl, postOptions, function (response) { 
+      if (!response.success) {
+        callback((response.data ? response.data.message : null) || "Unknown error occurred");
+      } else {
+        callback(null, response.data || {});
+      }
+    })
+    .fail(function (response) {
+      callback(response.responseText || response.statusText || "Unknown error occurred");
+    });
+  }
+
   function getMetaformData(metaform) {
     var valuesArray = metaform.metaform('val', true); 
     var values = {};
@@ -16,24 +31,15 @@
   }
 
   function mailDraft(email, draftId, draftUrl, callback) {
-    var ajaxurl = metaformwp.ajaxurl;
-    var postParams = {
+    wpAjaxPost({
       'action': 'metaform_email_draft',
       'email': email,
       'draft-id': draftId,
       'draft-url': draftUrl
-    };
-
-    $.post(ajaxurl, postParams, function (response) { 
-      callback(null);
-    })
-    .fail(function (response) {
-      callback(response.responseText || response.statusText || "Unknown error occurred");
-    });
+    }, callback);
   }
 
   function draftMetaform(metaform, callback) {
-    var ajaxurl = metaformwp.ajaxurl;
     var id = metaform.closest('.metaform-container').attr('data-id');
     var postOptions = {
       'action': 'metaform_save_draft',
@@ -41,64 +47,69 @@
       'values': JSON.stringify(getMetaformData(metaform))
     };
 
-    $.post(ajaxurl, postOptions, function (response) {
-      var draftId = response.data.draftId;
-      var draftUrl = window.location.href + (window.location.length > 1 ? "&" : "?") + "metaform-draft=" + draftId;
-      var message = 
-        "<p>Pääset muokkaamaan lomaketta osoitteessa:<br/>" +
-        "<a href=\"" + draftUrl + "\" target=\"_blank\">" + draftUrl + "</a></p>" + 
-        "<p>Voit myös lähettää osoitteen itsellesi syöttämällä sähköpostiosoitteen kentään:<br/>" +
-        "<input name=\"email\" type=\"email\"/>" +
-        "</p>";
+    wpAjaxPost(postOptions, function (err, data) {
+      if (err) {
+        alert(err);
+      } else {
+        var draftId = data.draftId;
+        var draftUrl = window.location.href + (window.location.length > 1 ? "&" : "?") + "metaform-draft=" + draftId;
+        var message = 
+          "<p>Pääset muokkaamaan lomaketta osoitteessa:<br/>" +
+          "<a href=\"" + draftUrl + "\" target=\"_blank\">" + draftUrl + "</a></p>" + 
+          "<p>Voit myös lähettää osoitteen itsellesi syöttämällä sähköpostiosoitteen kentään:<br/>" +
+          "<input name=\"email\" type=\"email\"/>" +
+          "</p>";
 
-      var dialog = $("<div>").html(message);
-      dialog.dialog({
-        title: "Vedos tallennettu",
-        resizable: false,
-        height: "auto",
-        width: "90%",
-        modal: true,
-        buttons: {
-          "Lähetä sähköpostilla": function() {
-            var email = dialog.find("[name='email']").val();
-            mailDraft(email, draftId, draftUrl, function (err) {
-              if (err) {
-                alert(err);
-              } else {
-                $(dialog).dialog("close");
-              }
-            });
-          },
-          "Sulje": function() {
-            $(dialog).dialog("close");
+        var dialog = $("<div>").html(message);
+        dialog.dialog({
+          title: "Vedos tallennettu",
+          resizable: false,
+          height: "auto",
+          width: "90%",
+          modal: true,
+          buttons: {
+            "Lähetä sähköpostilla": function() {
+              var email = dialog.find("[name='email']").val();
+              mailDraft(email, draftId, draftUrl, function (err) {
+                if (err) {
+                  alert(err);
+                } else {
+                  $(dialog).dialog("close");
+                }
+              });
+            },
+            "Sulje": function() {
+              $(dialog).dialog("close");
+            }
           }
-        }
-      });
-    })
-    .fail(function (response) {
-      callback(response.responseText || response.statusText || "Unknown error occurred");
+        });
+      }
     });
   }
 
   function saveMetaform(metaform, callback) {
     var ajaxurl = metaformwp.ajaxurl;
     var id = metaform.closest('.metaform-container').attr('data-id');
-
-    $.post(ajaxurl, {
+    var postOptions = {
       'action': 'metaform_save_reply',
       'id': id,
       'values': JSON.stringify(getMetaformData(metaform))
-    }, function (response) { 
-      bootbox.alert({
-        message: '<h3>Lomake lähetettiin onnistuneesti.</h3>',
-        backdrop: true,
-        callback: function(){
-          window.location.reload(true);
-        }
-      });
-    })
-    .fail(function (response) {
-      callback(response.responseText || response.statusText || "Unknown error occurred");
+    };
+
+    wpAjaxPost(postOptions, function (err, data) {
+      if (err) {
+        alert(err);
+      } else {
+        $("<div>").text("Lomake lähetettiin onnistuneesti.").dialog({
+          title: "Lähetys onnistui",
+          modal: true,
+          buttons: {
+            Ok: function() {
+              window.location.reload(true);
+            }
+          }
+        });
+      }
     });
   }
     

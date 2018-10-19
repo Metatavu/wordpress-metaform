@@ -35,10 +35,13 @@
         $updateExisting = "true";
       }
   
-      $userId = wp_get_current_user()->ID;
-      $ssoUserId = get_user_meta($userId, "openid-connect-generic-subject-identity", true);
       $realmId = Settings::getValue("realm-id");
-  
+      if (empty($realmId)) {
+        return wp_send_json_error([
+          "message" => "Invalid configuration for Metaforms"
+        ]);
+      }
+
       $repliesApi = ApiClient::getRepliesApi();
       $metaformsApi = ApiClient::getMetaformsApi();
       $metaformJson = $metaformsApi->findMetaform($realmId, $id);
@@ -46,7 +49,6 @@
       $replyData = MetaformUtils::getFormData($metaformJson, $values);
   
       $reply = new \Metatavu\Metaform\Api\Model\Reply([
-        "userId" => $ssoUserId,
         "data" => $replyData
       ]);
   
@@ -65,11 +67,9 @@
       $realmId = Settings::getValue("realm-id");
   
       if (empty($managementUrl) || empty($realmId)) {
-        wp_send_json_error([
+        return wp_send_json_error([
           "message" => "Invalid configuration for drafts"
         ]);
-  
-        return;
       }
       
       $id = $_POST['id'];
@@ -84,26 +84,32 @@
       }
   
       $formData = MetaformUtils::getFormData($metaform, $values);
-  
-      $ch = curl_init("$managementUrl/formDraft");
-      curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_POST,1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-        "formData" => $formData
-      ]));
-  
-      $result = utf8_decode(curl_exec($ch));
-      curl_close ($ch);
-  
-      $draft = json_decode($result);
+
+      $response = wp_remote_post("$managementUrl/formDraft", [
+        "headers" => [
+          'Content-Type' => 'application/json'
+        ],
+        "body" => json_encode([
+          "formData" => $formData
+        ])
+      ]);
+
+      $body = $response["body"];
+
+      if (!$this->isRemoteSuccess($response)) {
+        wp_send_json_error([
+          "message" => !empty($body) ? $body : "Drafting failed"
+        ]);
+      }
+
+      $draft = json_decode($body);
       if ($draft && $draft->id) {
         wp_send_json_success([
           "draftId" => $draft->id
         ]);  
       } else {
         wp_send_json_error([
-          "message" => "Drafting failed"
+          "message" => !empty($body) ? $body : "Drafting failed"
         ]);
       }
     }
@@ -130,22 +136,43 @@
           "message" => "Missing parameters"
         ]);
       }
-  
-      $ch = curl_init("$managementUrl/formDraft/$draftId/email");
-      curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_POST,1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-        "email" => $email,
-        "draftUrl" => $draftUrl
-      ]));
-  
-      $result = utf8_decode(curl_exec($ch));
-      curl_close ($ch);
-      
+
+      $response = wp_remote_post("$managementUrl/formDraft/$draftId/email", [
+        "headers" => [
+          'Content-Type' => 'application/json'
+        ],
+        "body" => json_encode([
+          "email" => $email,
+          "draftUrl" => $draftUrl
+        ])
+      ]);
+
+      $body = $response["body"];
+      if (!$this->isRemoteSuccess($response)) {
+        wp_send_json_error([
+          "message" => !empty($body) ? $body : "Email sending failed"
+        ]);
+      }
+
       wp_send_json_success([
         "message" => "Email sent"
       ]); 
+    }
+
+    /**
+     * Returns whether request mady by wp_remote_xxx function is a success
+     * 
+     * @param {Object} $response response object
+     * @return {Boolean} whether the response is a success
+     */
+    private function isRemoteSuccess($response) {
+      if (is_wp_error($response)) {
+        return false;
+      }
+
+      $code = $response["response"]["code"];
+
+      return $code >= 200 && $code <= 299;
     }
   }
 
