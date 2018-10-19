@@ -11,7 +11,6 @@
   
   require_once( __DIR__ . '/metaform/metaform-ajax.php');
   require_once( __DIR__ . '/capabilities/capabilities.php');
-  require_once( __DIR__ . '/reply-strategies/reply-strategies.php');
   require_once( __DIR__ . '/metaform/metaform.php');
   require_once( __DIR__ . '/metaform/metaform-shortcodes.php');
   require_once( __DIR__ . '/settings/settings.php');
