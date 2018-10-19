@@ -36,10 +36,10 @@
        * @returns \Metatavu\Metaform\Configuration
        */
       private static function getConfiguration() {
-       $result = \Metatavu\Metaform\Configuration::getDefaultConfiguration();
-       $result->setHost(\Metatavu\Metaform\Settings\Settings::getValue("api-url"));
-       $result->setApiKey("Authorization", "Bearer " . self::getAccessToken());
-       return $result;
+        $result = \Metatavu\Metaform\Configuration::getDefaultConfiguration();
+        $result->setHost(\Metatavu\Metaform\Settings\Settings::getValue("api-url"));
+        $result->setApiKey("Authorization", "Bearer " . self::getAccessToken());
+        return $result;
       }
 
       /**
@@ -51,7 +51,7 @@
        */
       private static function getAccessToken() {
         if (!is_user_logged_in()) {
-          return null;
+          return self::getAnonymousToken();
         }
 
         $userId = wp_get_current_user()->ID;
@@ -63,7 +63,35 @@
           return $tokenResponse['access_token'];
         }
 
-        return null;
+        return self::getAnonymousToken();
+      }
+
+      private static function getAnonymousToken() {
+        $settings = self::getOpenIdSettings();
+
+        $tokenEndpoint = $settings["endpoint_token"];
+        $clientId = $settings["client_id"];
+        $clientSecret = $settings["client_secret"];
+        $passwordEncoded = base64_encode("$clientId:$clientSecret");
+        $authorization = "Basic $passwordEncoded";
+
+        $request = [
+          'headers' => [
+            'Authorization' => $authorization
+          ],
+          'body' => [
+            'grant_type' => 'client_credentials'
+          ]
+        ];
+
+        $response = wp_remote_post($tokenEndpoint, $request);
+        if (is_wp_error($response)) {
+          error_log("Failed to refresh anonymous token: " . print_r($response, true));
+          return null;
+        }
+
+        $token = json_decode($response['body'], true);
+        return $token["access_token"];
       }
 
       /**
