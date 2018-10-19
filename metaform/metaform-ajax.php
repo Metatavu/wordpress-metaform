@@ -27,6 +27,8 @@
 
   });
 
+  
+
   /**
    * Delete file
    */
@@ -113,7 +115,7 @@
   /**
    * Save Metaform
    */
-  add_action('wp_ajax_save_metaform', function () {
+  add_action('wp_ajax_metaform_save_reply', function () {
     $id = $_POST['id'];
     $values = $_POST['values'];
     $updateExisting = $_POST["updateExisting"];
@@ -143,5 +145,96 @@
       'message'   => 'Saved'
     );
     wp_send_json_success($response);
+  });  
+  
+  /**
+   * Save Metaform
+   */
+  add_action('wp_ajax_metaform_save_draft', function () {
+    $managementUrl = \Metatavu\Metaform\Settings\Settings::getValue("management-url");
+    $realmId = Settings::getValue("realm-id");
+
+    if (empty($managementUrl) || empty($realmId)) {
+      wp_send_json_error([
+        "message" => "Invalid configuration for drafts"
+      ]);
+
+      return;
+    }
+    
+    $id = $_POST['id'];
+    $values = $_POST['values'];
+    $metaformsApi = ApiClient::getMetaformsApi();
+    $metaform = $metaformsApi->findMetaform($realmId, $id);
+    
+    if (!$metaform) {
+      return wp_send_json_error([
+        "message" => "Form not found"
+      ]);
+    }
+
+    $formData = MetaformUtils::getFormData($metaform, $values);
+
+    $ch = curl_init("$managementUrl/formDraft");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST,1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+      "formData" => $formData
+    ]));
+
+    $result = utf8_decode(curl_exec($ch));
+    curl_close ($ch);
+
+    $draft = json_decode($result);
+    if ($draft && $draft->id) {
+      wp_send_json_success([
+        "draftId" => $draft->id
+      ]);  
+    } else {
+      wp_send_json_error([
+        "message" => "Drafting failed"
+      ]);
+    }
+  });
+  
+  /**
+   * Email Metaform draft
+   */
+  add_action('wp_ajax_metaform_email_draft', function () {
+    $managementUrl = \Metatavu\Metaform\Settings\Settings::getValue("management-url");
+    $realmId = Settings::getValue("realm-id");
+
+    if (empty($managementUrl) || empty($realmId)) {
+      return wp_send_json_error([
+        "message" => "Invalid configuration for drafts"
+      ]);
+    }
+
+    $email = $_POST['email'];
+    $draftId = $_POST['draft-id'];
+    $draftUrl = $_POST['draft-url'];
+
+    if (empty($email) || empty($draftId) || empty($draftUrl)) {
+      return wp_send_json_error([
+        "message" => "Missing parameters"
+      ]);
+    }
+
+    $ch = curl_init("$managementUrl/formDraft/$draftId/email");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST,1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+      "email" => $email,
+      "draftUrl" => $draftUrl
+    ]));
+
+    $result = utf8_decode(curl_exec($ch));
+    curl_close ($ch);
+    
+    wp_send_json_success([
+      "message" => "Email sent"
+    ]);  
   });
 ?>
