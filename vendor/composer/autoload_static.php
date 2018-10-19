@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit812619d3c97e44d6a8b2ba5a69f8fa1b
+class ComposerStaticInitb2768472729bfb796fccaf45f479c43a
 {
     public static $files = array (
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
@@ -52,17 +52,11 @@ class ComposerStaticInit812619d3c97e44d6a8b2ba5a69f8fa1b
         ),
     );
 
-    public static $classMap = array (
-        'XLSXWriter' => __DIR__ . '/..' . '/mk-j/php_xlsxwriter/xlsxwriter.class.php',
-        'XLSXWriter_BuffererWriter' => __DIR__ . '/..' . '/mk-j/php_xlsxwriter/xlsxwriter.class.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit812619d3c97e44d6a8b2ba5a69f8fa1b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit812619d3c97e44d6a8b2ba5a69f8fa1b::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit812619d3c97e44d6a8b2ba5a69f8fa1b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb2768472729bfb796fccaf45f479c43a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb2768472729bfb796fccaf45f479c43a::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

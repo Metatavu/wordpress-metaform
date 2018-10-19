@@ -8,12 +8,6 @@
 	"license" : "AGPL-3.0",
 	"type" : "wordpress-plugin",
 	"require" : {
-		"mk-j/php_xlsxwriter": "^0.37.0",
 		"metatavu/metaform-api-client-php": "^0.0.6"
-	},
-	"repositories" : [{
-			"type" : "git",
-			"url" : "https://github.com/Metatavu/wordpress-metaform.git"
-		}
-	]
+	}
 }
