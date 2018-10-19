@@ -23,6 +23,107 @@
           'callback' => [$this, "replyPostCallback"],
           'permission_callback' => [$this, "replyPostPermissionCallback"]
         ]);
+
+        register_rest_route('metaform', 'files/upload', [
+          'methods' => 'POST',
+          'callback' => [$this, 'uploadFile']
+        ]);
+
+        register_rest_route('metaform', 'files/upload/(?P<id>\S+)', [
+          'methods' => 'GET',
+          'callback' => [$this, 'getFile']
+        ]);
+
+        register_rest_route('metaform', 'files/upload/(?P<id>\S+)', [
+          'methods' => 'DELETE',
+          'callback' => [$this, 'deleteFile']
+        ]);
+      }
+
+      /**
+       * Returns single file
+       */
+      function getFile($data) {
+        $id = $data['id'];
+        $ext = '';
+        $extPath = tmpnam(sys_get_temp_dir(), $id . '.txt');
+        $fh = fopen($extPath,'r');
+
+        while ($line = fgets($fh)) {
+          $ext = $line;
+          break;
+        }
+
+        // TODO: Näytä file käyttäjälle
+        $filePath = tmpnam(sys_get_temp_dir(), $id . $ext);
+        wp_redirect();
+
+        die;
+      }
+
+      /**
+       * Upload image
+       */
+      function uploadImage($id) {
+        $uploadUrl = sys_get_temp_dir();
+        $fileWithOriginalName = $uploadUrl . basename($_FILES["file"]["name"]);
+        $imageFileType = strtolower(pathinfo($fileWithOriginalName,PATHINFO_EXTENSION));
+        $file = $uploadUrl . basename($id . '.' . $imageFileType);
+
+        $metaFile = fopen($uploadUrl . $id . '.txt', "w");
+        fwrite($metaFile, $imageFileType);
+        fclose($metaFile);
+        
+        move_uploaded_file($_FILES["file"]["tmp_name"], $file);
+      }
+
+      /**
+       * Upload file
+       */
+      function uploadFile () {
+        $apiUrl = \Metatavu\Metaform\Settings\Settings::getValue("api-url");
+        $uploadUrl = preg_replace("/\/v1.*/", "/fileUpload", $apiUrl);
+
+        if (function_exists('curl_file_create')) {
+          $cFile = curl_file_create($_FILES['file']['tmp_name'], $_FILES['file']['type'], $_FILES['file']['name']);
+        } else {
+          $cFile = new \CURLFile(($_FILES['file']['tmp_name']));
+        }
+
+        $post = array('file'=> $cFile);
+        $ch = curl_init($uploadUrl);
+
+        curl_setopt($ch, CURLOPT_POST,1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_SAFE_UPLOAD, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = utf8_decode(curl_exec($ch));
+        curl_close ($ch);
+
+        $array = [];
+        $array['result'] = json_decode($result, true);
+        $array['result']['filename'] = $array['result']['fileName'];
+        $array['result']['originalname'] = $array['result']['fileName'];
+        $array['result']['_id'] = $array['result']['fileRef'];
+      
+        uploadImage($array['result']['fileRef']);
+        wp_send_json($array);
+      }
+
+      /**
+       * Delete file
+       */
+      function deleteFile($data) {
+        $apiUrl = \Metatavu\Metaform\Settings\Settings::getValue("api-url");
+        $uploadUrl = preg_replace("/\/v1.*/", "/fileUpload", $apiUrl);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $uploadUrl . '?fileRef=' . $data['id']);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return $result;
       }
 
       /**
