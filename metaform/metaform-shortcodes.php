@@ -88,9 +88,8 @@
         $metaformId = $id;
         $metaform = null;
         
-        if ($_GET['replyId']) {
-          $formValues = $this->getFormValues($_GET['replyId'])->reply;
-          error_log($formValues);
+        if ($_GET['metaform-draft']) {
+          $formValues = $this->getDraftValues($_GET['metaform-draft']);
         }
 
         if ($metaformId) {
@@ -111,14 +110,24 @@
       }
 
       /**
-       * Get form values
+       * Load draft values
+       * 
+       * @param {String} draftId
+       * @return {Array} values
        */
-      public function getFormValues($id) {
-        $ch = curl_init("http://localhost:3000/formDraft?draftId=$id");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = utf8_decode(curl_exec($ch));
-        curl_close ($ch);
-        return json_decode($result);
+      public function getDraftValues($draftId) {
+        $managementUrl = \Metatavu\Metaform\Settings\Settings::getValue("management-url");
+        if (empty($managementUrl)) {
+          return null;
+        }
+  
+        $response = wp_remote_get("$managementUrl/formDraft/$draftId");
+        if (is_wp_error($response)) {
+          return null;
+        }
+
+        $formData = json_decode($response['body'], true)["formData"];
+        return $formData ? json_encode($formData) : null;
       }
       
     }
