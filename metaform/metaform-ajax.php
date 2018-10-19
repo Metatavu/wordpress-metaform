@@ -18,6 +18,9 @@
       add_action('wp_ajax_metaform_save_reply', [$this, "saveReply"]);
       add_action('wp_ajax_metaform_save_draft', [$this, "saveDraft"]);
       add_action('wp_ajax_metaform_email_draft', [$this, "sendDraftEmail"]);
+      add_action('wp_ajax_nopriv_metaform_save_reply', [$this, "saveReply"]);
+      add_action('wp_ajax_nopriv_metaform_save_draft', [$this, "saveDraft"]);
+      add_action('wp_ajax_nopriv_metaform_email_draft', [$this, "sendDraftEmail"]);
     }
 
     /**
