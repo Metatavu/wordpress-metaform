@@ -114,8 +114,6 @@
   }
     
   $(document).on('ready', function() {
-    window.draftUrl = "/wp-json/metaform/formDraft";
-
     $(".metaform-container[data-allow-drafts='true']").each(function (index, element) {
       $("<a>")
         .text("Tallenna vedos")

@@ -11,6 +11,25 @@
      * Metaform REST operations 
      */
     class MetaformUtils {
+
+      /**
+       * Returns version of Metaform JSON that is suitable for
+       * Wordpress plugin 
+       */
+      public static function getMetaformJson($metaform) {
+        $metaformId = $metaform->getId();
+        $uploadUrl = "/wp-json/wp/v2/metaforms/$metaformId/files/upload/";
+
+        foreach($metaform->getSections() as $section) {
+          foreach ($section->getFields() as $field) {
+            if ($field->getType() == "files") {
+              $field->setUploadUrl($uploadUrl);
+            }
+          }
+        }
+
+        return $metaform->__toString();
+      }
       
       /**
        * Get fields from metaform

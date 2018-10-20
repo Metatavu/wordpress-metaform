@@ -7,7 +7,9 @@
 
   require_once( __DIR__ . '/../api/api-client.php');
   require_once( __DIR__ . '/../settings/settings.php');
+  require_once( __DIR__ . '/metaform-utils.php');
 
+  use \Metatavu\Metaform\MetaformUtils;
   use \Metatavu\Metaform\Api\ApiClient;
   use \Metatavu\Metaform\Settings\Settings;
   
@@ -100,7 +102,7 @@
           return;
         }
 
-        $json = $metaform->__toString();
+        $json = MetaformUtils::getMetaformJson($metaform);
         $allowDrafts = $metaform->getAllowDrafts();
 
         wp_enqueue_style('metaform');

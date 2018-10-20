@@ -24,17 +24,17 @@
           'permission_callback' => [$this, "replyPostPermissionCallback"]
         ]);
 
-        register_rest_route('metaform', 'files/upload', [
+        register_rest_route('wp/v2', '/metaforms/(?P<metaformId>[a-zA-Z0-9-]+)/files/upload', [
           'methods' => 'POST',
           'callback' => [$this, 'uploadFile']
         ]);
 
-        register_rest_route('metaform', 'files/upload/(?P<id>\S+)', [
+        register_rest_route('wp/v2', '/metaforms/(?P<metaformId>[a-zA-Z0-9-]+)/files/upload/(?P<fileRef>[a-zA-Z0-9-]+)', [
           'methods' => 'GET',
           'callback' => [$this, 'getFile']
         ]);
 
-        register_rest_route('metaform', 'files/upload/(?P<id>\S+)', [
+        register_rest_route('wp/v2', '/metaforms/(?P<metaformId>[a-zA-Z0-9-]+)/files/upload/(?P<fileRef>[a-zA-Z0-9-]+)', [
           'methods' => 'DELETE',
           'callback' => [$this, 'deleteFile']
         ]);
@@ -44,37 +44,12 @@
        * Returns single file
        */
       function getFile($data) {
-        $id = $data['id'];
-        $ext = '';
-        $extPath = tmpnam(sys_get_temp_dir(), $id . '.txt');
-        $fh = fopen($extPath,'r');
-
-        while ($line = fgets($fh)) {
-          $ext = $line;
-          break;
-        }
-
-        // TODO: Näytä file käyttäjälle
-        $filePath = tmpnam(sys_get_temp_dir(), $id . $ext);
-        wp_redirect();
-
-        die;
-      }
-
-      /**
-       * Upload image
-       */
-      function uploadImage($id) {
-        $uploadUrl = sys_get_temp_dir();
-        $fileWithOriginalName = $uploadUrl . basename($_FILES["file"]["name"]);
-        $imageFileType = strtolower(pathinfo($fileWithOriginalName,PATHINFO_EXTENSION));
-        $file = $uploadUrl . basename($id . '.' . $imageFileType);
-
-        $metaFile = fopen($uploadUrl . $id . '.txt', "w");
-        fwrite($metaFile, $imageFileType);
-        fclose($metaFile);
-        
-        move_uploaded_file($_FILES["file"]["tmp_name"], $file);
+        $apiUrl = \Metatavu\Metaform\Settings\Settings::getValue("api-url");
+        $uploadUrl = preg_replace("/\/v1.*/", "/fileUpload", $apiUrl);
+        $fileRef = $data['fileRef'];
+        $fileUrl = "$uploadUrl?fileRef=${fileRef}";
+        wp_redirect($fileUrl);
+        exit;
       }
 
       /**
@@ -106,7 +81,6 @@
         $array['result']['originalname'] = $array['result']['fileName'];
         $array['result']['_id'] = $array['result']['fileRef'];
       
-        uploadImage($array['result']['fileRef']);
         wp_send_json($array);
       }
 
@@ -118,7 +92,7 @@
         $uploadUrl = preg_replace("/\/v1.*/", "/fileUpload", $apiUrl);
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $uploadUrl . '?fileRef=' . $data['id']);
+        curl_setopt($ch, CURLOPT_URL, $uploadUrl . '?fileRef=' . $data['fileRef']);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
         $result = curl_exec($ch);
         curl_close($ch);
