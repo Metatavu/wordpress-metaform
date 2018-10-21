@@ -3,7 +3,7 @@
  * Created on Feb 28, 2018
  * Plugin Name: Wordpress Metaform integration
  * Description: Wordpress integration for Metaforms
- * Version: 0.0.11
+ * Version: 0.1.0
  * Author: Metatavu Oy
  */
 
