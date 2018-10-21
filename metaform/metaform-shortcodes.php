@@ -21,7 +21,7 @@
        * Constructor
        */
       public function __construct() {
-        $metaformUrl = '//cdn.metatavu.io/libs/metaform-fields/0.6.23';
+        $metaformUrl = '//cdn.metatavu.io/libs/metaform-fields/0.6.24';
         
         wp_enqueue_style('font_awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
         wp_enqueue_style('jquery-ui', '//cdn.metatavu.io/libs/jquery-ui/1.12.1/jquery-ui.min.css');
@@ -89,10 +89,6 @@
         $realmId = Settings::getValue("realm-id");
         $metaformId = $id;
         $metaform = null;
-        
-        if ($_GET['metaform-draft']) {
-          $formValues = $this->getDraftValues($_GET['metaform-draft']);
-        }
 
         if ($metaformId) {
           $metaform = $metaformsApi->findMetaform($realmId, $metaformId);
@@ -100,6 +96,10 @@
 
         if (!isset($metaform)) {
           return;
+        }
+        
+        if ($_GET['metaform-draft']) {
+          $formValues = $this->getDraftValues($metaform, $_GET['metaform-draft']);
         }
 
         $json = MetaformUtils::getMetaformJson($metaform);
@@ -117,7 +117,7 @@
        * @param {String} draftId
        * @return {Array} values
        */
-      public function getDraftValues($draftId) {
+      public function getDraftValues($metaform, $draftId) {
         $managementUrl = \Metatavu\Metaform\Settings\Settings::getValue("management-url");
         if (empty($managementUrl)) {
           return null;
@@ -127,13 +127,51 @@
         if (is_wp_error($response)) {
           return null;
         }
-
+        
         $formData = json_decode($response['body'], true)["formData"];
+        
+        foreach (MetaformUtils::getFieldNamesByType($metaform, "files") as $fileFieldName) {
+          error_log($formData[$fileFieldName]);
+          $fileRefs = explode(",", $formData[$fileFieldName]);
+          if (!empty($fileRefs)) {
+            $fileData = [];
+
+            foreach ($fileRefs as $fileRef) {
+              $fileMeta = $this->getFileMeta($fileRef);
+              $fileData[] = [
+                "fileData" => $fileRef,
+                "originalname" => $fileMeta["fileName"]
+              ];
+            }
+
+            $formData[$fileFieldName] = $fileData;
+          }
+        }
+
         return $formData ? json_encode($formData) : null;
       }
-      
+
+      /**
+       * Returns metadata for a file
+       * 
+       * @param {String} $fileRef file reference id
+       * @return {Object} file metadata
+       */
+      private function getFileMeta($fileRef) {
+        $uploadUrl = MetaformUtils::getUploadUrl();
+        $url = "$uploadUrl?fileRef=${fileRef}&meta=true";
+        $response = wp_remote_get($url);
+
+        if (is_wp_error($response)) {
+          return null;
+        }
+
+        $body = $response["body"]; 
+        return json_decode($body, true);
+      }
+        
     }
-  
+
   }
   
   add_action('init', function () {

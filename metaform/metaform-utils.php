@@ -5,6 +5,8 @@
     exit;
   }
 
+  require_once( __DIR__ . '/../settings/settings.php');
+
   if (!class_exists('Metatavu\Metaform\MetaformUtils')) {
     
     /**
@@ -107,6 +109,16 @@
         }
 
         return $replyData;
+      }
+
+      /**
+       * Returns API upload URL
+       * 
+       * @return {String} API upload URL
+       */
+      public static function getUploadUrl() {
+        $apiUrl = \Metatavu\Metaform\Settings\Settings::getValue("api-url");
+        return preg_replace("/\/v1.*/", "/fileUpload", $apiUrl);
       }
 
     }
