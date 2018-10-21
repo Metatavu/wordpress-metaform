@@ -1,6 +1,6 @@
 <?php
 /**
- * MetaformTest
+ * ReplyExportFormatTest
  *
  * PHP version 5
  *
@@ -29,16 +29,16 @@
 namespace Metatavu\Metaform;
 
 /**
- * MetaformTest Class Doc Comment
+ * ReplyExportFormatTest Class Doc Comment
  *
  * @category    Class */
-// * @description Metaform
+// * @description ReplyExportFormat
 /**
  * @package     Metatavu\Metaform
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class MetaformTest extends \PHPUnit_Framework_TestCase
+class ReplyExportFormatTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -70,51 +70,9 @@ class MetaformTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "Metaform"
+     * Test "ReplyExportFormat"
      */
-    public function testMetaform()
-    {
-    }
-
-    /**
-     * Test attribute "id"
-     */
-    public function testPropertyId()
-    {
-    }
-
-    /**
-     * Test attribute "replyStrategy"
-     */
-    public function testPropertyReplyStrategy()
-    {
-    }
-
-    /**
-     * Test attribute "exportThemeId"
-     */
-    public function testPropertyExportThemeId()
-    {
-    }
-
-    /**
-     * Test attribute "allowAnonymous"
-     */
-    public function testPropertyAllowAnonymous()
-    {
-    }
-
-    /**
-     * Test attribute "title"
-     */
-    public function testPropertyTitle()
-    {
-    }
-
-    /**
-     * Test attribute "sections"
-     */
-    public function testPropertySections()
+    public function testReplyExportFormat()
     {
     }
 }

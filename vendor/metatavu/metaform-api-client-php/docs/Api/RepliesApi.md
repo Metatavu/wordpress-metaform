@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**export**](RepliesApi.md#export) | **GET** /realms/{realmId}/metaforms/{metaformId}/export | Exports metaform data
 [**findReply**](RepliesApi.md#findReply) | **GET** /realms/{realmId}/metaforms/{metaformId}/replies/{replyId} | Find a single reply
 [**listReplies**](RepliesApi.md#listReplies) | **GET** /realms/{realmId}/metaforms/{metaformId}/replies | Lists form replies
+[**replyExport**](RepliesApi.md#replyExport) | **GET** /realms/{realmId}/metaforms/{metaformId}/replies/{replyId}/export | Exports reply data
 [**updateReply**](RepliesApi.md#updateReply) | **PUT** /realms/{realmId}/metaforms/{metaformId}/replies/{replyId} | Updates reply
 
 
@@ -285,6 +286,62 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**\Metatavu\Metaform\Api\Model\Reply[]**](../Model/Reply.md)
+
+### Authorization
+
+[bearer](../../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json;charset=utf-8
+ - **Accept**: application/json;charset=utf-8
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **replyExport**
+> string replyExport($realmId, $metaformId, $replyId, $format)
+
+Exports reply data
+
+Exports reply data
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: bearer
+Metatavu\Metaform\Configuration::getDefaultConfiguration()->setApiKey('Authorization', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// Metatavu\Metaform\Configuration::getDefaultConfiguration()->setApiKeyPrefix('Authorization', 'Bearer');
+
+$api_instance = new Metatavu\Metaform\Api\RepliesApi(new \Http\Adapter\Guzzle6\Client());
+$realmId = "realmId_example"; // string | realm id
+$metaformId = "metaformId_example"; // string | Metaform id
+$replyId = "replyId_example"; // string | Reply id
+$format = "format_example"; // string | Export results in specified format (PDF)
+
+try {
+    $result = $api_instance->replyExport($realmId, $metaformId, $replyId, $format);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling RepliesApi->replyExport: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **realmId** | **string**| realm id |
+ **metaformId** | **string**| Metaform id |
+ **replyId** | **string**| Reply id |
+ **format** | **string**| Export results in specified format (PDF) |
+
+### Return type
+
+**string**
 
 ### Authorization
 

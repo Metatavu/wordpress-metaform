@@ -1,6 +1,6 @@
 <?php
 /**
- * RepliesApiTest
+ * ExportThemeFilesApiTest
  * PHP version 5
  *
  * @category Class
@@ -32,14 +32,14 @@ use \Metatavu\Metaform\ApiException;
 use \Metatavu\Metaform\ObjectSerializer;
 
 /**
- * RepliesApiTest Class Doc Comment
+ * ExportThemeFilesApiTest Class Doc Comment
  *
  * @category Class
  * @package  Metatavu\Metaform
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class RepliesApiTest extends \PHPUnit_Framework_TestCase
+class ExportThemeFilesApiTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -71,72 +71,52 @@ class RepliesApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for createReply
+     * Test case for createExportThemeFile
      *
-     * create new form reply.
+     * create new export theme file.
      *
      */
-    public function testCreateReply()
+    public function testCreateExportThemeFile()
     {
     }
 
     /**
-     * Test case for deleteReply
+     * Test case for deleteExportThemeFile
      *
-     * Deletes a reply.
+     * Deletes an export theme file.
      *
      */
-    public function testDeleteReply()
+    public function testDeleteExportThemeFile()
     {
     }
 
     /**
-     * Test case for export
+     * Test case for findExportThemeFile
      *
-     * Exports metaform data.
+     * Finds single export theme file.
      *
      */
-    public function testExport()
+    public function testFindExportThemeFile()
     {
     }
 
     /**
-     * Test case for findReply
+     * Test case for listExportThemeFiles
      *
-     * Find a single reply.
+     * Lists files of export theme.
      *
      */
-    public function testFindReply()
+    public function testListExportThemeFiles()
     {
     }
 
     /**
-     * Test case for listReplies
+     * Test case for updateExportThemeFile
      *
-     * Lists form replies.
-     *
-     */
-    public function testListReplies()
-    {
-    }
-
-    /**
-     * Test case for replyExport
-     *
-     * Exports reply data.
+     * Updates export theme file.
      *
      */
-    public function testReplyExport()
-    {
-    }
-
-    /**
-     * Test case for updateReply
-     *
-     * Updates reply.
-     *
-     */
-    public function testUpdateReply()
+    public function testUpdateExportThemeFile()
     {
     }
 }

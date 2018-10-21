@@ -238,6 +238,13 @@ class MetaformFieldTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "addRows"
+     */
+    public function testPropertyAddRows()
+    {
+    }
+
+    /**
      * Test attribute "draggable"
      */
     public function testPropertyDraggable()

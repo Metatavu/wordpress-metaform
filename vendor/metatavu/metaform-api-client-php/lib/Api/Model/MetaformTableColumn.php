@@ -57,6 +57,7 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'type' => '\Metatavu\Metaform\Api\Model\MetaformTableColumnType',
+        'name' => 'string',
         'title' => 'string',
         'calculateSum' => 'bool',
         'sumPostfix' => 'string',
@@ -77,6 +78,7 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'type' => null,
+        'name' => null,
         'title' => null,
         'calculateSum' => null,
         'sumPostfix' => null,
@@ -118,6 +120,7 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
      */
     protected static $attributeMap = [
         'type' => 'type',
+        'name' => 'name',
         'title' => 'title',
         'calculateSum' => 'calculate-sum',
         'sumPostfix' => 'sum-postfix',
@@ -138,6 +141,7 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
      */
     protected static $setters = [
         'type' => 'setType',
+        'name' => 'setName',
         'title' => 'setTitle',
         'calculateSum' => 'setCalculateSum',
         'sumPostfix' => 'setSumPostfix',
@@ -158,6 +162,7 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
      */
     protected static $getters = [
         'type' => 'getType',
+        'name' => 'getName',
         'title' => 'getTitle',
         'calculateSum' => 'getCalculateSum',
         'sumPostfix' => 'getSumPostfix',
@@ -232,6 +237,7 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['type'] = isset($data['type']) ? $data['type'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
         $this->container['calculateSum'] = isset($data['calculateSum']) ? $data['calculateSum'] : null;
         $this->container['sumPostfix'] = isset($data['sumPostfix']) ? $data['sumPostfix'] : null;
@@ -254,6 +260,12 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['type'] === null) {
+            $invalidProperties[] = "'type' can't be null";
+        }
+        if ($this->container['name'] === null) {
+            $invalidProperties[] = "'name' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -266,6 +278,12 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
     public function valid()
     {
 
+        if ($this->container['type'] === null) {
+            return false;
+        }
+        if ($this->container['name'] === null) {
+            return false;
+        }
         return true;
     }
 
@@ -290,6 +308,30 @@ class MetaformTableColumn implements ModelInterface, ArrayAccess
     public function setType($type)
     {
         $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     *
+     * @param string $name Column name
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->container['name'] = $name;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * MetaformTest
+ * AttachmentTest
  *
  * PHP version 5
  *
@@ -29,16 +29,16 @@
 namespace Metatavu\Metaform;
 
 /**
- * MetaformTest Class Doc Comment
+ * AttachmentTest Class Doc Comment
  *
  * @category    Class */
-// * @description Metaform
+// * @description Attachment
 /**
  * @package     Metatavu\Metaform
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class MetaformTest extends \PHPUnit_Framework_TestCase
+class AttachmentTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -70,9 +70,9 @@ class MetaformTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "Metaform"
+     * Test "Attachment"
      */
-    public function testMetaform()
+    public function testAttachment()
     {
     }
 
@@ -84,37 +84,16 @@ class MetaformTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "replyStrategy"
+     * Test attribute "name"
      */
-    public function testPropertyReplyStrategy()
+    public function testPropertyName()
     {
     }
 
     /**
-     * Test attribute "exportThemeId"
+     * Test attribute "contentType"
      */
-    public function testPropertyExportThemeId()
-    {
-    }
-
-    /**
-     * Test attribute "allowAnonymous"
-     */
-    public function testPropertyAllowAnonymous()
-    {
-    }
-
-    /**
-     * Test attribute "title"
-     */
-    public function testPropertyTitle()
-    {
-    }
-
-    /**
-     * Test attribute "sections"
-     */
-    public function testPropertySections()
+    public function testPropertyContentType()
     {
     }
 }

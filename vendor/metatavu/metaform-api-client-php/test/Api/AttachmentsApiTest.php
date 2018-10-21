@@ -1,6 +1,6 @@
 <?php
 /**
- * RepliesApiTest
+ * AttachmentsApiTest
  * PHP version 5
  *
  * @category Class
@@ -32,14 +32,14 @@ use \Metatavu\Metaform\ApiException;
 use \Metatavu\Metaform\ObjectSerializer;
 
 /**
- * RepliesApiTest Class Doc Comment
+ * AttachmentsApiTest Class Doc Comment
  *
  * @category Class
  * @package  Metatavu\Metaform
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class RepliesApiTest extends \PHPUnit_Framework_TestCase
+class AttachmentsApiTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -71,72 +71,22 @@ class RepliesApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for createReply
+     * Test case for findAttachment
      *
-     * create new form reply.
+     * Find a attachment by id.
      *
      */
-    public function testCreateReply()
+    public function testFindAttachment()
     {
     }
 
     /**
-     * Test case for deleteReply
+     * Test case for findAttachmentData
      *
-     * Deletes a reply.
-     *
-     */
-    public function testDeleteReply()
-    {
-    }
-
-    /**
-     * Test case for export
-     *
-     * Exports metaform data.
+     * Find a attachment data by id.
      *
      */
-    public function testExport()
-    {
-    }
-
-    /**
-     * Test case for findReply
-     *
-     * Find a single reply.
-     *
-     */
-    public function testFindReply()
-    {
-    }
-
-    /**
-     * Test case for listReplies
-     *
-     * Lists form replies.
-     *
-     */
-    public function testListReplies()
-    {
-    }
-
-    /**
-     * Test case for replyExport
-     *
-     * Exports reply data.
-     *
-     */
-    public function testReplyExport()
-    {
-    }
-
-    /**
-     * Test case for updateReply
-     *
-     * Updates reply.
-     *
-     */
-    public function testUpdateReply()
+    public function testFindAttachmentData()
     {
     }
 }

@@ -6,6 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'XLSXWriter' => $vendorDir . '/mk-j/php_xlsxwriter/xlsxwriter.class.php',
-    'XLSXWriter_BuffererWriter' => $vendorDir . '/mk-j/php_xlsxwriter/xlsxwriter.class.php',
 );

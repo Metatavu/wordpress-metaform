@@ -1,6 +1,6 @@
 <?php
 /**
- * RepliesApi
+ * ExportThemesApi
  * PHP version 5
  *
  * @category Class
@@ -38,14 +38,14 @@ use Metatavu\Metaform\HeaderSelector;
 use Metatavu\Metaform\ObjectSerializer;
 
 /**
- * RepliesApi Class Doc Comment
+ * ExportThemesApi Class Doc Comment
  *
  * @category Class
  * @package  Metatavu\Metaform
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class RepliesApi
+class ExportThemesApi
 {
     /**
      * @var ClientInterface
@@ -81,45 +81,39 @@ class RepliesApi
     }
 
     /**
-     * Operation createReply
+     * Operation createExportTheme
      *
-     * create new form reply
+     * create new form export theme
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
-     * @param  bool $updateExisting specifies that existing reply should be updated. DEPRECATED, use replymode instead (optional)
-     * @param  string $replyMode specifies reply mode that will be used. possible values UPDATE, REVISION, CUMULATIVE (optional)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \Metatavu\Metaform\Api\Model\Reply
+     * @return \Metatavu\Metaform\Api\Model\ExportTheme
      */
-    public function createReply($realmId, $metaformId, $payload, $updateExisting = null, $replyMode = null)
+    public function createExportTheme($realmId, $payload)
     {
-        list($response) = $this->createReplyWithHttpInfo($realmId, $metaformId, $payload, $updateExisting, $replyMode);
+        list($response) = $this->createExportThemeWithHttpInfo($realmId, $payload);
         return $response;
     }
 
     /**
-     * Operation createReplyWithHttpInfo
+     * Operation createExportThemeWithHttpInfo
      *
-     * create new form reply
+     * create new form export theme
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
-     * @param  bool $updateExisting specifies that existing reply should be updated. DEPRECATED, use replymode instead (optional)
-     * @param  string $replyMode specifies reply mode that will be used. possible values UPDATE, REVISION, CUMULATIVE (optional)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \Metatavu\Metaform\Api\Model\Reply, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Metatavu\Metaform\Api\Model\ExportTheme, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createReplyWithHttpInfo($realmId, $metaformId, $payload, $updateExisting = null, $replyMode = null)
+    public function createExportThemeWithHttpInfo($realmId, $payload)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Reply';
-        $request = $this->createReplyRequest($realmId, $metaformId, $payload, $updateExisting, $replyMode);
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportTheme';
+        $request = $this->createExportThemeRequest($realmId, $payload);
 
         try {
 
@@ -169,7 +163,7 @@ class RepliesApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Reply',
+                        '\Metatavu\Metaform\Api\Model\ExportTheme',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -212,22 +206,19 @@ class RepliesApi
     }
 
     /**
-     * Operation createReplyAsync
+     * Operation createExportThemeAsync
      *
-     * create new form reply
+     * create new form export theme
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
-     * @param  bool $updateExisting specifies that existing reply should be updated. DEPRECATED, use replymode instead (optional)
-     * @param  string $replyMode specifies reply mode that will be used. possible values UPDATE, REVISION, CUMULATIVE (optional)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createReplyAsync($realmId, $metaformId, $payload, $updateExisting = null, $replyMode = null)
+    public function createExportThemeAsync($realmId, $payload)
     {
-        return $this->createReplyAsyncWithHttpInfo($realmId, $metaformId, $payload, $updateExisting, $replyMode)
+        return $this->createExportThemeAsyncWithHttpInfo($realmId, $payload)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -236,23 +227,20 @@ class RepliesApi
     }
 
     /**
-     * Operation createReplyAsyncWithHttpInfo
+     * Operation createExportThemeAsyncWithHttpInfo
      *
-     * create new form reply
+     * create new form export theme
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
-     * @param  bool $updateExisting specifies that existing reply should be updated. DEPRECATED, use replymode instead (optional)
-     * @param  string $replyMode specifies reply mode that will be used. possible values UPDATE, REVISION, CUMULATIVE (optional)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createReplyAsyncWithHttpInfo($realmId, $metaformId, $payload, $updateExisting = null, $replyMode = null)
+    public function createExportThemeAsyncWithHttpInfo($realmId, $payload)
     {
-        $returnType = '\Metatavu\Metaform\Api\Model\Reply';
-        $request = $this->createReplyRequest($realmId, $metaformId, $payload, $updateExisting, $replyMode);
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportTheme';
+        $request = $this->createExportThemeRequest($realmId, $payload);
 
         return $this->client
             ->sendAsync($request)
@@ -292,67 +280,42 @@ class RepliesApi
     }
 
     /**
-     * Create request for operation 'createReply'
+     * Create request for operation 'createExportTheme'
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
-     * @param  bool $updateExisting specifies that existing reply should be updated. DEPRECATED, use replymode instead (optional)
-     * @param  string $replyMode specifies reply mode that will be used. possible values UPDATE, REVISION, CUMULATIVE (optional)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function createReplyRequest($realmId, $metaformId, $payload, $updateExisting = null, $replyMode = null)
+    protected function createExportThemeRequest($realmId, $payload)
     {
         // verify the required parameter 'realmId' is set
         if ($realmId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling createReply'
-            );
-        }
-        // verify the required parameter 'metaformId' is set
-        if ($metaformId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling createReply'
+                'Missing the required parameter $realmId when calling createExportTheme'
             );
         }
         // verify the required parameter 'payload' is set
         if ($payload === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $payload when calling createReply'
+                'Missing the required parameter $payload when calling createExportTheme'
             );
         }
 
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/replies';
+        $resourcePath = '/realms/{realmId}/exportThemes';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($updateExisting !== null) {
-            $queryParams['updateExisting'] = ObjectSerializer::toQueryValue($updateExisting);
-        }
-        // query params
-        if ($replyMode !== null) {
-            $queryParams['replyMode'] = ObjectSerializer::toQueryValue($replyMode);
-        }
 
         // path params
         if ($realmId !== null) {
             $resourcePath = str_replace(
                 '{' . 'realmId' . '}',
                 ObjectSerializer::toPathValue($realmId),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($metaformId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'metaformId' . '}',
-                ObjectSerializer::toPathValue($metaformId),
                 $resourcePath
             );
         }
@@ -426,40 +389,365 @@ class RepliesApi
     }
 
     /**
-     * Operation deleteReply
+     * Operation createExportThemeFile
      *
-     * Deletes a reply
+     * create new export theme file
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Metatavu\Metaform\Api\Model\ExportThemeFile
+     */
+    public function createExportThemeFile($realmId, $exportThemeId, $payload)
+    {
+        list($response) = $this->createExportThemeFileWithHttpInfo($realmId, $exportThemeId, $payload);
+        return $response;
+    }
+
+    /**
+     * Operation createExportThemeFileWithHttpInfo
+     *
+     * create new export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Metatavu\Metaform\Api\Model\ExportThemeFile, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function createExportThemeFileWithHttpInfo($realmId, $exportThemeId, $payload)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportThemeFile';
+        $request = $this->createExportThemeFileRequest($realmId, $exportThemeId, $payload);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\ExportThemeFile',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\BadRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\Forbidden',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\NotFound',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\InternalServerError',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation createExportThemeFileAsync
+     *
+     * create new export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createExportThemeFileAsync($realmId, $exportThemeId, $payload)
+    {
+        return $this->createExportThemeFileAsyncWithHttpInfo($realmId, $exportThemeId, $payload)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation createExportThemeFileAsyncWithHttpInfo
+     *
+     * create new export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createExportThemeFileAsyncWithHttpInfo($realmId, $exportThemeId, $payload)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportThemeFile';
+        $request = $this->createExportThemeFileRequest($realmId, $exportThemeId, $payload);
+
+        return $this->client
+            ->sendAsync($request)
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'createExportThemeFile'
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function createExportThemeFileRequest($realmId, $exportThemeId, $payload)
+    {
+        // verify the required parameter 'realmId' is set
+        if ($realmId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $realmId when calling createExportThemeFile'
+            );
+        }
+        // verify the required parameter 'exportThemeId' is set
+        if ($exportThemeId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $exportThemeId when calling createExportThemeFile'
+            );
+        }
+        // verify the required parameter 'payload' is set
+        if ($payload === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $payload when calling createExportThemeFile'
+            );
+        }
+
+        $resourcePath = '/realms/{realmId}/exportThemes/{exportThemeId}/files';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($realmId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'realmId' . '}',
+                ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($exportThemeId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'exportThemeId' . '}',
+                ObjectSerializer::toPathValue($exportThemeId),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($payload)) {
+            $_tempBody = $payload;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json;charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json;charset=utf-8'],
+                ['application/json;charset=utf-8']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation deleteExportTheme
+     *
+     * Deletes an export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function deleteReply($realmId, $metaformId, $replyId)
+    public function deleteExportTheme($realmId, $exportThemeId)
     {
-        $this->deleteReplyWithHttpInfo($realmId, $metaformId, $replyId);
+        $this->deleteExportThemeWithHttpInfo($realmId, $exportThemeId);
     }
 
     /**
-     * Operation deleteReplyWithHttpInfo
+     * Operation deleteExportThemeWithHttpInfo
      *
-     * Deletes a reply
+     * Deletes an export theme
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
+     * @param  string $exportThemeId export theme id (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function deleteReplyWithHttpInfo($realmId, $metaformId, $replyId)
+    public function deleteExportThemeWithHttpInfo($realmId, $exportThemeId)
     {
         $returnType = '';
-        $request = $this->deleteReplyRequest($realmId, $metaformId, $replyId);
+        $request = $this->deleteExportThemeRequest($realmId, $exportThemeId);
 
         try {
 
@@ -530,20 +818,19 @@ class RepliesApi
     }
 
     /**
-     * Operation deleteReplyAsync
+     * Operation deleteExportThemeAsync
      *
-     * Deletes a reply
+     * Deletes an export theme
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
+     * @param  string $exportThemeId export theme id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteReplyAsync($realmId, $metaformId, $replyId)
+    public function deleteExportThemeAsync($realmId, $exportThemeId)
     {
-        return $this->deleteReplyAsyncWithHttpInfo($realmId, $metaformId, $replyId)
+        return $this->deleteExportThemeAsyncWithHttpInfo($realmId, $exportThemeId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -552,21 +839,20 @@ class RepliesApi
     }
 
     /**
-     * Operation deleteReplyAsyncWithHttpInfo
+     * Operation deleteExportThemeAsyncWithHttpInfo
      *
-     * Deletes a reply
+     * Deletes an export theme
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
+     * @param  string $exportThemeId export theme id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function deleteReplyAsyncWithHttpInfo($realmId, $metaformId, $replyId)
+    public function deleteExportThemeAsyncWithHttpInfo($realmId, $exportThemeId)
     {
         $returnType = '';
-        $request = $this->deleteReplyRequest($realmId, $metaformId, $replyId);
+        $request = $this->deleteExportThemeRequest($realmId, $exportThemeId);
 
         return $this->client
             ->sendAsync($request)
@@ -592,37 +878,30 @@ class RepliesApi
     }
 
     /**
-     * Create request for operation 'deleteReply'
+     * Create request for operation 'deleteExportTheme'
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
+     * @param  string $exportThemeId export theme id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteReplyRequest($realmId, $metaformId, $replyId)
+    protected function deleteExportThemeRequest($realmId, $exportThemeId)
     {
         // verify the required parameter 'realmId' is set
         if ($realmId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling deleteReply'
+                'Missing the required parameter $realmId when calling deleteExportTheme'
             );
         }
-        // verify the required parameter 'metaformId' is set
-        if ($metaformId === null) {
+        // verify the required parameter 'exportThemeId' is set
+        if ($exportThemeId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling deleteReply'
-            );
-        }
-        // verify the required parameter 'replyId' is set
-        if ($replyId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $replyId when calling deleteReply'
+                'Missing the required parameter $exportThemeId when calling deleteExportTheme'
             );
         }
 
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/replies/{replyId}';
+        $resourcePath = '/realms/{realmId}/exportThemes/{exportThemeId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -639,18 +918,10 @@ class RepliesApi
             );
         }
         // path params
-        if ($metaformId !== null) {
+        if ($exportThemeId !== null) {
             $resourcePath = str_replace(
-                '{' . 'metaformId' . '}',
-                ObjectSerializer::toPathValue($metaformId),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($replyId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'replyId' . '}',
-                ObjectSerializer::toPathValue($replyId),
+                '{' . 'exportThemeId' . '}',
+                ObjectSerializer::toPathValue($exportThemeId),
                 $resourcePath
             );
         }
@@ -721,1428 +992,40 @@ class RepliesApi
     }
 
     /**
-     * Operation export
+     * Operation deleteExportThemeFile
      *
-     * Exports metaform data
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $format Export results in specified format (XLSX) (required)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return string
-     */
-    public function export($realmId, $metaformId, $format)
-    {
-        list($response) = $this->exportWithHttpInfo($realmId, $metaformId, $format);
-        return $response;
-    }
-
-    /**
-     * Operation exportWithHttpInfo
-     *
-     * Exports metaform data
+     * Deletes an export theme file
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $format Export results in specified format (XLSX) (required)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of string, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function exportWithHttpInfo($realmId, $metaformId, $format)
-    {
-        $returnType = 'string';
-        $request = $this->exportRequest($realmId, $metaformId, $format);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\BadRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Forbidden',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\NotFound',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\InternalServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation exportAsync
-     *
-     * Exports metaform data
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $format Export results in specified format (XLSX) (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function exportAsync($realmId, $metaformId, $format)
-    {
-        return $this->exportAsyncWithHttpInfo($realmId, $metaformId, $format)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation exportAsyncWithHttpInfo
-     *
-     * Exports metaform data
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $format Export results in specified format (XLSX) (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function exportAsyncWithHttpInfo($realmId, $metaformId, $format)
-    {
-        $returnType = 'string';
-        $request = $this->exportRequest($realmId, $metaformId, $format);
-
-        return $this->client
-            ->sendAsync($request)
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'export'
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $format Export results in specified format (XLSX) (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function exportRequest($realmId, $metaformId, $format)
-    {
-        // verify the required parameter 'realmId' is set
-        if ($realmId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling export'
-            );
-        }
-        // verify the required parameter 'metaformId' is set
-        if ($metaformId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling export'
-            );
-        }
-        // verify the required parameter 'format' is set
-        if ($format === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $format when calling export'
-            );
-        }
-
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/export';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        if ($format !== null) {
-            $queryParams['format'] = ObjectSerializer::toQueryValue($format);
-        }
-
-        // path params
-        if ($realmId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'realmId' . '}',
-                ObjectSerializer::toPathValue($realmId),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($metaformId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'metaformId' . '}',
-                ObjectSerializer::toPathValue($metaformId),
-                $resourcePath
-            );
-        }
-
-        // body params
-        $_tempBody = null;
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json;charset=utf-8']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json;charset=utf-8'],
-                ['application/json;charset=utf-8']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
-        if ($apiKey !== null) {
-            $headers['Authorization'] = $apiKey;
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation findReply
-     *
-     * Find a single reply
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Metatavu\Metaform\Api\Model\Reply
-     */
-    public function findReply($realmId, $metaformId, $replyId)
-    {
-        list($response) = $this->findReplyWithHttpInfo($realmId, $metaformId, $replyId);
-        return $response;
-    }
-
-    /**
-     * Operation findReplyWithHttpInfo
-     *
-     * Find a single reply
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Metatavu\Metaform\Api\Model\Reply, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function findReplyWithHttpInfo($realmId, $metaformId, $replyId)
-    {
-        $returnType = '\Metatavu\Metaform\Api\Model\Reply';
-        $request = $this->findReplyRequest($realmId, $metaformId, $replyId);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Reply',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\BadRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Forbidden',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\NotFound',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\InternalServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation findReplyAsync
-     *
-     * Find a single reply
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function findReplyAsync($realmId, $metaformId, $replyId)
-    {
-        return $this->findReplyAsyncWithHttpInfo($realmId, $metaformId, $replyId)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation findReplyAsyncWithHttpInfo
-     *
-     * Find a single reply
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function findReplyAsyncWithHttpInfo($realmId, $metaformId, $replyId)
-    {
-        $returnType = '\Metatavu\Metaform\Api\Model\Reply';
-        $request = $this->findReplyRequest($realmId, $metaformId, $replyId);
-
-        return $this->client
-            ->sendAsync($request)
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'findReply'
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function findReplyRequest($realmId, $metaformId, $replyId)
-    {
-        // verify the required parameter 'realmId' is set
-        if ($realmId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling findReply'
-            );
-        }
-        // verify the required parameter 'metaformId' is set
-        if ($metaformId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling findReply'
-            );
-        }
-        // verify the required parameter 'replyId' is set
-        if ($replyId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $replyId when calling findReply'
-            );
-        }
-
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/replies/{replyId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($realmId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'realmId' . '}',
-                ObjectSerializer::toPathValue($realmId),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($metaformId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'metaformId' . '}',
-                ObjectSerializer::toPathValue($metaformId),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($replyId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'replyId' . '}',
-                ObjectSerializer::toPathValue($replyId),
-                $resourcePath
-            );
-        }
-
-        // body params
-        $_tempBody = null;
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json;charset=utf-8']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json;charset=utf-8'],
-                ['application/json;charset=utf-8']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
-        if ($apiKey !== null) {
-            $headers['Authorization'] = $apiKey;
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation listReplies
-     *
-     * Lists form replies
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $userId Filter results by user id. If this parameter is not specified all replies are returned, this requires logged user to have proper permission to do so (optional)
-     * @param  string $createdBefore Filter results created before specified time (optional)
-     * @param  string $createdAfter Filter results created after specified time (optional)
-     * @param  string $modifiedBefore Filter results modified before specified time (optional)
-     * @param  string $modifiedAfter Filter results modified after specified time (optional)
-     * @param  bool $includeRevisions Specifies that revisions should be included into response (optional)
-     * @param  string[] $fields Filter results by field values. Format is field:value, multiple values can be added by using comma separator. E.g. field1&#x3D;value,field2&#x3D;another (optional)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Metatavu\Metaform\Api\Model\Reply[]
-     */
-    public function listReplies($realmId, $metaformId, $userId = null, $createdBefore = null, $createdAfter = null, $modifiedBefore = null, $modifiedAfter = null, $includeRevisions = null, $fields = null)
-    {
-        list($response) = $this->listRepliesWithHttpInfo($realmId, $metaformId, $userId, $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter, $includeRevisions, $fields);
-        return $response;
-    }
-
-    /**
-     * Operation listRepliesWithHttpInfo
-     *
-     * Lists form replies
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $userId Filter results by user id. If this parameter is not specified all replies are returned, this requires logged user to have proper permission to do so (optional)
-     * @param  string $createdBefore Filter results created before specified time (optional)
-     * @param  string $createdAfter Filter results created after specified time (optional)
-     * @param  string $modifiedBefore Filter results modified before specified time (optional)
-     * @param  string $modifiedAfter Filter results modified after specified time (optional)
-     * @param  bool $includeRevisions Specifies that revisions should be included into response (optional)
-     * @param  string[] $fields Filter results by field values. Format is field:value, multiple values can be added by using comma separator. E.g. field1&#x3D;value,field2&#x3D;another (optional)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Metatavu\Metaform\Api\Model\Reply[], HTTP status code, HTTP response headers (array of strings)
-     */
-    public function listRepliesWithHttpInfo($realmId, $metaformId, $userId = null, $createdBefore = null, $createdAfter = null, $modifiedBefore = null, $modifiedAfter = null, $includeRevisions = null, $fields = null)
-    {
-        $returnType = '\Metatavu\Metaform\Api\Model\Reply[]';
-        $request = $this->listRepliesRequest($realmId, $metaformId, $userId, $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter, $includeRevisions, $fields);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Reply[]',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\BadRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Forbidden',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\NotFound',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\InternalServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation listRepliesAsync
-     *
-     * Lists form replies
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $userId Filter results by user id. If this parameter is not specified all replies are returned, this requires logged user to have proper permission to do so (optional)
-     * @param  string $createdBefore Filter results created before specified time (optional)
-     * @param  string $createdAfter Filter results created after specified time (optional)
-     * @param  string $modifiedBefore Filter results modified before specified time (optional)
-     * @param  string $modifiedAfter Filter results modified after specified time (optional)
-     * @param  bool $includeRevisions Specifies that revisions should be included into response (optional)
-     * @param  string[] $fields Filter results by field values. Format is field:value, multiple values can be added by using comma separator. E.g. field1&#x3D;value,field2&#x3D;another (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listRepliesAsync($realmId, $metaformId, $userId = null, $createdBefore = null, $createdAfter = null, $modifiedBefore = null, $modifiedAfter = null, $includeRevisions = null, $fields = null)
-    {
-        return $this->listRepliesAsyncWithHttpInfo($realmId, $metaformId, $userId, $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter, $includeRevisions, $fields)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation listRepliesAsyncWithHttpInfo
-     *
-     * Lists form replies
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $userId Filter results by user id. If this parameter is not specified all replies are returned, this requires logged user to have proper permission to do so (optional)
-     * @param  string $createdBefore Filter results created before specified time (optional)
-     * @param  string $createdAfter Filter results created after specified time (optional)
-     * @param  string $modifiedBefore Filter results modified before specified time (optional)
-     * @param  string $modifiedAfter Filter results modified after specified time (optional)
-     * @param  bool $includeRevisions Specifies that revisions should be included into response (optional)
-     * @param  string[] $fields Filter results by field values. Format is field:value, multiple values can be added by using comma separator. E.g. field1&#x3D;value,field2&#x3D;another (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function listRepliesAsyncWithHttpInfo($realmId, $metaformId, $userId = null, $createdBefore = null, $createdAfter = null, $modifiedBefore = null, $modifiedAfter = null, $includeRevisions = null, $fields = null)
-    {
-        $returnType = '\Metatavu\Metaform\Api\Model\Reply[]';
-        $request = $this->listRepliesRequest($realmId, $metaformId, $userId, $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter, $includeRevisions, $fields);
-
-        return $this->client
-            ->sendAsync($request)
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'listReplies'
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $userId Filter results by user id. If this parameter is not specified all replies are returned, this requires logged user to have proper permission to do so (optional)
-     * @param  string $createdBefore Filter results created before specified time (optional)
-     * @param  string $createdAfter Filter results created after specified time (optional)
-     * @param  string $modifiedBefore Filter results modified before specified time (optional)
-     * @param  string $modifiedAfter Filter results modified after specified time (optional)
-     * @param  bool $includeRevisions Specifies that revisions should be included into response (optional)
-     * @param  string[] $fields Filter results by field values. Format is field:value, multiple values can be added by using comma separator. E.g. field1&#x3D;value,field2&#x3D;another (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function listRepliesRequest($realmId, $metaformId, $userId = null, $createdBefore = null, $createdAfter = null, $modifiedBefore = null, $modifiedAfter = null, $includeRevisions = null, $fields = null)
-    {
-        // verify the required parameter 'realmId' is set
-        if ($realmId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling listReplies'
-            );
-        }
-        // verify the required parameter 'metaformId' is set
-        if ($metaformId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling listReplies'
-            );
-        }
-
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/replies';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        if ($userId !== null) {
-            $queryParams['userId'] = ObjectSerializer::toQueryValue($userId);
-        }
-        // query params
-        if ($createdBefore !== null) {
-            $queryParams['createdBefore'] = ObjectSerializer::toQueryValue($createdBefore);
-        }
-        // query params
-        if ($createdAfter !== null) {
-            $queryParams['createdAfter'] = ObjectSerializer::toQueryValue($createdAfter);
-        }
-        // query params
-        if ($modifiedBefore !== null) {
-            $queryParams['modifiedBefore'] = ObjectSerializer::toQueryValue($modifiedBefore);
-        }
-        // query params
-        if ($modifiedAfter !== null) {
-            $queryParams['modifiedAfter'] = ObjectSerializer::toQueryValue($modifiedAfter);
-        }
-        // query params
-        if ($includeRevisions !== null) {
-            $queryParams['includeRevisions'] = ObjectSerializer::toQueryValue($includeRevisions);
-        }
-        // query params
-        if (is_array($fields)) {
-            $fields = ObjectSerializer::serializeCollection($fields, 'csv', true);
-        }
-        if ($fields !== null) {
-            $queryParams['fields'] = ObjectSerializer::toQueryValue($fields);
-        }
-
-        // path params
-        if ($realmId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'realmId' . '}',
-                ObjectSerializer::toPathValue($realmId),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($metaformId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'metaformId' . '}',
-                ObjectSerializer::toPathValue($metaformId),
-                $resourcePath
-            );
-        }
-
-        // body params
-        $_tempBody = null;
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json;charset=utf-8']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json;charset=utf-8'],
-                ['application/json;charset=utf-8']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
-        if ($apiKey !== null) {
-            $headers['Authorization'] = $apiKey;
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation replyExport
-     *
-     * Exports reply data
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  string $format Export results in specified format (PDF) (required)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return string
-     */
-    public function replyExport($realmId, $metaformId, $replyId, $format)
-    {
-        list($response) = $this->replyExportWithHttpInfo($realmId, $metaformId, $replyId, $format);
-        return $response;
-    }
-
-    /**
-     * Operation replyExportWithHttpInfo
-     *
-     * Exports reply data
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  string $format Export results in specified format (PDF) (required)
-     *
-     * @throws \Metatavu\Metaform\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of string, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function replyExportWithHttpInfo($realmId, $metaformId, $replyId, $format)
-    {
-        $returnType = 'string';
-        $request = $this->replyExportRequest($realmId, $metaformId, $replyId, $format);
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'string',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\BadRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\Forbidden',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\NotFound',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Metatavu\Metaform\Api\Model\InternalServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation replyExportAsync
-     *
-     * Exports reply data
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  string $format Export results in specified format (PDF) (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function replyExportAsync($realmId, $metaformId, $replyId, $format)
-    {
-        return $this->replyExportAsyncWithHttpInfo($realmId, $metaformId, $replyId, $format)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation replyExportAsyncWithHttpInfo
-     *
-     * Exports reply data
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  string $format Export results in specified format (PDF) (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function replyExportAsyncWithHttpInfo($realmId, $metaformId, $replyId, $format)
-    {
-        $returnType = 'string';
-        $request = $this->replyExportRequest($realmId, $metaformId, $replyId, $format);
-
-        return $this->client
-            ->sendAsync($request)
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'replyExport'
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  string $format Export results in specified format (PDF) (required)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function replyExportRequest($realmId, $metaformId, $replyId, $format)
-    {
-        // verify the required parameter 'realmId' is set
-        if ($realmId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling replyExport'
-            );
-        }
-        // verify the required parameter 'metaformId' is set
-        if ($metaformId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling replyExport'
-            );
-        }
-        // verify the required parameter 'replyId' is set
-        if ($replyId === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $replyId when calling replyExport'
-            );
-        }
-        // verify the required parameter 'format' is set
-        if ($format === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $format when calling replyExport'
-            );
-        }
-
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/replies/{replyId}/export';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        if ($format !== null) {
-            $queryParams['format'] = ObjectSerializer::toQueryValue($format);
-        }
-
-        // path params
-        if ($realmId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'realmId' . '}',
-                ObjectSerializer::toPathValue($realmId),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($metaformId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'metaformId' . '}',
-                ObjectSerializer::toPathValue($metaformId),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($replyId !== null) {
-            $resourcePath = str_replace(
-                '{' . 'replyId' . '}',
-                ObjectSerializer::toPathValue($replyId),
-                $resourcePath
-            );
-        }
-
-        // body params
-        $_tempBody = null;
-
-        if ($multipart) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json;charset=utf-8']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json;charset=utf-8'],
-                ['application/json;charset=utf-8']
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-        // this endpoint requires API key authentication
-        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
-        if ($apiKey !== null) {
-            $headers['Authorization'] = $apiKey;
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation updateReply
-     *
-     * Updates reply
-     *
-     * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
      */
-    public function updateReply($realmId, $metaformId, $replyId, $payload)
+    public function deleteExportThemeFile($realmId, $exportThemeId, $exportThemeFileId)
     {
-        $this->updateReplyWithHttpInfo($realmId, $metaformId, $replyId, $payload);
+        $this->deleteExportThemeFileWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId);
     }
 
     /**
-     * Operation updateReplyWithHttpInfo
+     * Operation deleteExportThemeFileWithHttpInfo
      *
-     * Updates reply
+     * Deletes an export theme file
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
      *
      * @throws \Metatavu\Metaform\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function updateReplyWithHttpInfo($realmId, $metaformId, $replyId, $payload)
+    public function deleteExportThemeFileWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId)
     {
         $returnType = '';
-        $request = $this->updateReplyRequest($realmId, $metaformId, $replyId, $payload);
+        $request = $this->deleteExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId);
 
         try {
 
@@ -2213,21 +1096,20 @@ class RepliesApi
     }
 
     /**
-     * Operation updateReplyAsync
+     * Operation deleteExportThemeFileAsync
      *
-     * Updates reply
+     * Deletes an export theme file
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateReplyAsync($realmId, $metaformId, $replyId, $payload)
+    public function deleteExportThemeFileAsync($realmId, $exportThemeId, $exportThemeFileId)
     {
-        return $this->updateReplyAsyncWithHttpInfo($realmId, $metaformId, $replyId, $payload)
+        return $this->deleteExportThemeFileAsyncWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2236,22 +1118,21 @@ class RepliesApi
     }
 
     /**
-     * Operation updateReplyAsyncWithHttpInfo
+     * Operation deleteExportThemeFileAsyncWithHttpInfo
      *
-     * Updates reply
+     * Deletes an export theme file
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function updateReplyAsyncWithHttpInfo($realmId, $metaformId, $replyId, $payload)
+    public function deleteExportThemeFileAsyncWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId)
     {
         $returnType = '';
-        $request = $this->updateReplyRequest($realmId, $metaformId, $replyId, $payload);
+        $request = $this->deleteExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId);
 
         return $this->client
             ->sendAsync($request)
@@ -2277,44 +1158,37 @@ class RepliesApi
     }
 
     /**
-     * Create request for operation 'updateReply'
+     * Create request for operation 'deleteExportThemeFile'
      *
      * @param  string $realmId realm id (required)
-     * @param  string $metaformId Metaform id (required)
-     * @param  string $replyId Reply id (required)
-     * @param  \Metatavu\Metaform\Api\Model\Reply $payload Payload (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function updateReplyRequest($realmId, $metaformId, $replyId, $payload)
+    protected function deleteExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId)
     {
         // verify the required parameter 'realmId' is set
         if ($realmId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $realmId when calling updateReply'
+                'Missing the required parameter $realmId when calling deleteExportThemeFile'
             );
         }
-        // verify the required parameter 'metaformId' is set
-        if ($metaformId === null) {
+        // verify the required parameter 'exportThemeId' is set
+        if ($exportThemeId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $metaformId when calling updateReply'
+                'Missing the required parameter $exportThemeId when calling deleteExportThemeFile'
             );
         }
-        // verify the required parameter 'replyId' is set
-        if ($replyId === null) {
+        // verify the required parameter 'exportThemeFileId' is set
+        if ($exportThemeFileId === null) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $replyId when calling updateReply'
-            );
-        }
-        // verify the required parameter 'payload' is set
-        if ($payload === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $payload when calling updateReply'
+                'Missing the required parameter $exportThemeFileId when calling deleteExportThemeFile'
             );
         }
 
-        $resourcePath = '/realms/{realmId}/metaforms/{metaformId}/replies/{replyId}';
+        $resourcePath = '/realms/{realmId}/exportThemes/{exportThemeId}/files/{exportThemeFileId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2331,18 +1205,1940 @@ class RepliesApi
             );
         }
         // path params
-        if ($metaformId !== null) {
+        if ($exportThemeId !== null) {
             $resourcePath = str_replace(
-                '{' . 'metaformId' . '}',
-                ObjectSerializer::toPathValue($metaformId),
+                '{' . 'exportThemeId' . '}',
+                ObjectSerializer::toPathValue($exportThemeId),
                 $resourcePath
             );
         }
         // path params
-        if ($replyId !== null) {
+        if ($exportThemeFileId !== null) {
             $resourcePath = str_replace(
-                '{' . 'replyId' . '}',
-                ObjectSerializer::toPathValue($replyId),
+                '{' . 'exportThemeFileId' . '}',
+                ObjectSerializer::toPathValue($exportThemeFileId),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json;charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json;charset=utf-8'],
+                ['application/json;charset=utf-8']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'DELETE',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation findExportTheme
+     *
+     * Finds single export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Metatavu\Metaform\Api\Model\ExportTheme
+     */
+    public function findExportTheme($realmId, $exportThemeId)
+    {
+        list($response) = $this->findExportThemeWithHttpInfo($realmId, $exportThemeId);
+        return $response;
+    }
+
+    /**
+     * Operation findExportThemeWithHttpInfo
+     *
+     * Finds single export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Metatavu\Metaform\Api\Model\ExportTheme, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function findExportThemeWithHttpInfo($realmId, $exportThemeId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportTheme';
+        $request = $this->findExportThemeRequest($realmId, $exportThemeId);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\ExportTheme',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\BadRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\Forbidden',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\NotFound',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\InternalServerError',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation findExportThemeAsync
+     *
+     * Finds single export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function findExportThemeAsync($realmId, $exportThemeId)
+    {
+        return $this->findExportThemeAsyncWithHttpInfo($realmId, $exportThemeId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation findExportThemeAsyncWithHttpInfo
+     *
+     * Finds single export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function findExportThemeAsyncWithHttpInfo($realmId, $exportThemeId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportTheme';
+        $request = $this->findExportThemeRequest($realmId, $exportThemeId);
+
+        return $this->client
+            ->sendAsync($request)
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'findExportTheme'
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function findExportThemeRequest($realmId, $exportThemeId)
+    {
+        // verify the required parameter 'realmId' is set
+        if ($realmId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $realmId when calling findExportTheme'
+            );
+        }
+        // verify the required parameter 'exportThemeId' is set
+        if ($exportThemeId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $exportThemeId when calling findExportTheme'
+            );
+        }
+
+        $resourcePath = '/realms/{realmId}/exportThemes/{exportThemeId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($realmId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'realmId' . '}',
+                ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($exportThemeId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'exportThemeId' . '}',
+                ObjectSerializer::toPathValue($exportThemeId),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json;charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json;charset=utf-8'],
+                ['application/json;charset=utf-8']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation findExportThemeFile
+     *
+     * Finds single export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Metatavu\Metaform\Api\Model\ExportThemeFile
+     */
+    public function findExportThemeFile($realmId, $exportThemeId, $exportThemeFileId)
+    {
+        list($response) = $this->findExportThemeFileWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId);
+        return $response;
+    }
+
+    /**
+     * Operation findExportThemeFileWithHttpInfo
+     *
+     * Finds single export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Metatavu\Metaform\Api\Model\ExportThemeFile, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function findExportThemeFileWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportThemeFile';
+        $request = $this->findExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\ExportThemeFile',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\BadRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\Forbidden',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\NotFound',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\InternalServerError',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation findExportThemeFileAsync
+     *
+     * Finds single export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function findExportThemeFileAsync($realmId, $exportThemeId, $exportThemeFileId)
+    {
+        return $this->findExportThemeFileAsyncWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation findExportThemeFileAsyncWithHttpInfo
+     *
+     * Finds single export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function findExportThemeFileAsyncWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportThemeFile';
+        $request = $this->findExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId);
+
+        return $this->client
+            ->sendAsync($request)
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'findExportThemeFile'
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     * @param  string $exportThemeFileId export theme file id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function findExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId)
+    {
+        // verify the required parameter 'realmId' is set
+        if ($realmId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $realmId when calling findExportThemeFile'
+            );
+        }
+        // verify the required parameter 'exportThemeId' is set
+        if ($exportThemeId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $exportThemeId when calling findExportThemeFile'
+            );
+        }
+        // verify the required parameter 'exportThemeFileId' is set
+        if ($exportThemeFileId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $exportThemeFileId when calling findExportThemeFile'
+            );
+        }
+
+        $resourcePath = '/realms/{realmId}/exportThemes/{exportThemeId}/files/{exportThemeFileId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($realmId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'realmId' . '}',
+                ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($exportThemeId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'exportThemeId' . '}',
+                ObjectSerializer::toPathValue($exportThemeId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($exportThemeFileId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'exportThemeFileId' . '}',
+                ObjectSerializer::toPathValue($exportThemeFileId),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json;charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json;charset=utf-8'],
+                ['application/json;charset=utf-8']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listExportThemeFiles
+     *
+     * Lists files of export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Metatavu\Metaform\Api\Model\ExportThemeFile[]
+     */
+    public function listExportThemeFiles($realmId, $exportThemeId)
+    {
+        list($response) = $this->listExportThemeFilesWithHttpInfo($realmId, $exportThemeId);
+        return $response;
+    }
+
+    /**
+     * Operation listExportThemeFilesWithHttpInfo
+     *
+     * Lists files of export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Metatavu\Metaform\Api\Model\ExportThemeFile[], HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listExportThemeFilesWithHttpInfo($realmId, $exportThemeId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportThemeFile[]';
+        $request = $this->listExportThemeFilesRequest($realmId, $exportThemeId);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\ExportThemeFile[]',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\BadRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\Forbidden',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\NotFound',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\InternalServerError',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listExportThemeFilesAsync
+     *
+     * Lists files of export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listExportThemeFilesAsync($realmId, $exportThemeId)
+    {
+        return $this->listExportThemeFilesAsyncWithHttpInfo($realmId, $exportThemeId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listExportThemeFilesAsyncWithHttpInfo
+     *
+     * Lists files of export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listExportThemeFilesAsyncWithHttpInfo($realmId, $exportThemeId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportThemeFile[]';
+        $request = $this->listExportThemeFilesRequest($realmId, $exportThemeId);
+
+        return $this->client
+            ->sendAsync($request)
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listExportThemeFiles'
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId export theme id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function listExportThemeFilesRequest($realmId, $exportThemeId)
+    {
+        // verify the required parameter 'realmId' is set
+        if ($realmId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $realmId when calling listExportThemeFiles'
+            );
+        }
+        // verify the required parameter 'exportThemeId' is set
+        if ($exportThemeId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $exportThemeId when calling listExportThemeFiles'
+            );
+        }
+
+        $resourcePath = '/realms/{realmId}/exportThemes/{exportThemeId}/files';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($realmId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'realmId' . '}',
+                ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($exportThemeId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'exportThemeId' . '}',
+                ObjectSerializer::toPathValue($exportThemeId),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json;charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json;charset=utf-8'],
+                ['application/json;charset=utf-8']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation listExportThemes
+     *
+     * Lists form export themes
+     *
+     * @param  string $realmId realm id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Metatavu\Metaform\Api\Model\ExportTheme[]
+     */
+    public function listExportThemes($realmId)
+    {
+        list($response) = $this->listExportThemesWithHttpInfo($realmId);
+        return $response;
+    }
+
+    /**
+     * Operation listExportThemesWithHttpInfo
+     *
+     * Lists form export themes
+     *
+     * @param  string $realmId realm id (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Metatavu\Metaform\Api\Model\ExportTheme[], HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listExportThemesWithHttpInfo($realmId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportTheme[]';
+        $request = $this->listExportThemesRequest($realmId);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\ExportTheme[]',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\BadRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\Forbidden',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\NotFound',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\InternalServerError',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listExportThemesAsync
+     *
+     * Lists form export themes
+     *
+     * @param  string $realmId realm id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listExportThemesAsync($realmId)
+    {
+        return $this->listExportThemesAsyncWithHttpInfo($realmId)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation listExportThemesAsyncWithHttpInfo
+     *
+     * Lists form export themes
+     *
+     * @param  string $realmId realm id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function listExportThemesAsyncWithHttpInfo($realmId)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportTheme[]';
+        $request = $this->listExportThemesRequest($realmId);
+
+        return $this->client
+            ->sendAsync($request)
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'listExportThemes'
+     *
+     * @param  string $realmId realm id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function listExportThemesRequest($realmId)
+    {
+        // verify the required parameter 'realmId' is set
+        if ($realmId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $realmId when calling listExportThemes'
+            );
+        }
+
+        $resourcePath = '/realms/{realmId}/exportThemes';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($realmId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'realmId' . '}',
+                ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json;charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json;charset=utf-8'],
+                ['application/json;charset=utf-8']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation updateExportTheme
+     *
+     * Updates export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Metatavu\Metaform\Api\Model\ExportTheme
+     */
+    public function updateExportTheme($realmId, $exportThemeId, $payload)
+    {
+        list($response) = $this->updateExportThemeWithHttpInfo($realmId, $exportThemeId, $payload);
+        return $response;
+    }
+
+    /**
+     * Operation updateExportThemeWithHttpInfo
+     *
+     * Updates export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Metatavu\Metaform\Api\Model\ExportTheme, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateExportThemeWithHttpInfo($realmId, $exportThemeId, $payload)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportTheme';
+        $request = $this->updateExportThemeRequest($realmId, $exportThemeId, $payload);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\ExportTheme',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\BadRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\Forbidden',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\NotFound',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\InternalServerError',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateExportThemeAsync
+     *
+     * Updates export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateExportThemeAsync($realmId, $exportThemeId, $payload)
+    {
+        return $this->updateExportThemeAsyncWithHttpInfo($realmId, $exportThemeId, $payload)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateExportThemeAsyncWithHttpInfo
+     *
+     * Updates export theme
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateExportThemeAsyncWithHttpInfo($realmId, $exportThemeId, $payload)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportTheme';
+        $request = $this->updateExportThemeRequest($realmId, $exportThemeId, $payload);
+
+        return $this->client
+            ->sendAsync($request)
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateExportTheme'
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportTheme $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function updateExportThemeRequest($realmId, $exportThemeId, $payload)
+    {
+        // verify the required parameter 'realmId' is set
+        if ($realmId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $realmId when calling updateExportTheme'
+            );
+        }
+        // verify the required parameter 'exportThemeId' is set
+        if ($exportThemeId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $exportThemeId when calling updateExportTheme'
+            );
+        }
+        // verify the required parameter 'payload' is set
+        if ($payload === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $payload when calling updateExportTheme'
+            );
+        }
+
+        $resourcePath = '/realms/{realmId}/exportThemes/{exportThemeId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($realmId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'realmId' . '}',
+                ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($exportThemeId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'exportThemeId' . '}',
+                ObjectSerializer::toPathValue($exportThemeId),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($payload)) {
+            $_tempBody = $payload;
+        }
+
+        if ($multipart) {
+            $headers= $this->headerSelector->selectHeadersForMultipart(
+                ['application/json;charset=utf-8']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json;charset=utf-8'],
+                ['application/json;charset=utf-8']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('Authorization');
+        if ($apiKey !== null) {
+            $headers['Authorization'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'PUT',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation updateExportThemeFile
+     *
+     * Updates export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  string $exportThemeFileId ExportThemeFile file id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Metatavu\Metaform\Api\Model\ExportThemeFile
+     */
+    public function updateExportThemeFile($realmId, $exportThemeId, $exportThemeFileId, $payload)
+    {
+        list($response) = $this->updateExportThemeFileWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId, $payload);
+        return $response;
+    }
+
+    /**
+     * Operation updateExportThemeFileWithHttpInfo
+     *
+     * Updates export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  string $exportThemeFileId ExportThemeFile file id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \Metatavu\Metaform\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Metatavu\Metaform\Api\Model\ExportThemeFile, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function updateExportThemeFileWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId, $payload)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportThemeFile';
+        $request = $this->updateExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId, $payload);
+
+        try {
+
+            try {
+                $response = $this->client->send($request);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\ExportThemeFile',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\BadRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\Forbidden',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\NotFound',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Metatavu\Metaform\Api\Model\InternalServerError',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation updateExportThemeFileAsync
+     *
+     * Updates export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  string $exportThemeFileId ExportThemeFile file id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateExportThemeFileAsync($realmId, $exportThemeId, $exportThemeFileId, $payload)
+    {
+        return $this->updateExportThemeFileAsyncWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId, $payload)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateExportThemeFileAsyncWithHttpInfo
+     *
+     * Updates export theme file
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  string $exportThemeFileId ExportThemeFile file id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateExportThemeFileAsyncWithHttpInfo($realmId, $exportThemeId, $exportThemeFileId, $payload)
+    {
+        $returnType = '\Metatavu\Metaform\Api\Model\ExportThemeFile';
+        $request = $this->updateExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId, $payload);
+
+        return $this->client
+            ->sendAsync($request)
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateExportThemeFile'
+     *
+     * @param  string $realmId realm id (required)
+     * @param  string $exportThemeId ExportTheme id (required)
+     * @param  string $exportThemeFileId ExportThemeFile file id (required)
+     * @param  \Metatavu\Metaform\Api\Model\ExportThemeFile $payload Payload (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function updateExportThemeFileRequest($realmId, $exportThemeId, $exportThemeFileId, $payload)
+    {
+        // verify the required parameter 'realmId' is set
+        if ($realmId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $realmId when calling updateExportThemeFile'
+            );
+        }
+        // verify the required parameter 'exportThemeId' is set
+        if ($exportThemeId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $exportThemeId when calling updateExportThemeFile'
+            );
+        }
+        // verify the required parameter 'exportThemeFileId' is set
+        if ($exportThemeFileId === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $exportThemeFileId when calling updateExportThemeFile'
+            );
+        }
+        // verify the required parameter 'payload' is set
+        if ($payload === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $payload when calling updateExportThemeFile'
+            );
+        }
+
+        $resourcePath = '/realms/{realmId}/exportThemes/{exportThemeId}/files/{exportThemeFileId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($realmId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'realmId' . '}',
+                ObjectSerializer::toPathValue($realmId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($exportThemeId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'exportThemeId' . '}',
+                ObjectSerializer::toPathValue($exportThemeId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($exportThemeFileId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'exportThemeFileId' . '}',
+                ObjectSerializer::toPathValue($exportThemeFileId),
                 $resourcePath
             );
         }

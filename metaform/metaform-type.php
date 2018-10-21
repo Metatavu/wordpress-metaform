@@ -22,10 +22,10 @@
       public function __construct() {
         $this->registerMetaformType();
 
+        add_action('admin_enqueue_scripts', [$this, 'enqueScripts']);
         add_action('admin_init',[$this, "adminInit"]);
         add_action('add_meta_boxes', [$this, "addMetaboxes"], 9999, 2);
-        add_action('save_post', [$this, "savePost"]);
-        add_filter('post_row_actions', [$this, "postRowActionsFilter"], 10, 2);    
+        add_action('save_post_metaform', [$this, "saveMetaformPost"]);    
         
         wp_register_style('codemirror', '//cdn.metatavu.io/libs/codemirror/5.35.0/lib/codemirror.css');
         wp_register_style('codemirror-js', plugin_dir_url(dirname(__FILE__)) . 'codemirror-js.css', ['codemirror']);
@@ -35,43 +35,23 @@
       }
 
       /**
-       * Admin init action
+       * Enque scripts hook
        */
-      public function adminInit() {
-        if (isset($_REQUEST['action']) && 'xlsx-export' == $_REQUEST['action'] && $_REQUEST['post']) {
-          $this->exportExcel($_REQUEST['post']);
-        }
-
-        if (isset($_REQUEST['action']) && 'api-migrate' == $_REQUEST['action'] && $_REQUEST['post']) {
-          $this->apiMigrate($_REQUEST['post'], intval($_REQUEST['offset']), $_REQUEST['metaformId']);
+      function enqueScripts() {
+        switch(get_post_type()) {
+          case 'metaform':
+            wp_dequeue_script('autosave');
+            break;
         }
       }
 
       /**
-       * Processes Metaform row actions
-       * 
-       * @param String[] $actions array of actions
-       * @param \WP_Post $post post
-       * @return returns altered actions array 
+       * Admin init action
        */
-      public function postRowActionsFilter($actions, $post) {
-        if ($post->post_type == "metaform") {
-          if (current_user_can('metaform_read_replies')) {
-            $url = add_query_arg(['post' => $post->ID, 'action' => 'xlsx-export']);
-            $exportLink = add_query_arg(['action' => 'xlsx-export'], $url);
-            $actions["xlsx-export"] = sprintf('<a href="%1$s">%2$s</a>', $exportLink, esc_html(__( 'Excel Export', 'metaform' )));
-          }
-
-          if (current_user_can('metaform_migrate')) {
-            $apiId = get_post_meta($post->ID, "metaform-api-id", true);
-            if (empty($apiId) && !empty(Settings::getValue("api-url"))) {
-              $migrateLink = add_query_arg(['post' => $post->ID, 'action' => 'api-migrate', 'offset' => '0']);              
-              $actions["api-migrate"] = sprintf('<a href="%1$s">%2$s</a>', $migrateLink, esc_html(__( 'Migrate to API', 'metaform' )));                
-            }
-          }
+      public function adminInit() {
+        if (isset($_REQUEST['action']) && 'api-migrate' == $_REQUEST['action'] && $_REQUEST['post']) {
+          $this->apiMigrate($_REQUEST['post'], intval($_REQUEST['offset']), $_REQUEST['metaformId']);
         }
-
-        return $actions;
       }
 
       /**
@@ -79,7 +59,6 @@
        */
       public function addMetaboxes() {
         add_meta_box('metaform-json-meta-box', __( 'Metaform JSON', 'metaform' ), [$this, 'renderJsonMetaBox'], 'metaform', 'normal', 'default');
-        add_meta_box('metaform-reply-strategy-meta-box', __( 'Reply strategy', 'metaform' ), [$this, 'renderReplyStrategyMetaBox'], 'metaform', 'side');
       }
 
       /**
@@ -88,44 +67,39 @@
        * @param \WP_Post $metaform metaform post objects
        */
       public function renderJsonMetaBox($metaform) {
+        global $post;
         wp_enqueue_style('codemirror-js');
         wp_enqueue_script('codemirror-js');
-        $json = get_post_meta($metaform->ID, "metaform-json", true);
-        echo sprintf('<textarea class="codemirror" name="metaform-json" style="%s" rows="20">%s</textarea>', 'width: 100%', htmlspecialchars($json));
-      }
+        
+        $metaformsApi = ApiClient::getMetaformsApi();
+        $realmId = Settings::getValue("realm-id");
+        $metaformId = get_post_meta($post->ID, 'metaform-id', true);
+        $json = '';
 
-      /** 
-       * Renders reply strategy metabox
-       * 
-       * @param \WP_Post $metaform metaform post objects
-       */
-      public function renderReplyStrategyMetaBox($metaform) {
-        $selectedStrategy = get_post_meta($metaform->ID, "metaform-reply-strategy", true);
-        $supportedStrategies = ReplyStrategyFactory::getSupportedStrategies();
-
-        echo '<select name="metaform-reply-strategy">';
-
-        foreach ($supportedStrategies as $supportedStrategy) {
-          $strategy = ReplyStrategyFactory::createStrategy($supportedStrategy);
-          $selected = $supportedStrategy === $selectedStrategy; 
-          $label = $strategy->getLabel();
-          echo sprintf('<option value="%s"%s>%s</option>', $supportedStrategy, $selected ? 'selected="selected"' : '', $label);
+        if ($metaformId) {
+          $json = $metaformsApi->findMetaform($realmId, $metaformId);
         }
 
-        echo '</select>';
+        if (empty($json)) {
+          wp_die("Api form not found", "Not found", [
+            "response" => 404
+          ]);
+
+          return;
+        }
+
+        echo '<textarea class="codemirror" name="metaform-json" style="width:100%" rows="20"> '. $json->__toString() .' </textarea>';
       }
 
       /**
        * Post save hook
        */
-      public function savePost($metaformId) {
-        if (array_key_exists('metaform-json', $_POST)) {
-          update_post_meta($metaformId, 'metaform-json', $_POST['metaform-json']);
+      public function saveMetaformPost($metaformId) {
+        if (!isset($_REQUEST['metaform-json'])) {
+          return;
         }
 
-        if (array_key_exists('metaform-reply-strategy', $_POST)) {
-          update_post_meta($metaformId, 'metaform-reply-strategy', $_POST['metaform-reply-strategy']);
-        }
+        $this->createOrUpdateMetaform($metaformId);
       }
 
       /**
@@ -166,150 +140,37 @@
       }
 
       /**
-       * Exports metaform values as Excel
+       * Create or update metaform
        * 
-       * @param int $id metaform id
+       * @param String $postId id of wp post
        */
-      private function exportExcel($id) {
-        if (!current_user_can('metaform_read_replies')) {
-          echo __('Permission denied', 'metaform');
-          exit;
-        }
+      private function createOrUpdateMetaform($postId) {
+        $metaformId = get_post_meta($postId, 'metaform-id', true);
 
-        $metaform = get_post($id);
-        if (!$metaform || $metaform->post_type !== 'metaform') {
-          echo __('Metaform could not be found', 'metaform');
-          exit;
+        if (!$metaformId) {
+          $this->createMetaform($postId);
+        } else {
+          $this->updateMetaform($postId, $metaformId);
         }
-
-        $metaformJson = get_post_meta($id, "metaform-json", true);
-        if (!$metaformJson) {
-          echo __('Metaform is empty', 'metaform');
-          exit;
-        }
-
-        $viewModel = json_decode($metaformJson);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-          echo __('Failed to read Metaform', 'metaform');
-          exit;
-        }
-
-        $strategy = ReplyStrategyFactory::createStrategy(get_post_meta($metaform->ID, "metaform-reply-strategy", true));
-        if (!$strategy) {
-          echo __('Failed to resolve reply strategy', 'metaform');
-          exit;
-        }
-
-        $rows = $this->getSpreadsheetRows($metaform, $strategy, $viewModel);
-        $filename = sanitize_title($metaform->post_title ? $metaform->post_title : $metaform->ID) . '.xlsx';
-        $this->outputXlsx($filename, $rows);
-        exit;
       }
 
       /**
-       * Migrates Metaform to API
+       * Create metaform
        * 
-       * @param int $id metaform id
+       * @param String $postId id of wp post
        */
-      private function apiMigrate($id, $offset, $metaformId) {
-        echo "<pre>";
-        $maxResults = 10;
-
-        if (!current_user_can('metaform_migrate')) {
-          echo __('Permission denied', 'metaform');
-          exit;
-        }
-
-        $metaform = get_post($id);
-        if (!$metaform || $metaform->post_type !== 'metaform') {
-          echo __('Metaform could not be found', 'metaform');
-          exit;
-        }
-
-        $metaformJson = get_post_meta($id, "metaform-json", true);
-        if (!$metaformJson) {
-          echo __('Metaform is empty', 'metaform');
-          exit;
-        }
-
-        $viewModel = json_decode($metaformJson, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-          echo __('Failed to read Metaform', 'metaform');
-          exit;
-        }
-
-        $replyStrategy = get_post_meta($metaform->ID, "metaform-reply-strategy", true);
-        $strategy = ReplyStrategyFactory::createStrategy($replyStrategy);
-        if (!$strategy) {
-          echo __('Failed to resolve reply strategy', 'metaform');
-          exit;
-        }
-
-        if ($strategy->getName() !== "wordpress_usermeta") {
-          echo __('Unsupported reply strategy', 'metaform');
-          exit;
-        }
-
+      private function createMetaform($postId) {
         $metaformsApi = ApiClient::getMetaformsApi();
-        $repliesApi = ApiClient::getRepliesApi();
         $realmId = Settings::getValue("realm-id");
 
+        $metaformJson = $_POST['metaform-json'];
+        $viewModel = json_decode(stripslashes($metaformJson), true);
         $metaform = new \Metatavu\Metaform\Api\Model\Metaform($viewModel);
 
         try {
-          if (!$metaformId) {
-            $metaformResponse = $metaformsApi->createMetaform($realmId, $metaform);
-            $metaformId = $metaformResponse->getId();
-            echo "Created new metaform $metaformId" . PHP_EOL;
-          }
-
-          $lastResult = $offset + $maxResults;
-          echo "Migrate users from $offset to $lastResult" . PHP_EOL;
-
-          $users = get_users([
-            'fields' => ['ID'],
-            'offset' => $offset,
-            'number' => $maxResults
-          ]);
-          
-          foreach ($users as $user) {
-            $ssoUserId = get_user_meta($user->ID, "openid-connect-generic-subject-identity", true);
-            $replyJson = get_user_meta($user->ID, "metaform-$id-values", true);
-
-            if (!empty($ssoUserId) && !empty($replyJson)) {
-              $replyData = json_decode($replyJson, true);
-              if (json_last_error() !== JSON_ERROR_NONE) {
-                echo __("Failed to read replies of user $ssoUserId", 'metaform');
-                exit;
-              }
-
-              $reply = new \Metatavu\Metaform\Api\Model\Reply([
-                "userId" => $ssoUserId,
-                "data" => $replyData
-              ]);
-
-              $repliesApi->createReply($realmId, $metaformId, $reply, "true");
-              echo "Migrated user $user->ID ($ssoUserId)" . PHP_EOL;
-            } else {
-              echo "Skipped user $user->ID" . PHP_EOL;
-            }
-          }
-
-          $userCount = count($users);
-          echo "Migrated $userCount users" . PHP_EOL;
-          
-          if ($userCount >= $maxResults) {
-            $url = add_query_arg(['post' => $id, 'action' => 'api-migrate', 'offset' => $offset + $maxResults, 'metaformId' => $metaformId]);
-            echo sprintf('<a href="%s">Continue to next batch</a>', $url);
-          } else {
-            update_post_meta($id, 'metaform-api-id', $metaformId);
-            $url = add_query_arg(['post_type' => 'metaform']);
-            echo sprintf('Migration complete, <a href="/wp-admin/">Return to admin view</a>', $url);
-          }
-
-          echo "</pre>";
-
-          exit;
+          $metaformResponse = $metaformsApi->createMetaform($realmId, $metaform);
+          $metaformId = $metaformResponse->getId();
+          update_post_meta($postId, 'metaform-id', $metaformId);
         } catch (\Metatavu\Metaform\ApiException $e) {
           $message = $e->getMessage();
 
@@ -324,87 +185,34 @@
       }
 
       /**
-       * Returns metaform data as spreadsheet rows
+       * Update metaform
        * 
-       * @param \WP_Post $metaform Metaform
-       * @param \Metatavu\Metaform\ReplyStrategy\AbstractReplyStrategy $strategy metaform reply strategy
-       * @param Object $viewModel Metaform view model
+       * @param String $metaformId id of metaform
        */
-      private function getSpreadsheetRows($metaform, $strategy, $viewModel) {
-        $formDatas = [];
+      private function updateMetaform($postId, $metaformId) {
+        $metaformsApi = ApiClient::getMetaformsApi();
+        $realmId = Settings::getValue("realm-id");
 
-        foreach ($viewModel->sections as $section) {
-          foreach ($section->fields as $field) {
-            $fieldName = $field->name;
-            if ($fieldName) {
-              $fieldType = $field->type;
-              $fieldTitle = $field->title ? $field->title : $fieldName;
-
-              $formDatas[$fieldName] = [
-                "title" => $fieldTitle,
-                "type" => $fieldType,
-                "values" => []
-              ];
-            }
-          }
-        }
-
-        $values = $strategy->getValues($metaform);
-        foreach ($values as $user => $userValues) {
-          foreach ($userValues as $key => $value) {
-            if ($formDatas[$key]) {
-              $formDatas[$key]["values"][$user] = $value;
-            }
-          }
-        }
-
-        $columnNames = [];
-        $columnTitles = [];
-        $userRows = [];
+        $metaformJson = $_POST['metaform-json'];
+        $viewModel = json_decode(stripslashes($metaformJson), true);
         
-        foreach ($formDatas as $key => $formData) {
-          $columnTitles[] = $formData['title'];
-          $columnNames[] = $key;
-        }
+        $metaform = new \Metatavu\Metaform\Api\Model\Metaform($viewModel);
+        
+        try {
+          $metaformResponse = $metaformsApi->updateMetaform($realmId, $metaformId, $metaform);
+          $metaformId = $metaformResponse->getId();
+          update_post_meta($postId, 'metaform-id', $metaformId);
+        } catch (\Metatavu\Metaform\ApiException $e) {
+          $message = $e->getMessage();
 
-        foreach ($formDatas as $key => $formData) {
-          $index = array_search($key, $columnNames);
-
-          foreach ($formData["values"] as $user => $value) {
-            $userRow = $userRows[$user];
-            if (!$userRows[$user]) {
-              $userRows[$user] = array_fill(0, count($columnNames), null);
-            }
-
-            $userRows[$user][$index] = $value;
+          if (empty($message)) {
+            $message = json_encode($e->getResponseBody());
           }
+
+          wp_die($message, null, [
+            response => $e->getCode()
+          ]);
         }
-
-        $rows = [$columnTitles];
-
-        foreach ($userRows as $user => $values) {
-          $rows[] = $values;
-        }
-
-        return $rows;
-      }
-
-      /**
-       * Outputs rows as Excel file
-       * 
-       * @param String $filename file name
-       * @param Array $rows rows
-       */
-      private function outputXlsx($filename, $rows) {
-        $writer = new \XLSXWriter();
-        $writer->writeSheet($rows);
-        $file = tempnam("tmp", "zip");
-        $writer->writeToFile($file);
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Length: ' . filesize($file));
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        readfile($file);
-        unlink($file);
       }
 
     }
