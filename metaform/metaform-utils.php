@@ -70,6 +70,23 @@
       }
 
       /**
+       * Get field names by type
+       * 
+       * @param $metaform Metaform
+       * @param $type Type of field
+       * 
+       * @return $result Array of field names
+       */
+      public static function getFieldNamesByType($metaform, $type) {
+        $result = [];
+        foreach (self::getFieldsByType($metaform, $type) as $field) {
+          $result[] = $field->getName();
+        }
+
+        return $result;
+      }
+
+      /**
        * Get form data
        * 
        * @param $metaform Metaform
