@@ -3,6 +3,54 @@
   'use strict';
 
   /**
+   * Returns query params as object
+   * 
+   * @return {Object} query params as object
+   */
+  function getQueryParams() {
+    var result = {};
+    var search = window.location.search.substring(1);
+    if (search) {
+      var pairs = search.split("&");
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split("=");
+        result[pair[0]] = pair[1];
+      }
+    }
+
+    return result;
+  } 
+
+  /**
+   * Returns page url without query part
+   * 
+   * @return {String} page url without query part
+   */
+  function getBaseUrl() {
+    var href = window.location.href;
+    var queryIndex = href.indexOf("?");
+    return queryIndex > -1 ? href.substring(0, queryIndex) : href;
+  }
+  
+  /**
+   * Merges query params from object into string
+   * 
+   * @param {Object} queryParams query params as object
+   * @return {String} stringified query params
+   */
+  function mergeQueryParams(queryParams) {
+    var pairs = [];
+    var keys = Object.keys(queryParams);
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      var value = queryParams[key];
+      pairs.push(key + '=' + value);
+    }
+
+    return pairs.join("&");
+  }
+
+  /**
    * Executes Wordpress ajax request
    * 
    * @param {Object} postOptions post options
@@ -77,7 +125,9 @@
         alert(err);
       } else {
         var draftId = data.draftId;
-        var draftUrl = window.location.href + (window.location.length > 1 ? "&" : "?") + "metaform-draft=" + draftId;
+        var queryParams = getQueryParams();
+        queryParams["metaform-draft"] = draftId;
+        var draftUrl = getBaseUrl() + "?" + mergeQueryParams(queryParams);
         var message = 
           "<p>Pääset muokkaamaan lomaketta osoitteessa:<br/>" +
           "<a href=\"" + draftUrl + "\" target=\"_blank\">" + draftUrl + "</a></p>" + 
