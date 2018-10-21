@@ -2,6 +2,12 @@
 (function ($) {
   'use strict';
 
+  /**
+   * Executes Wordpress ajax request
+   * 
+   * @param {Object} postOptions post options
+   * @param {Function} callback callback function 
+   */
   function wpAjaxPost(postOptions, callback) {
     var ajaxurl = metaformwp.ajaxurl;
     
@@ -17,6 +23,12 @@
     });
   }
 
+  /**
+   * Returns values from Metaform
+   * 
+   * @param {jQuery} metaform metaform
+   * @returns {Object} metaform values 
+   */
   function getMetaformData(metaform) {
     var valuesArray = metaform.metaform('val', true); 
     var values = {};
@@ -30,6 +42,14 @@
     return values;
   }
 
+  /**
+   * Mails created draft link to given email address
+   * 
+   * @param {String} email email address
+   * @param {String} draftId  draft id
+   * @param {String} draftUrl draft url
+   * @param {Function} callback callback 
+   */
   function mailDraft(email, draftId, draftUrl, callback) {
     wpAjaxPost({
       'action': 'metaform_email_draft',
@@ -39,7 +59,12 @@
     }, callback);
   }
 
-  function draftMetaform(metaform, callback) {
+  /**
+   * Creates a draft of the Metaform
+   * 
+   * @param {jQuery} metaform metaform 
+   */
+  function draftMetaform(metaform) {
     var id = metaform.closest('.metaform-container').attr('data-id');
     var postOptions = {
       'action': 'metaform_save_draft',
@@ -87,8 +112,12 @@
     });
   }
 
-  function saveMetaform(metaform, callback) {
-    var ajaxurl = metaformwp.ajaxurl;
+  /**
+   * Saves the Metaform
+   * 
+   * @param {jQuery} metaform metaform
+   */
+  function saveMetaform(metaform) {
     var id = metaform.closest('.metaform-container').attr('data-id');
     var postOptions = {
       'action': 'metaform_save_reply',
@@ -112,7 +141,7 @@
       }
     });
   }
-    
+  
   $(document).on('ready', function() {
     $(".metaform-container[data-allow-drafts='true']").each(function (index, element) {
       $("<a>")
@@ -127,11 +156,7 @@
     var button = $(event.target);
     var metaform = button.closest('.metaform-container').find('.metaform');
 
-    draftMetaform(metaform, function (err) {
-      if (err) {
-        alert(err);
-      }
-    });
+    draftMetaform(metaform);
   });
 
   $(document).on('click', 'input[type="submit"]', function (event) {
@@ -141,11 +166,7 @@
   
     if (valid) {
       event.preventDefault();
-      saveMetaform(metaform, function (err) {
-        if (err) {
-          alert(err);
-        }
-      });
+      saveMetaform(metaform);
     }
   });
 

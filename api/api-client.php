@@ -66,6 +66,11 @@
         return self::getAnonymousToken();
       }
 
+      /**
+       * Returns anonymous access token 
+       * 
+       * @return {String} anonymous access token
+       */
       private static function getAnonymousToken() {
         $settings = self::getOpenIdSettings();
 
