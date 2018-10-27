@@ -84,7 +84,12 @@
     for (var i = 0; i < valuesArray.length; i++) {
       var name = valuesArray[i].name;
       var value = valuesArray[i].value;
-      values[name] = value;
+      if (values[name]) {
+        var oldValue = values[name];
+        values[name] = $.isArray(oldValue) ? oldValue : [oldValue].concat([value]);
+      } else {
+        values[name] = value;
+      }
     }
 
     return values;
@@ -111,8 +116,9 @@
    * Creates a draft of the Metaform
    * 
    * @param {jQuery} metaform metaform 
+   * @param {Function} callback
    */
-  function draftMetaform(metaform) {
+  function draftMetaform(metaform, callback) {
     var id = metaform.closest('.metaform-container').attr('data-id');
     var postOptions = {
       'action': 'metaform_save_draft',
@@ -121,6 +127,8 @@
     };
 
     wpAjaxPost(postOptions, function (err, data) {
+      callback(err);
+      
       if (err) {
         alert(err);
       } else {
@@ -132,7 +140,7 @@
           "<p>Pääset muokkaamaan lomaketta osoitteessa:<br/>" +
           "<a href=\"" + draftUrl + "\" target=\"_blank\">" + draftUrl + "</a></p>" + 
           "<p>Voit myös lähettää osoitteen itsellesi syöttämällä sähköpostiosoitteen kentään:<br/>" +
-          "<input name=\"email\" type=\"email\"/>" +
+          "<input class=\"form-control\" name=\"email\" type=\"email\"/>" +
           "</p>";
 
         var dialog = $("<div>").html(message);
@@ -196,17 +204,19 @@
     $(".metaform-container[data-allow-drafts='true']").each(function (index, element) {
       $("<a>")
         .text("Tallenna vedos")
-        .addClass("btn btn-info float-right create-metaform-draft-button")
+        .addClass("btn btn-info create-metaform-draft-button")
         .prependTo(element);
     });
   });
 
   $(document).on('click', '.create-metaform-draft-button', function (event) {
     event.preventDefault();
-    var button = $(event.target);
+    var button = $(event.target).addClass("disabled");
     var metaform = button.closest('.metaform-container').find('.metaform');
 
-    draftMetaform(metaform);
+    draftMetaform(metaform, function () {
+      button.removeClass("disabled");
+    });
   });
 
   $(document).on('click', 'input[type="submit"]', function (event) {
