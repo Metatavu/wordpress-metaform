@@ -131,8 +131,7 @@
         $formData = json_decode($response['body'], true)["formData"];
         
         foreach (MetaformUtils::getFieldNamesByType($metaform, "files") as $fileFieldName) {
-          error_log($formData[$fileFieldName]);
-          $fileRefs = explode(",", $formData[$fileFieldName]);
+          $fileRefs = is_array($formData[$fileFieldName]) ? $formData[$fileFieldName] : [$formData[$fileFieldName]];
           if (!empty($fileRefs)) {
             $fileData = [];
 

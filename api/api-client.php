@@ -59,7 +59,7 @@
         self::ensureFreshToken($userId);
         $tokenResponse = get_user_meta($userId, 'openid-connect-generic-last-token-response', true);
         
-        if (isset($tokenResponse)) {
+        if (!!$tokenResponse) {
           return $tokenResponse['access_token'];
         }
 
