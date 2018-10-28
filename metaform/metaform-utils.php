@@ -15,14 +15,19 @@
     class MetaformUtils {
 
       /**
-       * Returns version of Metaform JSON that is suitable for
+       * Returns cloned version of Metaform JSON that is suitable for
        * Wordpress plugin 
+       * 
+       * @param $metaform {Object} metaform
+       * @param $context {String} used context
        */
-      public static function getMetaformJson($metaform) {
+      public static function getMetaformJson($metaform, $context) {
         $metaformId = $metaform->getId();
         $uploadUrl = "/wp-json/wp/v2/metaforms/$metaformId/files/upload/";
 
-        foreach($metaform->getSections() as $section) {
+        $result = self::filterMetaformContextFields($metaform, $context);
+
+        foreach($result->getSections() as $section) {
           foreach ($section->getFields() as $field) {
             if ($field->getType() == "files") {
               $field->setUploadUrl($uploadUrl);
@@ -30,7 +35,7 @@
           }
         }
 
-        return $metaform->__toString();
+        return $result->__toString();
       }
       
       /**
@@ -83,6 +88,38 @@
         $result = [];
         foreach (self::getFieldsByType($metaform, $type) as $field) {
           $result[] = $field->getName();
+        }
+
+        return $result;
+      }
+
+      /**
+       * Creates (cloned) version of input Metaform with fields 
+       * filter to match specific context 
+       * 
+       * @param {Object} $metaform metaform
+       * @param {String} $context context
+       */
+      public static function filterMetaformContextFields($metaform, $context) {
+        $result = clone $metaform;
+
+        if (!$context) {
+          return $result;
+        }
+
+        foreach($result->getSections() as $section) {
+          $fields = [];
+
+          foreach ($section->getFields() as $field) {
+            $contexts = $field->getContexts();
+
+
+            if ((!$contexts) || (count($contexts) === 0) || in_array($context, $contexts)) {
+              $fields[] = $field;
+            }
+          }
+
+          $section->setFields($fields);
         }
 
         return $result;
