@@ -102,7 +102,7 @@
           $formValues = $this->getDraftValues($metaform, $_GET['metaform-draft']);
         }
 
-        $json = MetaformUtils::getMetaformJson($metaform);
+        $json = MetaformUtils::getMetaformJson($metaform, "FORM");
         $allowDrafts = $metaform->getAllowDrafts();
 
         wp_enqueue_style('metaform');
