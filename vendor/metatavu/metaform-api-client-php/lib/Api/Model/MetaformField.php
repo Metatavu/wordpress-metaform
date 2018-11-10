@@ -57,6 +57,7 @@ class MetaformField implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'visibleIf' => '\Metatavu\Metaform\Api\Model\MetaformVisibleIf',
+        'permissionContexts' => '\Metatavu\Metaform\Api\Model\MetaformFieldPermissioncontexts',
         'name' => 'string',
         'type' => '\Metatavu\Metaform\Api\Model\MetaformFieldType',
         'title' => 'string',
@@ -94,6 +95,7 @@ class MetaformField implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'visibleIf' => null,
+        'permissionContexts' => null,
         'name' => null,
         'type' => null,
         'title' => null,
@@ -152,6 +154,7 @@ class MetaformField implements ModelInterface, ArrayAccess
      */
     protected static $attributeMap = [
         'visibleIf' => 'visible-if',
+        'permissionContexts' => 'permission-contexts',
         'name' => 'name',
         'type' => 'type',
         'title' => 'title',
@@ -189,6 +192,7 @@ class MetaformField implements ModelInterface, ArrayAccess
      */
     protected static $setters = [
         'visibleIf' => 'setVisibleIf',
+        'permissionContexts' => 'setPermissionContexts',
         'name' => 'setName',
         'type' => 'setType',
         'title' => 'setTitle',
@@ -226,6 +230,7 @@ class MetaformField implements ModelInterface, ArrayAccess
      */
     protected static $getters = [
         'visibleIf' => 'getVisibleIf',
+        'permissionContexts' => 'getPermissionContexts',
         'name' => 'getName',
         'type' => 'getType',
         'title' => 'getTitle',
@@ -317,6 +322,7 @@ class MetaformField implements ModelInterface, ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['visibleIf'] = isset($data['visibleIf']) ? $data['visibleIf'] : null;
+        $this->container['permissionContexts'] = isset($data['permissionContexts']) ? $data['permissionContexts'] : null;
         $this->container['name'] = isset($data['name']) ? $data['name'] : null;
         $this->container['type'] = isset($data['type']) ? $data['type'] : null;
         $this->container['title'] = isset($data['title']) ? $data['title'] : null;
@@ -398,6 +404,30 @@ class MetaformField implements ModelInterface, ArrayAccess
     public function setVisibleIf($visibleIf)
     {
         $this->container['visibleIf'] = $visibleIf;
+
+        return $this;
+    }
+
+    /**
+     * Gets permissionContexts
+     *
+     * @return \Metatavu\Metaform\Api\Model\MetaformFieldPermissioncontexts
+     */
+    public function getPermissionContexts()
+    {
+        return $this->container['permissionContexts'];
+    }
+
+    /**
+     * Sets permissionContexts
+     *
+     * @param \Metatavu\Metaform\Api\Model\MetaformFieldPermissioncontexts $permissionContexts
+     *
+     * @return $this
+     */
+    public function setPermissionContexts($permissionContexts)
+    {
+        $this->container['permissionContexts'] = $permissionContexts;
 
         return $this;
     }
