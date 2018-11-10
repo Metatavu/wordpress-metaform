@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **visibleIf** | [**\Metatavu\Metaform\Api\Model\MetaformVisibleIf**](MetaformVisibleIf.md) |  | [optional] 
+**permissionContexts** | [**\Metatavu\Metaform\Api\Model\MetaformFieldPermissioncontexts**](MetaformFieldPermissioncontexts.md) |  | [optional] 
 **name** | **string** | Field name | [optional] 
 **type** | [**\Metatavu\Metaform\Api\Model\MetaformFieldType**](MetaformFieldType.md) |  | 
 **title** | **string** |  | [optional] 

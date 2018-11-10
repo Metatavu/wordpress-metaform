@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "520801545f1ebdd41637c8316f1cad2c",
+    "content-hash": "2090662eaa04ad1b5d5a8fb8e3eb8f2b",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -189,16 +189,16 @@
         },
         {
             "name": "metatavu/metaform-api-client-php",
-            "version": "0.0.6",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Metatavu/metaform-api-client-php.git",
-                "reference": "2007e81a4e28861c467f850ef02638410312f2a3"
+                "reference": "7fc12be5c5ace6aa3686ee1f7dc2d66a14aca476"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Metatavu/metaform-api-client-php/zipball/2007e81a4e28861c467f850ef02638410312f2a3",
-                "reference": "2007e81a4e28861c467f850ef02638410312f2a3",
+                "url": "https://api.github.com/repos/Metatavu/metaform-api-client-php/zipball/7fc12be5c5ace6aa3686ee1f7dc2d66a14aca476",
+                "reference": "7fc12be5c5ace6aa3686ee1f7dc2d66a14aca476",
                 "shasum": ""
             },
             "require": {
@@ -236,7 +236,7 @@
                 "sdk",
                 "swagger"
             ],
-            "time": "2018-10-04T07:22:29+00:00"
+            "time": "2018-11-10T07:24:09+00:00"
         },
         {
             "name": "psr/http-message",

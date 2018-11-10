@@ -120,11 +120,16 @@ class AttachmentsApi
             try {
                 $response = $this->client->send($request);
             } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
+                $umaResponse = $this->umaRetry($request, $e);
+                if ($umaResponse) {
+                    $response = $umaResponse; 
+                } else {
+                    throw new ApiException(
+                        "[{$e->getCode()}] {$e->getMessage()}",
+                        $e->getCode(),
+                        $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    );
+                }
             }
 
             $statusCode = $response->getStatusCode();
@@ -384,7 +389,6 @@ class AttachmentsApi
             $httpBody
         );
     }
-
     /**
      * Operation findAttachmentData
      *
@@ -425,11 +429,16 @@ class AttachmentsApi
             try {
                 $response = $this->client->send($request);
             } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
+                $umaResponse = $this->umaRetry($request, $e);
+                if ($umaResponse) {
+                    $response = $umaResponse; 
+                } else {
+                    throw new ApiException(
+                        "[{$e->getCode()}] {$e->getMessage()}",
+                        $e->getCode(),
+                        $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    );
+                }
             }
 
             $statusCode = $response->getStatusCode();
@@ -690,4 +699,71 @@ class AttachmentsApi
         );
     }
 
+    private function getUMATicket($response) {
+        $result = []; 
+        $wwwAuthenticateHeader = $response->getHeader("www-authenticate")[0];
+        if ($wwwAuthenticateHeader) {
+            if (strpos($wwwAuthenticateHeader, 'UMA ') !== false) {
+                $headerComponents = explode(",", substr($wwwAuthenticateHeader, 4));
+                foreach ($headerComponents as $headerComponent) {
+                    $componentParts = explode("=", $headerComponent, 2);
+                    $result[$componentParts[0]] = trim($componentParts[1], '"');
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    private function getRPT($ticket) {
+        $authorization = $this->config->getApiKeyWithPrefix('Authorization');
+        $asUri = $ticket["as_uri"]; 
+        $url = "$asUri/protocol/openid-connect/token";
+        $body = [
+            "grant_type" => "urn:ietf:params:oauth:grant-type:uma-ticket",
+            "ticket" => $ticket["ticket"],
+            "submit_request" => "false"
+        ];
+
+        $headers = [
+            "Authorization" => $authorization,
+            "Content-Type" => "application/x-www-form-urlencoded"
+        ];
+
+        $response = $this->client->request('POST', $url, [
+            'headers' => $headers,
+            'form_params' => $body
+        ]);
+
+        $body = $response->getBody();
+
+        if ($body) {
+            $jsonBody = json_decode($body, true);
+            if ($jsonBody && $jsonBody["access_token"]) {
+                return $jsonBody["access_token"];
+            }
+        }
+
+        return null;
+    }
+
+    private function umaRetry($request, $e) {
+        try {
+            if ($e->getCode() == 401) {
+                $ticket = $this->getUMATicket($e->getResponse());
+                $rpt = $this->getRPT($ticket);
+                $retry = !!$rpt;
+
+                if ($retry) {
+                    $headers = $request->getHeaders();
+                    $headers["Authorization"] = "bearer $rpt";
+                    $newRequest = new Request($request->getMethod(), $request->getUri(), $headers, $request->getBody());
+                    return $this->client->send($newRequest);
+                }
+            }
+        } catch (RequestException $e) {
+        }
+
+        return null;
+    }
 }
