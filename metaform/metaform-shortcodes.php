@@ -21,6 +21,12 @@
        * Constructor
        */
       public function __construct() {
+      }
+      
+      /**
+       * Loads required client side scripts and styles
+       */
+      public function loadScripts() {
         $metaformUrl = '//cdn.metatavu.io/libs/metaform-fields/0.6.24';
         
         wp_enqueue_style('font_awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
@@ -29,7 +35,8 @@
         wp_enqueue_style('hyperform', '//cdn.metatavu.io/libs/hyperform/0.8.15/hyperform.min.css');
         wp_enqueue_style('animate-css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css');
         wp_register_style('metaform', "$metaformUrl/css/form.min.css");
-  
+        wp_enqueue_style('metaform');
+
         wp_register_script('moment', "//cdn.metatavu.io/libs/moment/2.17.1/moment-with-locales.js");
         wp_register_script('jquery-ui_touch-punch', "//cdn.metatavu.io/libs/jquery.ui.touch-punch/0.2.3/jquery.ui.touch-punch.min.js");
         wp_register_script('flatpickr', '//cdn.metatavu.io/libs/flatpickr/4.0.6/flatpickr.min.js');
@@ -57,7 +64,7 @@
           wp_enqueue_style('bootstrap-css', '//cdn.metatavu.io/libs/bootstrap/4.1.0/css/bootstrap.min.css');
         }
       }
-      
+
       /**
        * Renders a metaform.
        * 
@@ -105,8 +112,7 @@
         $json = MetaformUtils::getMetaformJson($metaform, "FORM");
         $allowDrafts = $metaform->getAllowDrafts();
 
-        wp_enqueue_style('metaform');
-        wp_enqueue_script('metaform-init');
+        $this->loadScripts();
 
         return sprintf('<div id="metaform-%s" data-allow-drafts="%s" class="metaform-container %s" data-id="%s" data-view-model="%s" data-form-values="%s"/>', $id, $allowDrafts ? "true" : "false", $attrs['class'], $id, htmlspecialchars($json), htmlspecialchars($formValues));
       }
