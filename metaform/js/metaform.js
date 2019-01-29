@@ -86,7 +86,7 @@
       var value = valuesArray[i].value;
       if (values[name]) {
         var oldValue = values[name];
-        values[name] = $.isArray(oldValue) ? oldValue : [oldValue].concat([value]);
+        values[name] = ($.isArray(oldValue) ? oldValue : [oldValue]).concat([value]);
       } else {
         values[name] = value;
       }

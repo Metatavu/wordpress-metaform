@@ -138,9 +138,17 @@
         
         foreach (MetaformUtils::getFieldNamesByType($metaform, "files") as $fileFieldName) {
           $fileRefs = [];
-          if (isset($formData[$fileFieldName]) && strlen(trim($formData[$fileFieldName])) > 0) {
-            $fileRefs = is_array($formData[$fileFieldName]) ? $formData[$fileFieldName] : [$formData[$fileFieldName]];
+
+          if (isset($formData[$fileFieldName])) {
+            if (is_array($formData[$fileFieldName])) {
+              $fileRefs = $formData[$fileFieldName];
+            } else if (is_string($formData[$fileFieldName])) {
+              $fileRefs = [trim($formData[$fileFieldName])];
+            }
           }
+
+          $fileRefs = array_filter($fileRefs);
+    
           if (!empty($fileRefs)) {
             $fileData = [];
 
